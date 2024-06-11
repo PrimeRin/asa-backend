@@ -17,4 +17,4 @@ Gemfile.lock
 /tmp
 /test
 /log
-
+.env
