@@ -1,0 +1,16 @@
+Employee:
+  salary_advance:
+    view: true
+    create: true
+    delete: true
+    update: false
+  tour_advance:
+    view: true
+    create: true
+    delete: true
+    update: true
+  other_advance:
+    view: true
+    create: true
+    delete: true
+    update: true

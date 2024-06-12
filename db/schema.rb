@@ -12,19 +12,34 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 20_240_612_035_231) do
+ActiveRecord::Schema[7.0].define(version: 20_240_612_065_422) do
+  create_table 'permissions', charset: 'utf8mb4', collation: 'utf8mb4_0900_ai_ci', force: :cascade do |t|
+    t.string 'resource', null: false
+    t.json 'actions', null: false
+    t.bigint 'role_id', null: false
+    t.datetime 'created_at', null: false
+    t.datetime 'updated_at', null: false
+    t.index ['role_id'], name: 'index_permissions_on_role_id'
+  end
+
+  create_table 'roles', charset: 'utf8mb4', collation: 'utf8mb4_0900_ai_ci', force: :cascade do |t|
+    t.string 'name', null: false
+    t.datetime 'created_at', null: false
+    t.datetime 'updated_at', null: false
+  end
+
   create_table 'users', charset: 'utf8mb4', collation: 'utf8mb4_0900_ai_ci', force: :cascade do |t|
     t.string 'email', default: '', null: false
     t.string 'encrypted_password', default: '', null: false
-    t.string 'reset_password_token'
-    t.datetime 'reset_password_sent_at'
-    t.datetime 'remember_created_at'
     t.datetime 'created_at', null: false
     t.datetime 'updated_at', null: false
     t.string 'username'
-    t.string 'role'
+    t.bigint 'role_id', null: false
     t.index ['email'], name: 'index_users_on_email', unique: true
-    t.index ['reset_password_token'], name: 'index_users_on_reset_password_token', unique: true
+    t.index ['role_id'], name: 'index_users_on_role_id'
     t.index ['username'], name: 'index_users_on_username', unique: true
   end
+
+  add_foreign_key 'permissions', 'roles'
+  add_foreign_key 'users', 'roles'
 end
