@@ -2,6 +2,7 @@
 
 class User < ApplicationRecord
   devise :database_authenticatable, :registerable, :rememberable, :validatable
+  has_many :advances, dependent: :destroy
   belongs_to :role
 
   attr_writer :login

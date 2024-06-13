@@ -12,7 +12,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 20_240_612_065_422) do
+ActiveRecord::Schema[7.0].define(version: 20_240_612_105_838) do
+  create_table 'advances', charset: 'utf8mb4', collation: 'utf8mb4_0900_ai_ci', force: :cascade do |t|
+    t.string 'advance_type'
+    t.string 'status'
+    t.decimal 'amount', precision: 10
+    t.integer 'verified_by'
+    t.integer 'confirmed_by'
+    t.integer 'dispatch_by'
+    t.bigint 'user_id', null: false
+    t.datetime 'created_at', null: false
+    t.datetime 'updated_at', null: false
+    t.index ['user_id'], name: 'index_advances_on_user_id'
+  end
+
   create_table 'permissions', charset: 'utf8mb4', collation: 'utf8mb4_0900_ai_ci', force: :cascade do |t|
     t.string 'resource', null: false
     t.json 'actions', null: false
@@ -40,6 +53,7 @@ ActiveRecord::Schema[7.0].define(version: 20_240_612_065_422) do
     t.index ['username'], name: 'index_users_on_username', unique: true
   end
 
+  add_foreign_key 'advances', 'users'
   add_foreign_key 'permissions', 'roles'
   add_foreign_key 'users', 'roles'
 end
