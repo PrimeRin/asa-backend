@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class Advance < ApplicationRecord
+  has_many :attachments, dependent: :destroy
   belongs_to :user
 
   validates :advance_type, :status, :amount, presence: true
