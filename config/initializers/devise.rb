@@ -17,4 +17,5 @@ Devise.setup do |config|
   config.responder.error_status = :unprocessable_entity
   config.responder.redirect_status = :see_other
   config.navigational_formats = ['*/*', :html, :json]
+  config.skip_session_storage = [:http_auth, :token_auth]
 end
