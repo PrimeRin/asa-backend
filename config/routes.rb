@@ -5,5 +5,7 @@ Rails.application.routes.draw do
     sessions: 'users/sessions'
   }
   resource :member, only: [:show]
-  resources :advances, only: [:index, :show]
+  resources :advances, only: %i[index show]
+  mount Rswag::Ui::Engine => '/api-docs'
+  mount Rswag::Api::Engine => '/api-docs'
 end

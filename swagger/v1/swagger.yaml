@@ -1,0 +1,43 @@
+---
+openapi: 3.0.1
+info:
+  title: ASA Backend API
+  version: v1
+paths:
+  users/sign_in:
+    post:
+      summary: Sign in user
+      tags:
+      - Authentication
+      parameters: []
+      responses:
+        '200':
+          description: user signed in
+        '401':
+          description: unauthorized user
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                login:
+                  type: string
+                password:
+                  type: string
+              required:
+              - login
+              - password
+  users/sign_out:
+    delete:
+      summary: Sign out user
+      tags:
+      - Authentication
+      responses:
+        '200':
+          description: user signed out
+servers:
+- url: https://127.0.0.1:3000
+  variables:
+    defaultHost:
+      default: www.example.com

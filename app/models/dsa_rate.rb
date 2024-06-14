@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class DsaRate < ApplicationRecord
   belongs_to :grade
 

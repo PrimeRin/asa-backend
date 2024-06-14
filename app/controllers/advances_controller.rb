@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class AdvancesController < ApplicationController
   before_action :set_advance, only: [:show]
 
@@ -18,6 +20,6 @@ class AdvancesController < ApplicationController
   def set_advance
     @advance = Advance.find(params[:id])
   rescue ActiveRecord::RecordNotFound
-    render json: { error: "Advance not found" }, status: :not_found
+    render json: { error: 'Advance not found' }, status: :not_found
   end
 end

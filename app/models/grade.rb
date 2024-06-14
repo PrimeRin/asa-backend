@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Grade < ApplicationRecord
   has_one :dsa_rate, dependent: :destroy
   validates :name, :category, :position_title, presence: true
@@ -10,6 +12,6 @@ class Grade < ApplicationRecord
     manager_specialist: 'Managerial and Specialization(M/S)',
     administrative_service: 'Professional and Administrative Service(PS)',
     administrative_support_service: 'Professional and Administrative Support Service(SS)',
-    operational_service:'Operational Service(OS)'
+    operational_service: 'Operational Service(OS)'
   }
 end
