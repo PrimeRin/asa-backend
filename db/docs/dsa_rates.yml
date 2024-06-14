@@ -1,0 +1,16 @@
+M1:
+  from: Bhutan
+  to: Bhutan
+  rate: 5000
+M2:
+  from: Bhutan
+  to: Bhutan
+  rate: 4000
+PS1:
+  from: Bhutan
+  to: Bhutan
+  rate: 3000
+PS2:
+  from: Bhutan
+  to: Bhutan
+  rate: 2000

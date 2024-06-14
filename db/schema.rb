@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_06_13_044919) do
+ActiveRecord::Schema[7.0].define(version: 2024_06_13_063544) do
   create_table "advances", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "advance_type"
     t.string "status"
@@ -31,6 +31,25 @@ ActiveRecord::Schema[7.0].define(version: 2024_06_13_044919) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["advance_id"], name: "index_attachments_on_advance_id"
+  end
+
+  create_table "dsa_rates", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.string "from"
+    t.string "to"
+    t.decimal "rate", precision: 10
+    t.bigint "grade_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["grade_id"], name: "index_dsa_rates_on_grade_id"
+  end
+
+  create_table "grades", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.string "name"
+    t.string "category"
+    t.string "position_title"
+    t.decimal "basic_pay", precision: 10
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "permissions", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -62,6 +81,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_06_13_044919) do
 
   add_foreign_key "advances", "users"
   add_foreign_key "attachments", "advances"
+  add_foreign_key "dsa_rates", "grades"
   add_foreign_key "permissions", "roles"
   add_foreign_key "users", "roles"
 end

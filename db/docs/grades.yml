@@ -1,0 +1,31 @@
+- name: M1
+  category: manager_specialist
+  position_title: Executive Director
+  basic_pay: 71555
+- name: M2
+  category: manager_specialist
+  position_title: Director
+  basic_pay: 60270
+- name: S1
+  category: manager_specialist
+  position_title: Senior Specialist
+  basic_pay: 71,555
+- name: S2
+  category: manager_specialist
+  position_title: Specialist
+  basic_pay:  60270
+- name: PS1
+  category: administrative_service
+  position_title: Chief_Officer
+  basic_pay: 52510
+# TODO: seed remaining
+- name: SS1
+  category: administrative_support_service
+  position_title: Senior Assistant
+  basic_pay: 45130
+# TODO: seed remaining
+- name: OS1
+  category: operational_service
+  position_title: Driver
+  basic_pay: 34165
+# TODO: seed remaining
