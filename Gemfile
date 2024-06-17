@@ -8,6 +8,7 @@ gem 'bootsnap', require: false
 gem 'devise', '4.9'
 gem 'dotenv', '3.1'
 gem 'mysql2', '~> 0.5'
+gem 'pagy'
 gem 'puma', '~> 5.0'
 gem 'rack-cors', '~> 2.0'
 gem 'rails', '~> 7.0.8', '>= 7.0.8.1'

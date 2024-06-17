@@ -5,8 +5,9 @@ module Api
     before_action :set_advance, only: [:show]
 
     def index
-      @advances = Advance.all
-      render json: AdvanceQuery.call(params[:advance], current_user, @advances).run
+      @pagy, @advances = pagy(AdvanceQuery.call(params[:advance], current_user, Advance.all).run,
+                              page: params[:page] || 1)
+      render json: { pagy: pagy_metadata(@pagy), advances: @advances }, status: :ok
     end
 
     def show

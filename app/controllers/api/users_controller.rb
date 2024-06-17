@@ -5,8 +5,8 @@ module Api
     before_action :set_user, only: %i[show update destroy]
 
     def index
-      @users = User.all
-      render json: @users, status: :ok
+      @pagy, @users = pagy(User.all, page: params[:page] || 1)
+      render json: { pagy: pagy_metadata(@pagy), users: @users }, status: :ok
     end
 
     def show
