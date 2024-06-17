@@ -2,6 +2,7 @@
 
 class Grade < ApplicationRecord
   has_one :dsa_rate, dependent: :destroy
+  has_many :users, dependent: :nullify
   validates :name, :category, :position_title, presence: true
   validates :basic_pay, numericality: { greater_than_or_equal_to: 0 }
   validates :category,

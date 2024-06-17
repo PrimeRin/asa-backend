@@ -3,7 +3,7 @@
 users = [
   { email: 'employee1@gmail.com', role: 'Employee', username: '20240024', password: 'password' },
   { email: 'finance1@gmail.com', role: 'Finance', username: '20240025', password: 'password' },
-  { email: 'director1@gmail.com', role: 'Director', username: '20240026', password: 'password' },
+  { email: 'director1@gmail.com', role: 'DAF Director', username: '20240026', password: 'password' },
   { email: 'administrator@gmail.com', role: 'Administrator', username: '20240034', password: 'password' },
   { email: 'governor1@gmail.com', role: 'Governor', username: '20240044', password: 'password' }
 ]
