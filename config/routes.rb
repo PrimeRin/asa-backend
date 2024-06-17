@@ -4,8 +4,10 @@ Rails.application.routes.draw do
   devise_for :users, controllers: {
     sessions: 'users/sessions'
   }
-  resource :member, only: [:show]
-  resources :advances, only: %i[index show]
+
+  namespace :api do
+    resources :advances, only: %i[index show create]
+  end
   mount Rswag::Ui::Engine => '/api-docs'
   mount Rswag::Api::Engine => '/api-docs'
 end

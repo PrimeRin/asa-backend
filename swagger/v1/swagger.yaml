@@ -4,6 +4,155 @@ info:
   title: ASA Backend API
   version: v1
 paths:
+  "/api/advances":
+    get:
+      summary: Retrieves all advances
+      tags:
+      - Advances
+      parameters:
+      - name: advance
+        in: query
+        schema:
+          type: object
+          properties:
+            status:
+              type: array
+              items:
+                type: string
+            advance_type:
+              type: array
+              items:
+                type: string
+            type:
+              type: string
+          required:
+          - status
+          - advance_type
+      responses:
+        '200':
+          description: advances found
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                    advance_type:
+                      type: string
+                    status:
+                      type: string
+                    amount:
+                      type: number
+                    verified_by:
+                      type: integer
+                      nullable: true
+                    confirmed_by:
+                      type: integer
+                      nullable: true
+                    dispatch_by:
+                      type: integer
+                      nullable: true
+                    user_id:
+                      type: integer
+                    created_at:
+                      type: string
+                      format: date_time
+                    updated_at:
+                      type: string
+                      format: date_time
+                  required:
+                  - id
+                  - advance_type
+                  - status
+                  - amount
+                  - user_id
+                  - created_at
+                  - updated_at
+        '404':
+          description: advances not found
+    post:
+      summary: Creates an advance
+      tags:
+      - Advances
+      parameters: []
+      responses:
+        '201':
+          description: advance created
+        '422':
+          description: invalid request
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                advance_type:
+                  type: string
+                status:
+                  type: string
+                amount:
+                  type: number
+              required:
+              - advance_type
+              - status
+              - amount
+  "/api/advances/{id}":
+    get:
+      summary: Retrieves an advance
+      tags:
+      - Advances
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: advance found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  advance_type:
+                    type: string
+                  status:
+                    type: string
+                  amount:
+                    type: number
+                  verified_by:
+                    type: integer
+                    nullable: true
+                  confirmed_by:
+                    type: integer
+                    nullable: true
+                  dispatch_by:
+                    type: integer
+                    nullable: true
+                  user_id:
+                    type: integer
+                  created_at:
+                    type: string
+                    format: date_time
+                  updated_at:
+                    type: string
+                    format: date_time
+                required:
+                - id
+                - advance_type
+                - status
+                - amount
+                - user_id
+                - created_at
+                - updated_at
+        '404':
+          description: advance not found
   users/sign_in:
     post:
       summary: Sign in user
