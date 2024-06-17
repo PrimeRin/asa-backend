@@ -7,6 +7,7 @@ Rails.application.routes.draw do
   namespace :api do
     resources :advances, only: %i[index show create]
     resources :permissions, only: %i[index]
+    resources :users, only: %i[index show update]
     resources :rates, only: %i[index update create] do
       collection do
         get :get_country
