@@ -6,6 +6,7 @@ class User < ApplicationRecord
   belongs_to :grade
   belongs_to :role
   attr_writer :login
+
   validates :username, presence: true, uniqueness: { case_sensitive: false }
   validates_format_of :username, with: /^[a-zA-Z0-9_.]*$/, multiline: true
   validate :validate_username

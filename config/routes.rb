@@ -6,7 +6,7 @@ Rails.application.routes.draw do
   }
   namespace :api do
     resources :advances, only: %i[index show create]
-    resources :rates, only: [:index, :update, :create] do
+    resources :rates, only: %i[index update create] do
       collection do
         get :get_country
       end

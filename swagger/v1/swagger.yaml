@@ -153,6 +153,95 @@ paths:
                 - updated_at
         '404':
           description: advance not found
+  "/api/rates":
+    get:
+      summary: Retrieves a specific rate
+      tags:
+      - Rates
+      parameters:
+      - name: rate
+        in: query
+        schema:
+          type: object
+          properties:
+            from:
+              type: string
+            to:
+              type: string
+          required:
+          - from
+          - to
+      responses:
+        '200':
+          description: rate found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  from:
+                    type: string
+                  to:
+                    type: string
+                  grade_id:
+                    type: integer
+                  created_at:
+                    type: string
+                    format: date_time
+                  updated_at:
+                    type: string
+                    format: date_time
+                required:
+                - id
+                - from
+                - to
+                - grade_id
+                - created_at
+                - updated_at
+        '404':
+          description: rate not found
+    post:
+      summary: Creates a rate
+      tags:
+      - Rates
+      parameters: []
+      responses:
+        '201':
+          description: rate created
+        '422':
+          description: invalid request
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                from:
+                  type: string
+                to:
+                  type: string
+                grade_id:
+                  type: string
+              required:
+              - from
+              - to
+              - grade_id
+  "/api/rates/countries":
+    get:
+      summary: Retrieves all countries with rates
+      tags:
+      - Rates
+      responses:
+        '200':
+          description: countries found
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
   users/sign_in:
     post:
       summary: Sign in user

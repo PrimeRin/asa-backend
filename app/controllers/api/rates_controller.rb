@@ -2,15 +2,25 @@
 
 module Api
   class RatesController < ApplicationController
-    before_action :set_rate, only: [:index, :update]
+    before_action :set_rate, only: %i[index update]
 
     def index
       render json: @rate
     end
 
+    def create
+      @rate = DsaRate.new(rate_params)
+
+      if @rate.save
+        render json: @rate, status: :created
+      else
+        render json: @rate.errors, status: :unprocessable_entity
+      end
+    end
+
     def update
       if @rate.update(rate_params)
-        render json: @rate
+        render json: @rate, status: :ok
       else
         render json: @rate.errors, status: :unprocessable_entity
       end
@@ -30,7 +40,7 @@ module Api
     end
 
     def rate_params
-      params.require(:rate).permit(:from, :to)
+      params.require(:rate).permit(:from, :to, :grade_id)
     end
   end
 end
