@@ -3,6 +3,7 @@
 class User < ApplicationRecord
   devise :database_authenticatable, :registerable, :rememberable, :validatable
   has_many :advances, dependent: :destroy
+  has_one_attached :profile_pic
   belongs_to :grade
   belongs_to :role
   attr_writer :login
@@ -42,3 +43,5 @@ class User < ApplicationRecord
     end
   end
 end
+
+
