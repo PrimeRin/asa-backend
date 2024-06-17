@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CreateTravelItineraries < ActiveRecord::Migration[7.0]
   def change
     create_table :travel_itineraries do |t|

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Notification < ApplicationRecord
   serialize :recipients, Array
   validates :sender, presence: true
