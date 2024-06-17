@@ -4,6 +4,7 @@ class Advance < ApplicationRecord
   has_many_attached :files
   has_many :attachments, dependent: :destroy
   belongs_to :user
+  has_many :travel_itineraries, -> { where(advance_type: %w[in_country_tour_advance ex_country_tour_advance]) }, class_name: 'TravelItinerary', foreign_key: 'advance_id'
 
   validates :advance_type, :status, :amount, presence: true
   validates :advance_type,
