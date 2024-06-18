@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class ItineraryService
   def initialize(advance, itinerary_params)
     @advance = advance
