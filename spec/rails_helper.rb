@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 require 'spec_helper'
+require 'supports/auth_helpers'
+
 ENV['RAILS_ENV'] ||= 'test'
 require_relative '../config/environment'
 abort('The Rails environment is running in production mode!') if Rails.env.production?
@@ -16,6 +18,7 @@ RSpec.configure do |config|
   config.infer_spec_type_from_file_location!
   config.filter_rails_from_backtrace!
   config.include FactoryBot::Syntax::Methods
+  config.include AuthHelpers, type: :request
   # For Devise
   config.include Devise::Test::ControllerHelpers, type: :controller
   config.include Devise::Test::IntegrationHelpers, type: :request

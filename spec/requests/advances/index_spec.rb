@@ -18,9 +18,7 @@ RSpec.describe 'API::Advance ', type: :request do
   end
 
   describe 'GET /api/advances' do
-    before do
-      post '/users/sign_in', params: { user: { login: user.username, password: user.password } }
-    end
+    before { sign_in(user) }
 
     it 'returns a success response' do
       get '/api/advances', params: advance_params
