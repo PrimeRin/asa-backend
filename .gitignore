@@ -17,6 +17,7 @@ Gemfile.lock
 /tmp
 /test
 /log
-.env
+*.env
 /.idea
 /config/master.key
+
