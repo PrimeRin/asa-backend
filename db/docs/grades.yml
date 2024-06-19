@@ -18,6 +18,10 @@
   category: administrative_service
   position_title: Chief_Officer
   basic_pay: 52510
+- name: PS2
+  category: administrative_service
+  position_title: Chief_Officer
+  basic_pay: 52510
 # TODO: seed remaining
 - name: SS1
   category: administrative_support_service

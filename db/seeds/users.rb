@@ -10,10 +10,12 @@ users = [
 
 users.each do |user_attributes|
   role = Role.find_by(name: user_attributes[:role])
+  grade = Grade.find_by(name: "M1");
   if role
     user = role.users.find_or_initialize_by(username: user_attributes[:username])
     user.email = user_attributes[:email]
     user.password = user_attributes[:password]
+    user.grade = grade
     user.save!
   else
     puts "Role '#{user_attributes[:role]}' not found."
