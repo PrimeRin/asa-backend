@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: asa-backend
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: asa-backend
+  template:
+    metadata:
+      labels:
+        app: asa-backend
+    spec:
+      containers:
+        - name: asa-backend
+          image: primerin/asa:latest
+          ports:
+            - containerPort: 3001

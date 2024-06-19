@@ -25,3 +25,10 @@ end
 
 # check db connection
 ActiveRecord::Base.connection_pool.with_connection(&:active?)
+
+
+# docker build -t asa_backend .
+#   docker run -d -p 3000:3000 asa_backend
+# docker exec -it <container_id_or_name> sh
+# docker ps
+
