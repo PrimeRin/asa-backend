@@ -22,3 +22,6 @@ advance.files.each do |file|
   puts "File Name: #{file.filename}"
   puts "File Size: #{file.blob.byte_size} bytes"
 end
+
+# check db connection
+ActiveRecord::Base.connection_pool.with_connection(&:active?)
