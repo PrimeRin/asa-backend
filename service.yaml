@@ -1,12 +1,11 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: asa-backend
+  name: asa_backend
 spec:
   selector:
-    app: asa-backend
+    app: asa_backend
   ports:
     - protocol: TCP
       port: 80
-      targetPort: 3001
-  type: LoadBalancer
+      targetPort: 3010

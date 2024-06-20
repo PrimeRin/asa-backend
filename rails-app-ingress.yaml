@@ -1,19 +1,13 @@
-# rails-app-ingress.yaml
-apiVersion: networking.k8s.io/v1
+apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
-  name: rails-app-ingress
-  annotations:
-    nginx.ingress.kubernetes.io/rewrite-target: /
+  name: my-rails-app-ingress
 spec:
   rules:
-    - host: my.local
-      http:
-        paths:
-          - path: /
-            pathType: Prefix
-            backend:
-              service:
-                name: asa-backend
-                port:
-                  number: 80
+    - http:
+      paths:
+        - path: /
+          backend:
+            serviceName: asa_backend
+            servicePort: 80
+            
