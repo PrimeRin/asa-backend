@@ -32,3 +32,6 @@ ActiveRecord::Base.connection_pool.with_connection(&:active?)
 # docker exec -it <container_id_or_name> sh
 # docker ps
 
+# docker tag my-local-image:latest yourusername/your-repo:latest
+# docker push yourusername/your-repo:latest
+

@@ -1,0 +1,56 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: asa-backend
+  labels:
+    app: asa-backend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: asa-backend
+  template:
+    metadata:
+      labels:
+        app: asa-backend
+    spec:
+      containers:
+      - name: asa-backend
+        image: primerin/asa:latest
+        ports:
+        - containerPort: 3010
+        env:
+        - name: DATABASE_USERNAME
+          valueFrom:
+            secretKeyRef:
+              name: app-secret
+              key: mysql-username
+        - name: DATABASE_PASSWORD
+          valueFrom: 
+            secretKeyRef:
+              name: app-secret
+              key: mysql-password
+        - name: DATABASE_HOST
+          valueFrom: 
+            secretKeyRef:
+              name: app-secret
+              key: mysql-url
+        - name: DATABASE_PORT
+          valueFrom: 
+            secretKeyRef:
+              name: app-secret
+              key: mysql-port
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: asa-backend-service
+spec:
+  selector:
+    app: asa-backend-service
+  type: LoadBalancer  
+  ports:
+    - protocol: TCP
+      port: 3010
+      targetPort: 3010
+      nodePort: 30000

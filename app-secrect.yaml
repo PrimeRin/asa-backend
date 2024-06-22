@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: Secret
+metadata:
+    name: app-secret
+type: Opaque
+data:
+    mysql-username: Y2NydXNlcg==
+    mysql-password: Y2NydXNlcjIwMjBAIQ==
+    mysql-host: MTcyLjE5LjAuMTM=
+    mysql-port: MzMwNg==
