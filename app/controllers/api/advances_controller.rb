@@ -7,6 +7,7 @@ module Api
     def index
       @pagy, @advances = pagy(AdvanceQuery.call(params[:advance], current_user, Advance.all).run,
                               page: params[:page] || 1)
+      @advances = @advances.map { |advance| advance.attributes.merge(user: advance.user) }
       render json: { pagy: pagy_metadata(@pagy), advances: @advances }, status: :ok
     end
 
