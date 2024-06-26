@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_06_17_084450) do
+ActiveRecord::Schema[7.0].define(version: 2024_06_26_090323) do
   create_table "active_storage_attachments", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -120,6 +120,8 @@ ActiveRecord::Schema[7.0].define(version: 2024_06_17_084450) do
     t.string "username"
     t.bigint "role_id", null: false
     t.integer "grade_id"
+    t.string "name"
+    t.string "mobile_number"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["role_id"], name: "index_users_on_role_id"
     t.index ["username"], name: "index_users_on_username", unique: true

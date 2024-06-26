@@ -26,7 +26,6 @@ end
 # check db connection
 ActiveRecord::Base.connection_pool.with_connection(&:active?)
 
-
 # docker build -t asa_backend .
 #   docker run -d -p 3000:3000 asa_backend
 # docker exec -it <container_id_or_name> sh
@@ -35,4 +34,3 @@ ActiveRecord::Base.connection_pool.with_connection(&:active?)
 # docker tag my-local-image:latest yourusername/your-repo:latest
 # docker push yourusername/your-repo:latest
 # rails s -b 0.0.0.0 -p 3006 -d
-

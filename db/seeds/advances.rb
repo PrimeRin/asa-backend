@@ -35,3 +35,4 @@ advances.each do |advance_attributes|
     puts 'Advance Creator not found., Seed both Role and Users first'
   end
 end
+puts 'Advances seeding completed........'

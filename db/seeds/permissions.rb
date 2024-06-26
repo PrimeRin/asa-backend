@@ -10,3 +10,4 @@ permissions.each do |role, permission_hash|
     permission.update!(actions: actions)
   end
 end
+puts 'Permission seeding completed........'

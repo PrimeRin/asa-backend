@@ -8,6 +8,7 @@ class User < ApplicationRecord
   belongs_to :role
   attr_writer :login
 
+  validates :email, :name, :mobile_number, presence: true
   validates :username, presence: true, uniqueness: { case_sensitive: false }
   validates_format_of :username, with: /^[a-zA-Z0-9_.]*$/, multiline: true
   validate :validate_username
@@ -27,6 +28,6 @@ class User < ApplicationRecord
 
   def self.authenticate(conditions, password)
     user = find_for_authentication(conditions)
-    return user if user&.valid_password?(password)
+    user if user&.valid_password?(password)
   end
 end

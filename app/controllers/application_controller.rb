@@ -30,7 +30,8 @@ class ApplicationController < ActionController::API
 
     if auth_header.present?
       token = auth_header.split(' ').last
-      @current_user = JwtService.decode(token)&.fetch(:user_id)
+      decoded_token = JwtService.decode(token)
+      @current_user = User.find_by(id: decoded_token&.fetch(:user_id))
       head :unauthorized unless @current_user
     else
       head :unauthorized
