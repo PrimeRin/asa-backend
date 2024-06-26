@@ -10,7 +10,11 @@ module Api
     end
 
     def show
-      render json: @user, status: :ok
+      user_data = @user.attributes.merge(
+        role: @user.role,
+        grade: @user.grade
+      )
+      render json: user_data, status: :ok
     end
 
     def create
