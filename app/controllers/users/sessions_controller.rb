@@ -10,7 +10,8 @@ module Users
         sign_in(resource_name, user)
         yield user if block_given?
         token = JwtService.encode({ user_id: user.id })
-        render json: { token: token }, status: :ok
+        response.headers['Authorization'] = "Bearer #{token}"
+        render json: { user: user }, status: :ok
       else
         render json: { error: 'Invalid username or password.' }, status: :unauthorized
       end

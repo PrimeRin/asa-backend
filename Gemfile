@@ -3,7 +3,7 @@
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby '2.7.8'
+ruby '3.3.0'
 gem 'bootsnap', require: false
 gem 'devise', '4.9'
 gem 'dotenv', require: 'dotenv/load'
