@@ -3,7 +3,6 @@
 class ApplicationController < ActionController::API
   include Pagy::Backend
   before_action :configure_permitted_parameters, if: :devise_controller?
-  before_action :authenticate_user!
 
   def pagy_metadata(pagy)
     {
@@ -24,5 +23,17 @@ class ApplicationController < ActionController::API
     # devise_parameter_sanitizer.permit :sign_up, keys: added_attrs
     devise_parameter_sanitizer.permit :sign_in, keys: %i[login password]
     # devise_parameter_sanitizer.permit :account_update, keys: added_attrs
+  end
+
+  def authenticate_user!
+    auth_header = request.headers['Authorization']
+
+    if auth_header.present?
+      token = auth_header.split(' ').last
+      @current_user = JwtService.decode(token)&.fetch(:user_id)
+      head :unauthorized unless @current_user
+    else
+      head :unauthorized
+    end
   end
 end

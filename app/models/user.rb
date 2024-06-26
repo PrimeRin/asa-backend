@@ -12,7 +12,7 @@ class User < ApplicationRecord
   validates_format_of :username, with: /^[a-zA-Z0-9_.]*$/, multiline: true
   validate :validate_username
   def validate_username
-    return unless User.where(email: username).exists?
+    return unless User.where(username: username).exists?
 
     errors.add(:username, :invalid)
   end
@@ -21,25 +21,12 @@ class User < ApplicationRecord
     @login || username || email
   end
 
-  def self.find_first_by_auth_conditions(warden_conditions)
-    conditions = warden_conditions.dup
-    if (login = conditions.delete(:login))
-      where(conditions).where(['lower(username) = :value OR lower(email) = :value',
-                               { value: login.downcase }]).first
-    elsif conditions[:username].nil?
-      where(conditions).first
-    else
-      where(username: conditions[:username]).first
-    end
+  def self.find_for_authentication(username)
+    where(['lower(username) = :value', { value: username.downcase }]).first
   end
 
-  def self.find_for_database_authentication(warden_conditions)
-    conditions = warden_conditions.dup
-    if (login = conditions.delete(:login))
-      where(conditions.to_h).where(['lower(username) = :value OR lower(email) = :value',
-                                    { value: login.downcase }]).first
-    elsif conditions.key?(:username) || conditions.key?(:email)
-      where(conditions.to_h).first
-    end
+  def self.authenticate(conditions, password)
+    user = find_for_authentication(conditions)
+    return user if user&.valid_password?(password)
   end
 end
