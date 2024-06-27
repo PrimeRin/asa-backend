@@ -20,6 +20,7 @@ module Api
       @advance = current_user.advances.new(advance_params)
 
       if @advance.save
+        create_salary_advance if @advance.advance_type === 'salary_advance';
         create_itinerary if itinerary_needed?
         attach_files if files_attached?
         render json: @advance, status: :created
@@ -60,8 +61,16 @@ module Api
       params.require(:travel_itinerary).permit(:start_date, :end_date, :from, :to)
     end
 
+    def salary_params
+      params.require(:salary_advance).permit(:duration, :deduction, :completion_month, :status)
+    end
+
     def create_itinerary
       ItineraryService.new(@advance, itinerary_params).create
+    end
+
+    def create_salary_advance
+      SalaryService.new(@advance, salary_params).create
     end
 
     def set_advance
@@ -75,7 +84,7 @@ module Api
     end
 
     def advance_params
-      params.require(:advance).permit(:advance_type, :status, :amount)
+      params.require(:advance).permit(:advance_type, :status, :amount, :purpose)
     end
   end
 end

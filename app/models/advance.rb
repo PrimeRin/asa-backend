@@ -8,6 +8,8 @@ class Advance < ApplicationRecord
                                   where(advance_type: %w[in_country_tour_advance ex_country_tour_advance])
                                 }, class_name: 'TravelItinerary', foreign_key: 'advance_id'
 
+  has_one :salary_advance, class_name: 'SalaryAdvance', foreign_key: 'advance_id', dependent: :destroy
+
   validates :advance_type, :status, :amount, presence: true
   validates :advance_type,
             inclusion: { in: %w[salary_advance other_advance in_country_tour_advance ex_country_tour_advance],
