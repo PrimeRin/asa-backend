@@ -153,6 +153,38 @@ paths:
                 - updated_at
         '404':
           description: advance not found
+  users/sign_in:
+    post:
+      summary: Sign in user
+      tags:
+      - Authentication
+      parameters: []
+      responses:
+        '200':
+          description: user signed in
+        '401':
+          description: unauthorized user
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                login:
+                  type: string
+                password:
+                  type: string
+              required:
+              - login
+              - password
+  users/sign_out:
+    delete:
+      summary: Sign out user
+      tags:
+      - Authentication
+      responses:
+        '200':
+          description: user signed out
   "/api/rates":
     get:
       summary: Retrieves a specific rate
@@ -242,38 +274,151 @@ paths:
                 type: array
                 items:
                   type: string
-  users/sign_in:
-    post:
-      summary: Sign in user
+  "/api/users":
+    get:
+      summary: Retrieves all users
       tags:
-      - Authentication
-      parameters: []
+      - Users
+      parameters:
+      - name: page
+        in: query
+        description: Page number
+        schema:
+          type: integer
       responses:
         '200':
-          description: user signed in
-        '401':
-          description: unauthorized user
+          description: users found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  pagy:
+                    type: object
+                  users:
+                    type: array
+                    items:
+                      "$ref": "#/definitions/User"
+    post:
+      summary: Creates a user
+      tags:
+      - Users
+      parameters: []
+      responses:
+        '201':
+          description: user created
+        '422':
+          description: unprocessable entity
       requestBody:
         content:
           application/json:
             schema:
               type: object
               properties:
-                login:
+                email:
                   type: string
                 password:
                   type: string
+                password_confirmation:
+                  type: string
+                profile_pic:
+                  type: string
+                grade_id:
+                  type: integer
+                role_id:
+                  type: integer
               required:
-              - login
+              - email
               - password
-  users/sign_out:
-    delete:
-      summary: Sign out user
+              - password_confirmation
+  "/api/users/{id}":
+    get:
+      summary: Retrieves a user
       tags:
-      - Authentication
+      - Users
+      parameters:
+      - name: id
+        in: path
+        description: ID of the user to retrieve
+        required: true
+        schema:
+          type: integer
       responses:
         '200':
-          description: user signed out
+          description: user found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  email:
+                    type: string
+                  profile_pic:
+                    type: string
+                  grade_id:
+                    type: integer
+                  role_id:
+                    type: integer
+                  created_at:
+                    type: string
+                    format: date_time
+                  updated_at:
+                    type: string
+                    format: date_time
+                  role:
+                    type: object
+                  grade:
+                    type: object
+        '404':
+          description: user not found
+    put:
+      summary: Updates a user
+      tags:
+      - Users
+      parameters:
+      - name: id
+        in: path
+        description: ID of the user to update
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: user updated
+        '422':
+          description: unprocessable entity
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                profile_pic:
+                  type: string
+                grade_id:
+                  type: integer
+                role_id:
+                  type: integer
+              required:
+              - email
+    delete:
+      summary: Deletes a user
+      tags:
+      - Users
+      parameters:
+      - name: id
+        in: path
+        description: ID of the user to delete
+        required: true
+        schema:
+          type: integer
+      responses:
+        '204':
+          description: user deleted
 servers:
 - url: https://127.0.0.1:3000
   variables:
