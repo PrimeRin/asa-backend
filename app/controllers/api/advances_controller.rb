@@ -2,8 +2,8 @@
 
 module Api
   class AdvancesController < ApplicationController
-    before_action :set_advance, only: %i[show update]
     before_action :authenticate_user!
+    before_action :set_advance, only: %i[show update]
 
     def index
       @pagy, @advances = pagy(AdvanceQuery.call(params[:advance], current_user, Advance.all).run,

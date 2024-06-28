@@ -2,6 +2,7 @@
 
 module Api
   class RatesController < ApplicationController
+    before_action :authenticate_user!
     before_action :set_rate, only: %i[index update]
 
     def index
