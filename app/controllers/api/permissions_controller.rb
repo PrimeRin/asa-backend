@@ -3,6 +3,7 @@
 module Api
   class PermissionsController < ApplicationController
     before_action :set_permission, only: %i[index update destroy]
+    before_action :authenticate_user!
 
     def index
       render json: @permission, status: :ok
