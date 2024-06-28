@@ -13,10 +13,8 @@ module Api
     end
 
     def show
-      advance_attributes = @advance.attributes
-      advance_attributes.merge!(user: @advance.user)
-      advance_attributes.merge!(grade: @advance.grade)
-      render json: advance_attributes, status: :ok
+      @advance = @advance.attributes.merge(user: @advance.user, grade: @advance.user.grade, advance_detail: @advance.salary_advance)
+      render json: @advance, status: :ok
     end
 
     def create
