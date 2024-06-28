@@ -13,6 +13,7 @@ module Api
     end
 
     def show
+      @advance = @advance.attributes.merge(user: @advance.user)
       render json: @advance, status: :ok
     end
 
