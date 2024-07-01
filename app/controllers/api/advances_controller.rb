@@ -17,6 +17,29 @@ module Api
       render json: @advance, status: :ok
     end
 
+    def status_counts
+      status_count = calculate_status_count
+      render json: { status_count: status_count }, status: :ok
+    end
+
+    def type_counts
+      advance_type_count = calculate_type_count
+      render json: { advance_type_count: advance_type_count }, status: :ok
+    end
+
+    def monthly_counts
+      monthly_data = Advance.group_by_month(:created_at).count
+
+      formatted_data = monthly_data.map do |month, count|
+        {
+          month: month.strftime("%B %Y"),
+          count: count
+        }
+      end
+
+      render json: formatted_data, status: :ok
+    end
+
     def create
       @advance = current_user.advances.new(advance_params)
 
@@ -86,6 +109,14 @@ module Api
 
     def advance_params
       params.require(:advance).permit(:advance_type, :status, :amount, :purpose)
+    end
+
+    def calculate_status_count
+      Advance.group(:status).count
+    end
+
+    def calculate_type_count
+      Advance.group(:advance_type).count
     end
   end
 end

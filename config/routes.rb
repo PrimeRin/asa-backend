@@ -5,7 +5,13 @@ Rails.application.routes.draw do
     sessions: 'users/sessions'
   }
   namespace :api do
-    resources :advances, only: %i[index show create]
+    resources :advances, only: %i[index show create] do
+      collection do
+        get 'status_counts'
+        get 'type_counts'
+        get 'monthly_counts'
+      end
+    end
     resources :permissions, only: %i[index]
     resources :users, only: %i[index show update]
     resources :rates, only: %i[index update create] do
