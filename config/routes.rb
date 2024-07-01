@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
+  mount Rswag::Ui::Engine => '/api-docs'
+  mount Rswag::Api::Engine => '/api-docs'
   devise_for :users, controllers: {
     sessions: 'users/sessions'
   }
@@ -21,6 +23,4 @@ Rails.application.routes.draw do
     end
   end
   get '/test', to: 'test#status', as: :test_status
-  mount Rswag::Ui::Engine => '/api-docs'
-  mount Rswag::Api::Engine => '/api-docs'
 end

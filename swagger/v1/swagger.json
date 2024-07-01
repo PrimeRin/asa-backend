@@ -1,528 +1,802 @@
----
-swagger: '2.0'
-info:
-  title: API V1
-  version: v1
-paths:
-  "/api/advances":
-    get:
-      summary: Retrieves all advances
-      tags:
-      - Advances
-      produces:
-      - application/json
-      parameters:
-      - name: advance
-        in: query
-        schema:
-          type: object
-          properties:
-            status:
-              type: array
-              items:
-                type: string
-            advance_type:
-              type: array
-              items:
-                type: string
-          required:
-          - status
-          - advance_type
-      responses:
-        '200':
-          description: advances found
-          schema:
-            type: array
-            items:
-              type: object
-              properties:
-                id:
-                  type: integer
-                advance_type:
-                  type: string
-                status:
-                  type: string
-                amount:
-                  type: number
-                verified_by:
-                  type: integer
-                  nullable: true
-                confirmed_by:
-                  type: integer
-                  nullable: true
-                dispatch_by:
-                  type: integer
-                  nullable: true
-                user_id:
-                  type: integer
-                created_at:
-                  type: string
-                  format: date_time
-                updated_at:
-                  type: string
-                  format: date_time
-              required:
-              - id
-              - advance_type
-              - status
-              - amount
-              - user_id
-              - created_at
-              - updated_at
-        '404':
-          description: advances not found
-    post:
-      summary: Creates an advance
-      tags:
-      - Advances
-      consumes:
-      - application/json
-      parameters:
-      - name: advance
-        in: body
-        schema:
-          type: object
-          properties:
-            advance_type:
-              type: string
-            status:
-              type: string
-            amount:
-              type: number
-          required:
-          - advance_type
-          - status
-          - amount
-      responses:
-        '201':
-          description: advance created
-        '422':
-          description: invalid request
-  "/api/advances/{id}":
-    get:
-      summary: Retrieves an advance
-      tags:
-      - Advances
-      produces:
-      - application/json
-      parameters:
-      - name: id
-        in: path
-        type: integer
-        required: true
-      responses:
-        '200':
-          description: advance found
-          schema:
-            type: object
-            properties:
-              id:
-                type: integer
-              advance_type:
-                type: string
-              status:
-                type: string
-              amount:
-                type: number
-              verified_by:
-                type: integer
-                nullable: true
-              confirmed_by:
-                type: integer
-                nullable: true
-              dispatch_by:
-                type: integer
-                nullable: true
-              user_id:
-                type: integer
-              created_at:
-                type: string
-                format: date_time
-              updated_at:
-                type: string
-                format: date_time
-            required:
-            - id
-            - advance_type
-            - status
-            - amount
-            - user_id
-            - created_at
-            - updated_at
-        '404':
-          description: advance not found
-  "/api/advances/status_counts":
-    get:
-      summary: Retrieves count of advances by status
-      tags:
-      - Advances
-      produces:
-      - application/json
-      responses:
-        '200':
-          description: status counts found
-          schema:
-            type: object
-            properties:
-              status_count:
-                type: object
-                additionalProperties:
-                  type: integer
-        '404':
-          description: status counts not found
-  "/api/advances/type_counts":
-    get:
-      summary: Retrieves count of advances by type
-      tags:
-      - Advances
-      produces:
-      - application/json
-      responses:
-        '200':
-          description: type counts found
-          schema:
-            type: object
-            properties:
-              type_count:
-                type: object
-                additionalProperties:
-                  type: integer
-        '404':
-          description: type counts not found
-  "/api/advances/monthly_counts":
-    get:
-      summary: Retrieves count of advances by month
-      tags:
-      - Advances
-      produces:
-      - application/json
-      responses:
-        '200':
-          description: monthly counts found
-          schema:
-            type: object
-            properties:
-              monthly_count:
-                type: object
-                additionalProperties:
-                  type: integer
-        '404':
-          description: monthly counts not found
-  users/sign_in:
-    post:
-      summary: Sign in user
-      tags:
-      - Authentication
-      consumes:
-      - application/json
-      parameters:
-      - name: credentials
-        in: body
-        schema:
-          type: object
-          properties:
-            login:
-              type: string
-            password:
-              type: string
-          required:
-          - login
-          - password
-      responses:
-        '200':
-          description: user signed in
-        '401':
-          description: unauthorized user
-  users/sign_out:
-    delete:
-      summary: Sign out user
-      tags:
-      - Authentication
-      responses:
-        '200':
-          description: user signed out
-  "/api/rates":
-    get:
-      summary: Retrieves a specific rate
-      tags:
-      - Rates
-      produces:
-      - application/json
-      parameters:
-      - name: rate
-        in: query
-        schema:
-          type: object
-          properties:
-            from:
-              type: string
-            to:
-              type: string
-          required:
-          - from
-          - to
-      responses:
-        '200':
-          description: rate found
-          schema:
-            type: object
-            properties:
-              id:
-                type: integer
-              from:
-                type: string
-              to:
-                type: string
-              grade_id:
-                type: integer
-              created_at:
-                type: string
-                format: date_time
-              updated_at:
-                type: string
-                format: date_time
-            required:
-            - id
-            - from
-            - to
-            - grade_id
-            - created_at
-            - updated_at
-        '404':
-          description: rate not found
-    post:
-      summary: Creates a rate
-      tags:
-      - Rates
-      consumes:
-      - application/json
-      parameters:
-      - name: rate
-        in: body
-        schema:
-          type: object
-          properties:
-            from:
-              type: string
-            to:
-              type: string
-            grade_id:
-              type: string
-          required:
-          - from
-          - to
-          - grade_id
-      responses:
-        '201':
-          description: rate created
-        '422':
-          description: invalid request
-  "/api/rates/countries":
-    get:
-      summary: Retrieves all countries with rates
-      tags:
-      - Rates
-      produces:
-      - application/json
-      responses:
-        '200':
-          description: countries found
-          schema:
-            type: array
-            items:
-              type: string
-  "/api/users":
-    get:
-      summary: Retrieves all users
-      tags:
-      - Users
-      produces:
-      - application/json
-      parameters:
-      - name: page
-        in: query
-        type: integer
-        description: Page number
-      responses:
-        '200':
-          description: users found
-          schema:
-            type: object
-            properties:
-              pagy:
-                type: object
-              users:
-                type: array
-                items:
-                  "$ref": "#/definitions/User"
-    post:
-      summary: Creates a user
-      tags:
-      - Users
-      consumes:
-      - application/json
-      parameters:
-      - name: user
-        in: body
-        schema:
-          type: object
-          properties:
-            email:
-              type: string
-            password:
-              type: string
-            password_confirmation:
-              type: string
-            profile_pic:
-              type: string
-            grade_id:
-              type: integer
-            role_id:
-              type: integer
-          required:
-          - email
-          - password
-          - password_confirmation
-      responses:
-        '201':
-          description: user created
-        '422':
-          description: unprocessable entity
-  "/api/users/{id}":
-    get:
-      summary: Retrieves a user
-      tags:
-      - Users
-      produces:
-      - application/json
-      parameters:
-      - name: id
-        in: path
-        type: integer
-        description: ID of the user to retrieve
-        required: true
-      responses:
-        '200':
-          description: user found
-          schema:
-            type: object
-            properties:
-              id:
-                type: integer
-              email:
-                type: string
-              profile_pic:
-                type: string
-              grade_id:
-                type: integer
-              role_id:
-                type: integer
-              created_at:
-                type: string
-                format: date_time
-              updated_at:
-                type: string
-                format: date_time
-              role:
-                type: object
-              grade:
-                type: object
-        '404':
-          description: user not found
-    put:
-      summary: Updates a user
-      tags:
-      - Users
-      consumes:
-      - application/json
-      parameters:
-      - name: id
-        in: path
-        type: integer
-        description: ID of the user to update
-        required: true
-      - name: user
-        in: body
-        schema:
-          type: object
-          properties:
-            email:
-              type: string
-            profile_pic:
-              type: string
-            grade_id:
-              type: integer
-            role_id:
-              type: integer
-          required:
-          - email
-      responses:
-        '200':
-          description: user updated
-          schema:
-            type: object
-            properties:
-              id:
-                type: integer
-              email:
-                type: string
-              profile_pic:
-                type: string
-              grade_id:
-                type: integer
-              role_id:
-                type: integer
-              created_at:
-                type: string
-                format: date_time
-              updated_at:
-                type: string
-                format: date_time
-              role:
-                type: object
-              grade:
-                type: object
-        '422':
-          description: unprocessable entity
-    delete:
-      summary: Deletes a user
-      tags:
-      - Users
-      parameters:
-      - name: id
-        in: path
-        type: integer
-        description: ID of the user to delete
-        required: true
-      responses:
-        '204':
-          description: user deleted
-definitions:
-  User:
-    type: object
-    properties:
-      id:
-        type: integer
-      email:
-        type: string
-      profile_pic:
-        type: string
-      grade_id:
-        type: integer
-      role_id:
-        type: integer
-      created_at:
-        type: string
-        format: date_time
-      updated_at:
-        type: string
-        format: date_time
-      role:
-        type: object
-      grade:
-        type: object
-    required:
-    - id
-    - email
-    - created_at
-    - updated_at
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "API V1",
+    "version": "v1"
+  },
+  "paths": {
+    "/api/advances": {
+      "get": {
+        "summary": "Retrieves all advances",
+        "tags": [
+          "Advances"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "advance",
+            "in": "query",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "advance_type": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              },
+              "required": [
+                "status",
+                "advance_type"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "advances found",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "integer"
+                  },
+                  "advance_type": {
+                    "type": "string"
+                  },
+                  "status": {
+                    "type": "string"
+                  },
+                  "amount": {
+                    "type": "number"
+                  },
+                  "verified_by": {
+                    "type": "integer",
+                    "nullable": true
+                  },
+                  "confirmed_by": {
+                    "type": "integer",
+                    "nullable": true
+                  },
+                  "dispatch_by": {
+                    "type": "integer",
+                    "nullable": true
+                  },
+                  "user_id": {
+                    "type": "integer"
+                  },
+                  "created_at": {
+                    "type": "string",
+                    "format": "date_time"
+                  },
+                  "updated_at": {
+                    "type": "string",
+                    "format": "date_time"
+                  }
+                },
+                "required": [
+                  "id",
+                  "advance_type",
+                  "status",
+                  "amount",
+                  "user_id",
+                  "created_at",
+                  "updated_at"
+                ]
+              }
+            }
+          },
+          "404": {
+            "description": "advances not found"
+          }
+        }
+      },
+      "post": {
+        "summary": "Creates an advance",
+        "tags": [
+          "Advances"
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "advance",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "advance_type": {
+                  "type": "string"
+                },
+                "status": {
+                  "type": "string"
+                },
+                "amount": {
+                  "type": "number"
+                }
+              },
+              "required": [
+                "advance_type",
+                "status",
+                "amount"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "advance created"
+          },
+          "422": {
+            "description": "invalid request"
+          }
+        }
+      }
+    },
+    "/api/advances/{id}": {
+      "get": {
+        "summary": "Retrieves an advance",
+        "tags": [
+          "Advances"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "type": "integer",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "advance found",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "integer"
+                },
+                "advance_type": {
+                  "type": "string"
+                },
+                "status": {
+                  "type": "string"
+                },
+                "amount": {
+                  "type": "number"
+                },
+                "verified_by": {
+                  "type": "integer",
+                  "nullable": true
+                },
+                "confirmed_by": {
+                  "type": "integer",
+                  "nullable": true
+                },
+                "dispatch_by": {
+                  "type": "integer",
+                  "nullable": true
+                },
+                "user_id": {
+                  "type": "integer"
+                },
+                "created_at": {
+                  "type": "string",
+                  "format": "date_time"
+                },
+                "updated_at": {
+                  "type": "string",
+                  "format": "date_time"
+                }
+              },
+              "required": [
+                "id",
+                "advance_type",
+                "status",
+                "amount",
+                "user_id",
+                "created_at",
+                "updated_at"
+              ]
+            }
+          },
+          "404": {
+            "description": "advance not found"
+          }
+        }
+      }
+    },
+    "/api/advances/status_counts": {
+      "get": {
+        "summary": "Retrieves count of advances by status",
+        "tags": [
+          "Advances"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "status counts found",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status_count": {
+                  "type": "object",
+                  "additionalProperties": {
+                    "type": "integer"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "status counts not found"
+          }
+        }
+      }
+    },
+    "/api/advances/type_counts": {
+      "get": {
+        "summary": "Retrieves count of advances by type",
+        "tags": [
+          "Advances"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "type counts found",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "type_count": {
+                  "type": "object",
+                  "additionalProperties": {
+                    "type": "integer"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "type counts not found"
+          }
+        }
+      }
+    },
+    "/api/advances/monthly_counts": {
+      "get": {
+        "summary": "Retrieves count of advances by month",
+        "tags": [
+          "Advances"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "monthly counts found",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "monthly_count": {
+                  "type": "object",
+                  "additionalProperties": {
+                    "type": "integer"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "monthly counts not found"
+          }
+        }
+      }
+    },
+    "users/sign_in": {
+      "post": {
+        "summary": "Sign in user",
+        "tags": [
+          "Authentication"
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "credentials",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "login": {
+                  "type": "string"
+                },
+                "password": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "login",
+                "password"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "user signed in"
+          },
+          "401": {
+            "description": "unauthorized user"
+          }
+        }
+      }
+    },
+    "users/sign_out": {
+      "delete": {
+        "summary": "Sign out user",
+        "tags": [
+          "Authentication"
+        ],
+        "responses": {
+          "200": {
+            "description": "user signed out"
+          }
+        }
+      }
+    },
+    "/api/rates": {
+      "get": {
+        "summary": "Retrieves a specific rate",
+        "tags": [
+          "Rates"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "rate",
+            "in": "query",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "from": {
+                  "type": "string"
+                },
+                "to": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "from",
+                "to"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "rate found",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "integer"
+                },
+                "from": {
+                  "type": "string"
+                },
+                "to": {
+                  "type": "string"
+                },
+                "grade_id": {
+                  "type": "integer"
+                },
+                "created_at": {
+                  "type": "string",
+                  "format": "date_time"
+                },
+                "updated_at": {
+                  "type": "string",
+                  "format": "date_time"
+                }
+              },
+              "required": [
+                "id",
+                "from",
+                "to",
+                "grade_id",
+                "created_at",
+                "updated_at"
+              ]
+            }
+          },
+          "404": {
+            "description": "rate not found"
+          }
+        }
+      },
+      "post": {
+        "summary": "Creates a rate",
+        "tags": [
+          "Rates"
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "rate",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "from": {
+                  "type": "string"
+                },
+                "to": {
+                  "type": "string"
+                },
+                "grade_id": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "from",
+                "to",
+                "grade_id"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "rate created"
+          },
+          "422": {
+            "description": "invalid request"
+          }
+        }
+      }
+    },
+    "/api/rates/countries": {
+      "get": {
+        "summary": "Retrieves all countries with rates",
+        "tags": [
+          "Rates"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "countries found",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/users": {
+      "get": {
+        "summary": "Retrieves all users",
+        "tags": [
+          "Users"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "type": "integer",
+            "description": "Page number"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "users found",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "pagy": {
+                  "type": "object"
+                },
+                "users": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/User"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "Creates a user",
+        "tags": [
+          "Users"
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "user",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "email": {
+                  "type": "string"
+                },
+                "password": {
+                  "type": "string"
+                },
+                "password_confirmation": {
+                  "type": "string"
+                },
+                "profile_pic": {
+                  "type": "string"
+                },
+                "grade_id": {
+                  "type": "integer"
+                },
+                "role_id": {
+                  "type": "integer"
+                }
+              },
+              "required": [
+                "email",
+                "password",
+                "password_confirmation"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "user created"
+          },
+          "422": {
+            "description": "unprocessable entity"
+          }
+        }
+      }
+    },
+    "/api/users/{id}": {
+      "get": {
+        "summary": "Retrieves a user",
+        "tags": [
+          "Users"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "type": "integer",
+            "description": "ID of the user to retrieve",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "user found",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "integer"
+                },
+                "email": {
+                  "type": "string"
+                },
+                "profile_pic": {
+                  "type": "string"
+                },
+                "grade_id": {
+                  "type": "integer"
+                },
+                "role_id": {
+                  "type": "integer"
+                },
+                "created_at": {
+                  "type": "string",
+                  "format": "date_time"
+                },
+                "updated_at": {
+                  "type": "string",
+                  "format": "date_time"
+                },
+                "role": {
+                  "type": "object"
+                },
+                "grade": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "user not found"
+          }
+        }
+      },
+      "put": {
+        "summary": "Updates a user",
+        "tags": [
+          "Users"
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "type": "integer",
+            "description": "ID of the user to update",
+            "required": true
+          },
+          {
+            "name": "user",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "email": {
+                  "type": "string"
+                },
+                "profile_pic": {
+                  "type": "string"
+                },
+                "grade_id": {
+                  "type": "integer"
+                },
+                "role_id": {
+                  "type": "integer"
+                }
+              },
+              "required": [
+                "email"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "user updated",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "integer"
+                },
+                "email": {
+                  "type": "string"
+                },
+                "profile_pic": {
+                  "type": "string"
+                },
+                "grade_id": {
+                  "type": "integer"
+                },
+                "role_id": {
+                  "type": "integer"
+                },
+                "created_at": {
+                  "type": "string",
+                  "format": "date_time"
+                },
+                "updated_at": {
+                  "type": "string",
+                  "format": "date_time"
+                },
+                "role": {
+                  "type": "object"
+                },
+                "grade": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "unprocessable entity"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Deletes a user",
+        "tags": [
+          "Users"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "type": "integer",
+            "description": "ID of the user to delete",
+            "required": true
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "user deleted"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "User": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer"
+        },
+        "email": {
+          "type": "string"
+        },
+        "profile_pic": {
+          "type": "string"
+        },
+        "grade_id": {
+          "type": "integer"
+        },
+        "role_id": {
+          "type": "integer"
+        },
+        "created_at": {
+          "type": "string",
+          "format": "date_time"
+        },
+        "updated_at": {
+          "type": "string",
+          "format": "date_time"
+        },
+        "role": {
+          "type": "object"
+        },
+        "grade": {
+          "type": "object"
+        }
+      },
+      "required": [
+        "id",
+        "email",
+        "created_at",
+        "updated_at"
+      ]
+    }
+  }
+}
