@@ -12,8 +12,7 @@ RSpec.describe 'api/advances', type: :request do
         type: :object,
         properties: {
           status: { type: :array, items: { type: :string } },
-          advance_type: { type: :array, items: { type: :string } },
-          type: { type: :string }
+          advance_type: { type: :array, items: { type: :string } }
         },
         required: %w[status advance_type]
       }
@@ -26,9 +25,9 @@ RSpec.describe 'api/advances', type: :request do
             advance_type: { type: :string },
             status: { type: :string },
             amount: { type: :number },
-            verified_by: { type: :integer, 'nullable': true },
-            confirmed_by: { type: :integer, 'nullable': true },
-            dispatch_by: { type: :integer, 'nullable': true },
+            verified_by: { type: :integer, nullable: true },
+            confirmed_by: { type: :integer, nullable: true },
+            dispatch_by: { type: :integer, nullable: true },
             user_id: { type: :integer },
             created_at: { type: :string, format: :date_time },
             updated_at: { type: :string, format: :date_time }
@@ -83,9 +82,9 @@ RSpec.describe 'api/advances', type: :request do
                  advance_type: { type: :string },
                  status: { type: :string },
                  amount: { type: :number },
-                 verified_by: { type: :integer, 'nullable': true },
-                 confirmed_by: { type: :integer, 'nullable': true },
-                 dispatch_by: { type: :integer, 'nullable': true },
+                 verified_by: { type: :integer, nullable: true },
+                 confirmed_by: { type: :integer, nullable: true },
+                 dispatch_by: { type: :integer, nullable: true },
                  user_id: { type: :integer },
                  created_at: { type: :string, format: :date_time },
                  updated_at: { type: :string, format: :date_time }
@@ -98,6 +97,60 @@ RSpec.describe 'api/advances', type: :request do
 
       response '404', 'advance not found' do
         let(:id) { 'invalid' }
+        run_test!
+      end
+    end
+  end
+
+  path '/api/advances/status_counts' do
+    get 'Retrieves count of advances by status' do
+      tags 'Advances'
+      produces 'application/json'
+
+      response '200', 'status counts found' do
+        schema type: :object, properties: {
+          status_count: { type: :object, additionalProperties: { type: :integer } }
+        }
+        run_test!
+      end
+
+      response '404', 'status counts not found' do
+        run_test!
+      end
+    end
+  end
+
+  path '/api/advances/type_counts' do
+    get 'Retrieves count of advances by type' do
+      tags 'Advances'
+      produces 'application/json'
+
+      response '200', 'type counts found' do
+        schema type: :object, properties: {
+          type_count: { type: :object, additionalProperties: { type: :integer } }
+        }
+        run_test!
+      end
+
+      response '404', 'type counts not found' do
+        run_test!
+      end
+    end
+  end
+
+  path '/api/advances/monthly_counts' do
+    get 'Retrieves count of advances by month' do
+      tags 'Advances'
+      produces 'application/json'
+
+      response '200', 'monthly counts found' do
+        schema type: :object, properties: {
+          monthly_count: { type: :object, additionalProperties: { type: :integer } }
+        }
+        run_test!
+      end
+
+      response '404', 'monthly counts not found' do
         run_test!
       end
     end

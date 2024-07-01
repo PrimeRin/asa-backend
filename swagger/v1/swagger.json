@@ -25,8 +25,6 @@ paths:
               type: array
               items:
                 type: string
-            type:
-              type: string
           required:
           - status
           - advance_type
@@ -153,6 +151,63 @@ paths:
             - updated_at
         '404':
           description: advance not found
+  "/api/advances/status_counts":
+    get:
+      summary: Retrieves count of advances by status
+      tags:
+      - Advances
+      produces:
+      - application/json
+      responses:
+        '200':
+          description: status counts found
+          schema:
+            type: object
+            properties:
+              status_count:
+                type: object
+                additionalProperties:
+                  type: integer
+        '404':
+          description: status counts not found
+  "/api/advances/type_counts":
+    get:
+      summary: Retrieves count of advances by type
+      tags:
+      - Advances
+      produces:
+      - application/json
+      responses:
+        '200':
+          description: type counts found
+          schema:
+            type: object
+            properties:
+              type_count:
+                type: object
+                additionalProperties:
+                  type: integer
+        '404':
+          description: type counts not found
+  "/api/advances/monthly_counts":
+    get:
+      summary: Retrieves count of advances by month
+      tags:
+      - Advances
+      produces:
+      - application/json
+      responses:
+        '200':
+          description: monthly counts found
+          schema:
+            type: object
+            properties:
+              monthly_count:
+                type: object
+                additionalProperties:
+                  type: integer
+        '404':
+          description: monthly counts not found
   users/sign_in:
     post:
       summary: Sign in user
