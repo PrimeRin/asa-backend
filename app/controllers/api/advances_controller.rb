@@ -28,12 +28,14 @@ module Api
     end
 
     def monthly_counts
-      monthly_data = Advance.group_by_month(:created_at).count
+      monthly_data = Advance.select("DATE_FORMAT(created_at, '%Y-%m-01') as month, COUNT(*) as count")
+                            .group("DATE_FORMAT(created_at, '%Y-%m-01')")
+                            .order(Arel.sql("DATE_FORMAT(created_at, '%Y-%m-01') ASC"))
 
-      formatted_data = monthly_data.map do |month, count|
+      formatted_data = monthly_data.map do |record|
         {
-          month: month.strftime("%B %Y"),
-          count: count
+          month: Date.parse(record.month).strftime("%B %Y"),
+          count: record.count
         }
       end
 
