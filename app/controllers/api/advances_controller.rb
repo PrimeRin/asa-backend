@@ -48,7 +48,7 @@ module Api
       if @advance.save
         create_salary_advance if @advance.advance_type === 'salary_advance';
         create_itinerary if itinerary_needed?
-        attach_files if files_attached?
+        attach_files if
         render json: @advance, status: :created
       else
         render json: @advance.errors, status: :unprocessable_entity
@@ -58,7 +58,7 @@ module Api
     def update
       if @advance.update(advance_params)
         update_itinerary if itinerary_needed?
-        update_files if files_params_present?
+        update_files if files_attached?
         render json: @advance, status: :ok
       else
         render json: @advance.errors, status: :unprocessable_entity
