@@ -18,7 +18,8 @@ Rails.application.routes.draw do
     resources :users, only: %i[index show update]
     resources :rates, only: %i[index update create] do
       collection do
-        get :get_country
+        get :get_country_from
+        get :get_country_to
       end
     end
   end
