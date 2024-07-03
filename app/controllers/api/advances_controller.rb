@@ -76,15 +76,17 @@ module Api
     end
 
     def update_itinerary
-      @advance.travel_itineraries.update(itinerary_params)
+      @advance.travel_itineraries.update(travel_itinerary_params)
     end
 
     def update_files
       @advance.files.attach(params[:files][:files])
     end
 
-    def itinerary_params
-      params.require(:travel_itinerary).permit(:start_date, :end_date, :from, :to)
+    def travel_itinerary_params
+      params.require(:travel_itinerary).map do |itinerary|
+        itinerary.permit(:start_date, :end_date, :from, :to, :amount)
+      end
     end
 
     def salary_params
@@ -92,7 +94,7 @@ module Api
     end
 
     def create_itinerary
-      ItineraryService.new(@advance, itinerary_params).create
+      ItineraryService.new(@advance, travel_itinerary_params).create
     end
 
     def create_salary_advance
@@ -110,7 +112,7 @@ module Api
     end
 
     def advance_params
-      params.require(:advance).permit(:advance_type, :status, :amount, :purpose)
+      params.require(:advance).permit(:advance_type, :status, :amount, :purpose, :remark)
     end
 
     def calculate_status_count

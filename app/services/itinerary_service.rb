@@ -7,7 +7,9 @@ class ItineraryService
   end
 
   def create
-    @advance.travel_itineraries.create(@itinerary_params)
+    @itinerary_params.each do |itinerary|
+      @advance.travel_itineraries.create(itinerary)
+    end
   end
 
   def update(itinerary, new_itinerary_params)
