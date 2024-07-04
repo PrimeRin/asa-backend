@@ -9,6 +9,9 @@ module Api
     def create
       if files_attached?
         params[:files]&.each { |file| @advance.files.attach(file) }
+        render status: :created
+      else
+        render status: :unprocessable_entity
       end
     end
 
