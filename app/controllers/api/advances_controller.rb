@@ -2,6 +2,7 @@
 
 module Api
   class AdvancesController < ApplicationController
+    include UrlHelper
     before_action :authenticate_user!
     before_action :set_advance, only: %i[show update]
 
@@ -13,7 +14,13 @@ module Api
     end
 
     def show
-      @advance = @advance.attributes.merge(user: @advance.user, grade: @advance.user.grade, advance_detail: @advance.salary_advance)
+      @advance = @advance.attributes.merge(
+        user: @advance.user,
+        grade: @advance.user.grade,
+        advance_detail: @advance.salary_advance,
+        travel_itinerary: @advance.travel_itineraries,
+        files: serialize_files(@advance.files)
+      )
       render json: @advance, status: :ok
     end
 
@@ -34,7 +41,7 @@ module Api
 
       formatted_data = monthly_data.map do |record|
         {
-          month: Date.parse(record.month).strftime("%B %Y"),
+          month: Date.parse(record.month).strftime('%B %Y'),
           count: record.count
         }
       end
@@ -46,7 +53,7 @@ module Api
       @advance = current_user.advances.new(advance_params)
 
       if @advance.save
-        create_salary_advance if @advance.advance_type === 'salary_advance';
+        create_salary_advance if @advance.advance_type === 'salary_advance'
         create_itinerary if itinerary_needed?
         attach_files if
         render json: @advance, status: :created
@@ -69,6 +76,16 @@ module Api
 
     def attach_files
       params[:files]&.each { |file| @advance.files.attach(file) }
+    end
+
+    def serialize_files(files)
+      files.map do |file|
+        {
+          filename: file.filename.to_s,
+          byte_size: file.byte_size,
+          url: url_for(file)
+        }
+      end
     end
 
     def files_attached?

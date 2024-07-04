@@ -25,7 +25,7 @@ class TravelItinerary < ApplicationRecord
       calculated_amount = days * dsa_rate.rate
       errors.add(:amount, "is incorrect, should be #{calculated_amount}") if amount != calculated_amount
     else
-      errors.add(:base, "No DsaRate found for the given route and grade")
+      errors.add(:base, 'No DsaRate found for the given route and grade')
     end
   end
 end
