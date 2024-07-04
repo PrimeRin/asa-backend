@@ -55,7 +55,6 @@ module Api
       if @advance.save
         create_salary_advance if @advance.advance_type === 'salary_advance'
         create_itinerary if itinerary_needed?
-        attach_files if
         render json: @advance, status: :created
       else
         render json: @advance.errors, status: :unprocessable_entity
@@ -74,10 +73,6 @@ module Api
 
     private
 
-    def attach_files
-      params[:files]&.each { |file| @advance.files.attach(file) }
-    end
-
     def serialize_files(files)
       files.map do |file|
         {
@@ -86,10 +81,6 @@ module Api
           url: url_for(file)
         }
       end
-    end
-
-    def files_attached?
-      params[:files].present? && params[:files].is_a?(Array)
     end
 
     def update_itinerary

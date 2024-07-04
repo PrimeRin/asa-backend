@@ -14,6 +14,7 @@ Rails.application.routes.draw do
         get 'monthly_counts'
       end
     end
+    resources :files, only: %i[create]
     resources :permissions, only: %i[index]
     resources :users, only: %i[index show update]
     resources :rates, only: %i[index update create] do
