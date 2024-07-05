@@ -12,6 +12,7 @@ Rails.application.routes.draw do
         get 'status_counts'
         get 'type_counts'
         get 'monthly_counts'
+        post 'update_status'
       end
     end
     resources :files, only: %i[create]

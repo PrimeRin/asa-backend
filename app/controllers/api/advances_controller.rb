@@ -4,7 +4,7 @@ module Api
   class AdvancesController < ApplicationController
     include UrlHelper
     before_action :authenticate_user!
-    before_action :set_advance, only: %i[show update]
+    before_action :set_advance, only: %i[show update update_status]
 
     def index
       @pagy, @advances = pagy(AdvanceQuery.call(params[:advance], current_user, Advance.all).run,
@@ -32,6 +32,30 @@ module Api
     def type_counts
       advance_type_count = calculate_type_count
       render json: { advance_type_count: advance_type_count }, status: :ok
+    end
+
+    def update_status
+      if params[:status].present?
+        case params[:status]
+        when 'verified'
+          @advance.update(status: params[:status], message: params[:message], verified_by: current_user.id)
+        when 'confirmed'
+          @advance.update(status: params[:status], message: params[:message], confirmed_by: current_user.id)
+        when 'dispatched'
+          @advance.update(status: params[:status], message: params[:message], dispatched_by: current_user.id)
+        when 'closed'
+          @advance.update(status: params[:status], message: params[:message], closed_by: current_user.id)
+        when 'rejected'
+          @advance.update(status: params[:status], message: params[:message], rejected_by: current_user.id)
+        else
+          render json: { error: 'Invalid status' }, status: :unprocessable_entity
+          return
+        end
+      else
+        render json: { error: 'Status is required' }, status: :unprocessable_entity
+      end
+
+      render json: { advance: @advance }, status: :ok
     end
 
     def monthly_counts
@@ -72,16 +96,6 @@ module Api
     end
 
     private
-
-    def serialize_files(files)
-      files.map do |file|
-        {
-          filename: file.filename.to_s,
-          byte_size: file.byte_size,
-          url: url_for(file)
-        }
-      end
-    end
 
     def update_itinerary
       @advance.travel_itineraries.update(travel_itinerary_params)

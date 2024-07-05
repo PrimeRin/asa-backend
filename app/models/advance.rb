@@ -41,4 +41,8 @@ class Advance < ApplicationRecord
   def dispatcher
     User.find_by(id: dispatch_by)
   end
+
+  def rejecter
+    User.find_by(id: rejected_by)
+  end
 end
