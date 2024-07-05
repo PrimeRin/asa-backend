@@ -49,7 +49,6 @@ module Api
           @advance.update(status: params[:status], message: params[:message], rejected_by: current_user.id)
         else
           render json: { error: 'Invalid status' }, status: :unprocessable_entity
-          return
         end
       else
         render json: { error: 'Status is required' }, status: :unprocessable_entity
