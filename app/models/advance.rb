@@ -20,7 +20,8 @@ class Advance < ApplicationRecord
     verified: 'verified',
     confirmed: 'confirmed',
     dispatched: 'dispatched',
-    closed: 'closed'
+    closed: 'closed',
+    rejected: 'rejected'
   }
 
   enum advance_type: {

@@ -35,25 +35,7 @@ module Api
     end
 
     def update_status
-      if params[:status].present?
-        case params[:status]
-        when 'verified'
-          @advance.update(status: params[:status], message: params[:message], verified_by: current_user.id)
-        when 'confirmed'
-          @advance.update(status: params[:status], message: params[:message], confirmed_by: current_user.id)
-        when 'dispatched'
-          @advance.update(status: params[:status], message: params[:message], dispatched_by: current_user.id)
-        when 'closed'
-          @advance.update(status: params[:status], message: params[:message], closed_by: current_user.id)
-        when 'rejected'
-          @advance.update(status: params[:status], message: params[:message], rejected_by: current_user.id)
-        else
-          render json: { error: 'Invalid status' }, status: :unprocessable_entity
-        end
-      else
-        render json: { error: 'Status is required' }, status: :unprocessable_entity
-      end
-
+      @advance = AdvanceUpdateQuery.call(params, current_user, @advance)
       render json: { advance: @advance }, status: :ok
     end
 
