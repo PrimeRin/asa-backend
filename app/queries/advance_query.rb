@@ -13,6 +13,7 @@ class AdvanceQuery
 
   def run
     run_query
+    sort
     @resource
   end
 
@@ -28,5 +29,7 @@ class AdvanceQuery
 
   def search; end
 
-  def sort; end
+  def sort
+    @resource = @resource.order(updated_at: :desc)
+  end
 end
