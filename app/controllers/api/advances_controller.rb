@@ -7,8 +7,8 @@ module Api
     before_action :set_advance, only: %i[show update update_status]
 
     def index
-      @pagy, @advances = pagy(AdvanceQuery.call(params[:advance], current_user, Advance.all).run,
-                              page: params[:page] || 1)
+      items = params[:per_page] || 10
+      @pagy, @advances = pagy(AdvanceQuery.call(params[:advance], current_user, Advance.all).run, page: params[:page] || 1, items: items)
       @advances = @advances.map { |advance| advance.attributes.merge(user: advance.user) }
       render json: { pagy: pagy_metadata(@pagy), advances: @advances }, status: :ok
     end
