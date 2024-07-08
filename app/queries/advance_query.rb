@@ -12,8 +12,7 @@ class AdvanceQuery
   end
 
   def run
-    run_query
-    sort
+    run_query && search && sort
     @resource
   end
 
@@ -27,7 +26,11 @@ class AdvanceQuery
                 end
   end
 
-  def search; end
+  def search
+    if @params[:query]
+      @resource = @resource.joins(:user).where('users.email LIKE ?', "%#{@params[:query]}%")
+    end
+  end
 
   def sort
     @resource = @resource.order(updated_at: :desc)
