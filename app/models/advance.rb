@@ -12,7 +12,7 @@ class Advance < ApplicationRecord
             inclusion: { in: %w[salary_advance other_advance in_country_tour_advance ex_country_tour_advance],
                          message: '%<value>s is not a valid advance type' }
   validates :status,
-            inclusion: { in: %w[pending verified confirmed dispatched closed],
+            inclusion: { in: %w[pending verified confirmed dispatched closed rejected],
                          message: '%<value>s is not a valid status' }
 
   enum status: {
