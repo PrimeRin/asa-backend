@@ -46,7 +46,34 @@ Finance:
     delete: true
     update: true
   requested_advance:
+    verify: true
+    confirm: false
+    dispatch: true
+    reject: true
+
+DAF Director:
+  salary_advance:
+    view: true
+    create: true
+    delete: true
+    update: false
+  tour_advance:
     view: true
     create: true
     delete: true
     update: true
+  other_advance:
+    view: true
+    create: true
+    delete: true
+    update: true
+  dashboard:
+    view: true
+    create: true
+    delete: true
+    update: true
+  requested_advance:
+    verify: false
+    confirm: true
+    dispatch: false
+    reject: true
