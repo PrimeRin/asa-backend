@@ -46,6 +46,7 @@ Finance:
     delete: true
     update: true
   requested_advance:
+    view: true
     verify: true
     confirm: false
     dispatch: true
@@ -73,6 +74,7 @@ DAF Director:
     delete: true
     update: true
   requested_advance:
+    view: true
     verify: false
     confirm: true
     dispatch: false
