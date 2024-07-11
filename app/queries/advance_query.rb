@@ -2,7 +2,7 @@
 
 class AdvanceQuery
   def self.call(params, current_user, resource)
-    new(params, current_user, resource)
+    new(params, current_user, resource).run
   end
 
   def initialize(params, current_user, resource)
@@ -12,7 +12,9 @@ class AdvanceQuery
   end
 
   def run
-    run_query && search && sort
+    run_query
+    search
+    sort
     @resource
   end
 
@@ -38,9 +40,9 @@ class AdvanceQuery
   end
 
   def search
-    if @params[:query]
-      @resource = @resource.joins(:user).where('users.email LIKE ?', "%#{@params[:query]}%")
-    end
+    return unless @params[:query]
+
+    @resource = @resource.joins(:user).where('users.email LIKE ?', "%#{@params[:query]}%")
   end
 
   def sort
@@ -48,10 +50,14 @@ class AdvanceQuery
   end
 
   def finance_statuses
+    return @params[:status] if @params[:status].present?
+
     %w[pending confirmed rejected dispatched]
   end
 
   def director_statuses
+    return @params[:status] if @params[:status].present?
+
     %w[verified rejected dispatched]
   end
 end
