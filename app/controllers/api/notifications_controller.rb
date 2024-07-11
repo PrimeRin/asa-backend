@@ -13,7 +13,7 @@ module Api
     private
 
     def notification_params
-      params.require(:notification).permit(:sender, :message, recipients: [])
+      params.require(:notification).permit(:sender, :message, :detail_url, recipients: [])
     end
   end
 end

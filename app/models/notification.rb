@@ -14,7 +14,8 @@ class Notification < ApplicationRecord
         sender: sender,
         recipients: recipients,
         message: message,
-        created_at: created_at
+        created_at: created_at,
+        detail_url: detail_url
       })
     end
   end

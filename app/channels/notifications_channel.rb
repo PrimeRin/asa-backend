@@ -34,8 +34,9 @@ class NotificationsChannel < ApplicationCable::Channel
         sender: notification.sender,
        recipients: notification.recipients,
        message: notification.message,
-       created_at: notification.created_at
-      }
+       created_at: notification.created_at,
+       detail_url: notification.detail_url
+    }
     )
   end
 end
