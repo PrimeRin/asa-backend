@@ -3,6 +3,7 @@
 Rails.application.routes.draw do
   mount Rswag::Ui::Engine => '/api-docs'
   mount Rswag::Api::Engine => '/api-docs'
+  mount ActionCable.server => '/cable'
   devise_for :users, controllers: {
     sessions: 'users/sessions'
   }
@@ -15,6 +16,7 @@ Rails.application.routes.draw do
         post 'update_status'
       end
     end
+    resources :notifications, only: [:create]
     resources :files, only: %i[create]
     resources :permissions, only: %i[index]
     resources :users, only: %i[index show update]

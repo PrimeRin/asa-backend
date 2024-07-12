@@ -1,8 +1,7 @@
-
 namespace :advances do
-  desc "Randomly update the status of all Advance records"
+  desc 'Randomly update the status of all Advance records'
   task update_status: :environment do
-    statuses = %w[pending verified confirmed dispatched rejected closed ]
+    statuses = %w[pending verified confirmed dispatched rejected closed]
 
     Advance.find_each do |advance|
       random_status = statuses.sample
@@ -10,6 +9,6 @@ namespace :advances do
       puts "Updated Advance ID #{advance.id} to status #{random_status}"
     end
 
-    puts "Finished updating all advances."
+    puts 'Finished updating all advances.'
   end
 end

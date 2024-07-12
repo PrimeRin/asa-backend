@@ -27,18 +27,16 @@ class AdvanceUpdateQuery
   private
 
   def run_query
-    if @params[:status].present?
-      case @params[:status]
-      when 'approved'
-        next_status = next_status(@resource.status)
-        @resource.update(status: next_status, message: @params[:message], verified_by: @current_user.id)
-      when 'rejected'
-        @resource.update(status: 'rejected', message: @params[:message], confirmed_by: @current_user.id)
-      else
-        raise 'Invalid status'
-      end
+    raise 'Status is required' unless @params[:status].present?
+
+    case @params[:status]
+    when 'approved'
+      next_status = next_status(@resource.status)
+      @resource.update(status: next_status, message: @params[:message], verified_by: @current_user.id)
+    when 'rejected'
+      @resource.update(status: 'rejected', message: @params[:message], confirmed_by: @current_user.id)
     else
-      raise 'Status is required'
+      raise 'Invalid status'
     end
   end
 

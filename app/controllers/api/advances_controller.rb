@@ -8,7 +8,8 @@ module Api
 
     def index
       items = params[:per_page] || 10
-      @pagy, @advances = pagy(AdvanceQuery.call(params[:advance], current_user, Advance.all).run, page: params[:page] || 1, items: items)
+      @pagy, @advances = pagy(AdvanceQuery.call(params[:advance], current_user, Advance.all).run,
+                              page: params[:page] || 1, items: items)
       @advances = @advances.map { |advance| advance.attributes.merge(user: advance.user) }
       render json: { pagy: pagy_metadata(@pagy), advances: @advances }, status: :ok
     end
@@ -36,6 +37,7 @@ module Api
 
     def update_status
       @advance = AdvanceUpdateQuery.call(params, current_user, @advance)
+      PublishNotificationService.new(current_user, @advance).update
       render json: { advance: @advance }, status: :ok
     end
 
@@ -60,6 +62,7 @@ module Api
       if @advance.save
         create_salary_advance if @advance.advance_type === 'salary_advance'
         create_itinerary if itinerary_needed?
+        PublishNotificationService.new(current_user, @advance).create
         render json: @advance, status: :created
       else
         render json: @advance.errors, status: :unprocessable_entity
