@@ -1,5 +1,3 @@
-
-
 module Api
   class FilesController < ApplicationController
     include UrlHelper
@@ -16,9 +14,11 @@ module Api
     end
 
     private
+
     def files_attached?
       params[:files].present? && params[:files].is_a?(Array)
     end
+
     def set_advance
       @advance = Advance.find(params[:id])
     rescue ActiveRecord::RecordNotFound
