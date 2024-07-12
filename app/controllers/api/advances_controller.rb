@@ -36,6 +36,7 @@ module Api
 
     def update_status
       @advance = AdvanceUpdateQuery.call(params, current_user, @advance)
+      PublishNotificationService.new(current_user, @advance).update
       render json: { advance: @advance }, status: :ok
     end
 
@@ -60,6 +61,7 @@ module Api
       if @advance.save
         create_salary_advance if @advance.advance_type === 'salary_advance'
         create_itinerary if itinerary_needed?
+        PublishNotificationService.new(current_user, @advance).create
         render json: @advance, status: :created
       else
         render json: @advance.errors, status: :unprocessable_entity
