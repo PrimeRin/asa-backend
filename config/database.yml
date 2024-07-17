@@ -8,14 +8,51 @@ default: &default
   password: <%= ENV["DATABASE_PASSWORD"] %>
 
 development:
-  <<: *default
-  database: asa_backend_development
+  primary:
+    <<: *default
+    database: asa_backend_development
+
+  secondary:
+    adapter: oracle_enhanced
+    encoding: utf8
+    pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+    host: <%= ENV["SECONDARY_DATABASE_HOST"] %>
+    port: <%= ENV["SECONDARY_DATABASE_PORT"] %>
+    username: <%= ENV["SECONDARY_DATABASE_USERNAME"] %>
+    password: <%= ENV["SECONDARY_DATABASE_PASSWORD"] %>
+    database: <%= ENV["SECONDARY_DATABASE_NAME"] %>
+    migrations_paths: db/migrate_icbs
 
 test:
-  <<: *default
-  database: asa_backend_test
+  primary:
+    <<: *default
+    database: asa_backend_test
+
+  secondary:
+    adapter: oracle_enhanced
+    encoding: utf8
+    pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+    host: <%= ENV["SECONDARY_DATABASE_HOST"] %>
+    port: <%= ENV["SECONDARY_DATABASE_PORT"] %>
+    username: <%= ENV["SECONDARY_DATABASE_USERNAME"] %>
+    password: <%= ENV["SECONDARY_DATABASE_PASSWORD"] %>
+    database: <%= ENV["SECONDARY_DATABASE_NAME"] %>
+    database_tasks: false
+    migrations_paths: db/migrate_icbs
 
 production:
-  <<: *default
-  database: asa_backend_production
-  host: <%= ENV["DATABASE_HOST"] %>
+  primary:
+    <<: *default
+    database: asa_backend_production
+
+  secondary:
+    adapter: oracle_enhanced
+    encoding: utf8
+    pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+    host: <%= ENV["SECONDARY_DATABASE_HOST"] %>
+    port: <%= ENV["SECONDARY_DATABASE_PORT"] %>
+    username: <%= ENV["SECONDARY_DATABASE_USERNAME"] %>
+    password: <%= ENV["SECONDARY_DATABASE_PASSWORD"] %>
+    database: <%= ENV["SECONDARY_DATABASE_NAME"] %>
+    database_tasks: false
+    migrations_paths: db/migrate_icbs

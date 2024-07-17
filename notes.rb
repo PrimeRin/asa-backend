@@ -34,3 +34,14 @@ ActiveRecord::Base.connection_pool.with_connection(&:active?)
 # docker tag my-local-image:latest yourusername/your-repo:latest
 # docker push yourusername/your-repo:latest
 # rails s -b 0.0.0.0 -p 3006 -d
+
+# rails g  migration test name:string --database secondary
+# rails db:migrate:secondary
+# rails db:migrate:rollback:secondary
+# rails db:drop:primary
+# rails db:drop:secondary
+
+# #Rails console
+# reload!
+# Icbs::User.find(71)
+# Icbs::User.take
