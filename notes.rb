@@ -40,8 +40,14 @@ ActiveRecord::Base.connection_pool.with_connection(&:active?)
 # rails db:migrate:rollback:secondary
 # rails db:drop:primary
 # rails db:drop:secondary
+# rails g migration AddNameFieldsToUsers first_name:string middle_name:string last_name:string --database primary
+# rails g migration AddDepartmentToUsers department_name:string --database primary
+# rails g migration AddGradeFieldToUsers position_title:string basic_pay:decimal --database primary
+# rails g migration RemoveNameFromUsers name:string --database primary
 
 # #Rails console
 # reload!
 # Icbs::User.find(71)
 # Icbs::User.take
+# finance = ['2023012', '2024002']
+# daf = ['2005023']
