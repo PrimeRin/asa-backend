@@ -32,7 +32,19 @@ namespace :users do
           )
         puts "User ID #{user.employeecode} has been updated"
       else
-
+        User.create(
+          email: user.emailaddress,
+          password: user.intweb_pwd,
+          username: user.employeecode,
+          role_id: Role.first.id,
+          mobile_number: user.mob_no,
+          first_name: user.firstname,
+          middle_name: user.middlename,
+          last_name: user.lastname,
+          department_name: department_name,
+          position_title: position_title,
+          basic_pay: user.basicpay,
+          )
         puts "User ID #{user.employeecode} has been created"
       end
     end
