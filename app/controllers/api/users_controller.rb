@@ -11,10 +11,23 @@ module Api
     end
 
     def show
-      user_data = @user.attributes.merge(
-        role: @user.role,
-      )
-      render json: user_data, status: :ok
+      user_detail = Icbs::EmployeeMst.find_by(employeecode: @user.username)
+      if user_detail
+        user_data = @user.attributes.merge(
+          role: @user.role,
+          email: user_detail.emailaddress,
+          mobile_number: user_detail.mob_no,
+          first_name: user_detail.firstname,
+          middle_name: user_detail.middlename,
+          last_name: user_detail.lastname,
+          department_name: department_name(user_detail.divisionid),
+          position_title: position_title(user_detail.designationid),
+          basic_pay: user_detail.basicpay
+        )
+        render json: user_data, status: :ok
+      else
+        render json: { error: 'User detail not found' }, status: :not_found
+      end
     end
 
     def create
@@ -42,8 +55,16 @@ module Api
 
     private
 
+    def department_name(division_id)
+      Icbs::Division.find_by(id: division_id)&.divisionname
+    end
+
+    def position_title(designation_id)
+      Icbs::Designation.find_by(id: designation_id)&.designationname
+    end
+
     def set_user
-      @user = User.find(params[:id])
+      @user ||= User.find(params[:id])
     rescue ActiveRecord::RecordNotFound
       render json: { error: 'User not found' }, status: :not_found
     end
