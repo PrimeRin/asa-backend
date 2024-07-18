@@ -17,7 +17,6 @@ module Api
     def show
       @advance = @advance.attributes.merge(
         user: @advance.user,
-        grade: @advance.user.grade,
         advance_detail: @advance.salary_advance,
         travel_itinerary: @advance.travel_itineraries,
         files: serialize_files(@advance.files)
