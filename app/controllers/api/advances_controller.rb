@@ -8,7 +8,7 @@ module Api
 
     def index
       items = params[:per_page] || 10
-      @pagy, @advances = pagy(AdvanceQuery.call(params[:advance], current_user, Advance.all).run,
+      @pagy, @advances = pagy(AdvanceQuery.call(params[:advance], current_user, Advance.all),
                               page: params[:page] || 1, items: items)
       @advances = @advances.map { |advance| advance.attributes.merge(user: advance.user) }
       render json: { pagy: pagy_metadata(@pagy), advances: @advances }, status: :ok
@@ -17,7 +17,7 @@ module Api
     def show
       @advance = @advance.attributes.merge(
         user: @advance.user,
-        grade: @advance.user.grade,
+        position_title: @advance.position,
         advance_detail: @advance.salary_advance,
         travel_itinerary: @advance.travel_itineraries,
         files: serialize_files(@advance.files)

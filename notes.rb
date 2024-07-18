@@ -34,3 +34,24 @@ ActiveRecord::Base.connection_pool.with_connection(&:active?)
 # docker tag my-local-image:latest yourusername/your-repo:latest
 # docker push yourusername/your-repo:latest
 # rails s -b 0.0.0.0 -p 3006 -d
+
+# rails g  migration test name:string --database secondary
+# rails db:migrate:secondary
+# rails db:migrate:primary
+# rails db:migrate:rollback:secondary
+# rails db:drop:primary
+# rails db:drop:secondary
+# rails g migration AddNameFieldsToUsers first_name:string middle_name:string last_name:string --database primary
+# rails g migration AddDepartmentToUsers department_name:string --database primary
+# rails g migration AddGradeFieldToUsers position_title:string basic_pay:decimal --database primary
+# rails g migration RemoveNameFromUsers name:string --database primary
+
+# #Rails console
+# reload!
+# Icbs::User.find(71)
+# Icbs::User.take
+# finance = ['2023012', '2024002']
+# daf = ['2005023']
+# rails g migration RemoveFieldsFromUsers email:string mobile_number:string basic_pay:decimal first_name:string middle_name:string last_name:string position_title:string department_name:string --database primary
+
+# rails g migration RemoveEmailFromUsers email:string --database primary

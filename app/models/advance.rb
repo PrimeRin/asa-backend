@@ -46,4 +46,17 @@ class Advance < ApplicationRecord
   def rejecter
     User.find_by(id: rejected_by)
   end
+
+  def position
+    user_detail = Icbs::EmployeeMst.find_by(employeecode: user.username)
+    user_detail ? position_title(user_detail.designationid) : nil
+  end
+
+  def position_title(designation_id)
+    begin
+      Icbs::Designation.find(designation_id).designationname
+    rescue ActiveRecord::RecordNotFound
+      nil
+    end
+  end
 end

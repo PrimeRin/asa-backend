@@ -1,14 +1,12 @@
 # frozen_string_literal: true
 
 class User < ApplicationRecord
-  devise :database_authenticatable, :registerable, :rememberable, :validatable
+  devise :database_authenticatable, :registerable, :rememberable
   has_many :advances, dependent: :destroy
   has_one_attached :profile_pic
-  belongs_to :grade
   belongs_to :role
   attr_writer :login
 
-  validates :email, :name, :mobile_number, presence: true
   validates :username, presence: true, uniqueness: { case_sensitive: false }
   validates_format_of :username, with: /^[a-zA-Z0-9_.]*$/, multiline: true
   validate :validate_username
@@ -19,7 +17,7 @@ class User < ApplicationRecord
   end
 
   def login
-    @login || username || email
+    @login || username
   end
 
   def self.find_for_authentication(username)
