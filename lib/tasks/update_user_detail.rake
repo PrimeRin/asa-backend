@@ -5,12 +5,14 @@ namespace :users do
       existing_user = User.find_by(username: user.employeecode)
       if existing_user
         existing_user.update(
+          email: user.emailaddress,
           password: user.intweb_pwd,
           role_id: Role.first.id,
           )
         puts "User ID #{user.employeecode} has been updated"
       else
         User.create(
+          email: user.emailaddress,
           password: user.intweb_pwd,
           username: user.employeecode,
           role_id: Role.first.id,

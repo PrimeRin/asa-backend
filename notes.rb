@@ -37,6 +37,7 @@ ActiveRecord::Base.connection_pool.with_connection(&:active?)
 
 # rails g  migration test name:string --database secondary
 # rails db:migrate:secondary
+# rails db:migrate:primary
 # rails db:migrate:rollback:secondary
 # rails db:drop:primary
 # rails db:drop:secondary

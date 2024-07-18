@@ -15,7 +15,6 @@ module Api
       if user_detail
         user_data = @user.attributes.merge(
           role: @user.role,
-          email: user_detail.emailaddress,
           mobile_number: user_detail.mob_no,
           first_name: user_detail.firstname,
           middle_name: user_detail.middlename,
