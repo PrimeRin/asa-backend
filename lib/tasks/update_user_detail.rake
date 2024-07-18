@@ -2,9 +2,7 @@ namespace :users do
   desc 'Update the User with respect to ICBS'
   task update_detail: :environment do
     Icbs::EmployeeMst.find_each do |user|
-
       existing_user = User.find_by(username: user.employeecode)
-
       if existing_user
         existing_user.update(
           password: user.intweb_pwd,

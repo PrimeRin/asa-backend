@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class User < ApplicationRecord
-  devise :database_authenticatable, :registerable, :rememberable, :validatable
+  devise :database_authenticatable, :registerable, :rememberable
   has_many :advances, dependent: :destroy
   has_one_attached :profile_pic
   belongs_to :role
@@ -17,7 +17,7 @@ class User < ApplicationRecord
   end
 
   def login
-    @login || username || email
+    @login || username
   end
 
   def self.find_for_authentication(username)

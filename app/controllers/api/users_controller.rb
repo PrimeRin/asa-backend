@@ -56,11 +56,19 @@ module Api
     private
 
     def department_name(division_id)
-      Icbs::Division.find(division_id)&.divisionname
+      begin
+        Icbs::Division.find(division_id).divisionname
+      rescue ActiveRecord::RecordNotFound
+        nil
+      end
     end
 
     def position_title(designation_id)
-      Icbs::Designation.find(designation_id)&.designationname
+      begin
+        Icbs::Designation.find(designation_id).designationname
+      rescue ActiveRecord::RecordNotFound
+        nil
+      end
     end
 
     def set_user

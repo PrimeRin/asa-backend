@@ -53,3 +53,4 @@ ActiveRecord::Base.connection_pool.with_connection(&:active?)
 # daf = ['2005023']
 # rails g migration RemoveFieldsFromUsers email:string mobile_number:string basic_pay:decimal first_name:string middle_name:string last_name:string position_title:string department_name:string --database primary
 
+# rails g migration RemoveEmailFromUsers email:string --database primary
