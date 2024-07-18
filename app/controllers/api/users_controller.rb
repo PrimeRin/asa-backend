@@ -13,7 +13,6 @@ module Api
     def show
       user_data = @user.attributes.merge(
         role: @user.role,
-        grade: @user.grade
       )
       render json: user_data, status: :ok
     end
