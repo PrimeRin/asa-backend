@@ -14,7 +14,7 @@ class PublishNotificationService
 
   def create
     notification_params = {
-      'sender' => @current_user.id,
+      'sender' => ProfileService.new(@current_user.username).profile,
       'message' => create_message,
       'detail_url' => "/viewRequestedAdvance/#{@advance.id}",
       'recipients' => finance_id
