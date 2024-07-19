@@ -24,7 +24,7 @@ class PublishNotificationService
 
   def update
     notification_params = {
-      'sender' => @current_user.id,
+      'sender' => ProfileService.new(@current_user.username).profile,
       'message' => update_message,
       'detail_url' => "/viewRequestedAdvance/#{@advance.id}",
       'recipients' => update_recipients
