@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_07_18_104446) do
+ActiveRecord::Schema[7.0].define(version: 2024_07_19_052045) do
   create_table "active_storage_attachments", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -85,7 +85,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_07_18_104446) do
   end
 
   create_table "notifications", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.string "sender"
+    t.json "sender"
     t.text "recipients"
     t.string "message"
     t.datetime "created_at", null: false
