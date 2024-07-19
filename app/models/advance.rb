@@ -52,6 +52,19 @@ class Advance < ApplicationRecord
     user_detail ? position_title(user_detail.designationid) : nil
   end
 
+  def name
+    begin
+      employee = Icbs::EmployeeMst.find_by(employeecode: self.user.username)
+      if employee
+        [employee.firstname, employee.middlename, employee.lastname].compact.join(' ')
+      else
+        nil
+      end
+    rescue ActiveRecord::RecordNotFound
+      nil
+    end
+  end
+
   def position_title(designation_id)
     begin
       Icbs::Designation.find(designation_id).designationname

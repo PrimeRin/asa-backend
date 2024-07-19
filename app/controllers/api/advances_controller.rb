@@ -10,7 +10,15 @@ module Api
       items = params[:per_page] || 10
       @pagy, @advances = pagy(AdvanceQuery.call(params[:advance], current_user, Advance.all),
                               page: params[:page] || 1, items: items)
-      @advances = @advances.map { |advance| advance.attributes.merge(user: advance.user) }
+      @advances = @advances.map do |advance|
+        advance.attributes.merge(
+          user: {
+            username: advance.user.username,
+            email: advance.user.email,
+            name: advance.name,
+            profile_pic: ProfileService.new(advance.user.username).profile
+          })
+      end
       render json: { pagy: pagy_metadata(@pagy), advances: @advances }, status: :ok
     end
 
