@@ -56,11 +56,11 @@ class PublishNotificationService
   end
 
   def update_recipients
-    recipients = [creator_id, finance_id]
+    recipients = [creator_id]
 
     case @advance.status
     when 'comfirmed'
-      recipients << daf_id
+      recipients << finance_id
     end
 
     recipients.flatten
