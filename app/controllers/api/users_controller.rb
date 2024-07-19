@@ -2,6 +2,7 @@
 
 module Api
   class UsersController < ApplicationController
+    include UrlHelper
     before_action :authenticate_user!
     before_action :set_user, only: %i[show update destroy]
 
@@ -21,7 +22,8 @@ module Api
           last_name: user_detail.lastname,
           department_name: department_name(user_detail.divisionid),
           position_title: position_title(user_detail.designationid),
-          basic_pay: user_detail.basicpay
+          basic_pay: user_detail.basicpay,
+          profile_pic: fetch_profile(user_detail.employeeid)
         )
         render json: user_data, status: :ok
       else
@@ -53,6 +55,19 @@ module Api
     end
 
     private
+
+    def fetch_profile(id)
+      employee_image = Icbs::EmployeeImage.find_by(employeeid: id)
+      return nil unless employee_image&.photograph
+
+      blob = ActiveStorage::Blob.create_and_upload!(
+        io: StringIO.new(employee_image.photograph),
+        filename: "#{employee_image.employeeid}_photograph.jpg",
+        content_type: 'image/jpeg'
+      )
+
+      serialize_blob(blob, "#{employee_image.employeeid}_photograph.jpg")
+    end
 
     def department_name(division_id)
       begin
