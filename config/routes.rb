@@ -19,7 +19,11 @@ Rails.application.routes.draw do
     resources :notifications, only: [:create]
     resources :files, only: %i[create]
     resources :permissions, only: %i[index]
-    resources :users, only: %i[index show update]
+    resources :users, only: %i[index show update] do
+      collection do
+        post 'reset_password'
+      end
+    end
     resources :rates, only: %i[index update create] do
       collection do
         get :get_country_from

@@ -50,8 +50,8 @@ ActiveRecord::Base.connection_pool.with_connection(&:active?)
 # reload!
 # Icbs::User.find(71)
 # Icbs::User.take
-# finance = ['2023012', '2024002']
-# daf = ['2005023']
+# finance = ['2023012', '2024002'] .. [2005022] - 2005022
+# daf = ['2005023'] pwd = topman
 # rails g migration RemoveFieldsFromUsers email:string mobile_number:string basic_pay:decimal first_name:string middle_name:string last_name:string position_title:string department_name:string --database primary
 
 # rails g migration RemoveEmailFromUsers email:string --database primary

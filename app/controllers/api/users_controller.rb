@@ -53,6 +53,23 @@ module Api
       head :no_content
     end
 
+    def reset_password
+      @user = current_user
+      if @user.valid_password?(params[:current_password])
+        if params[:new_password] == params[:new_password_confirmation]
+          if @user.update(password: params[:new_password])
+            render json: { message: 'Password successfully updated' }, status: :ok
+          else
+            render json: { errors: @user.errors.full_messages }, status: :unprocessable_entity
+          end
+        else
+          render json: { errors: ['New password and confirmation do not match'] }, status: :unprocessable_entity
+        end
+      else
+        render json: { errors: ['Current password is incorrect'] }, status: :unprocessable_entity
+      end
+    end
+
     private
 
     def department_name(division_id)
