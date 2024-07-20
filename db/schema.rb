@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_07_19_052045) do
+ActiveRecord::Schema[7.0].define(version: 2024_07_19_100430) do
   create_table "active_storage_attachments", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -63,6 +63,13 @@ ActiveRecord::Schema[7.0].define(version: 2024_07_19_052045) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["advance_id"], name: "index_attachments_on_advance_id"
+  end
+
+  create_table "dsa_rate_third_countries", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.string "country"
+    t.decimal "rate", precision: 10
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "dsa_rates", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|

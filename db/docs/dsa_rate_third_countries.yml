@@ -1,0 +1,456 @@
+- country: Afghanistan
+  rate: 140
+- country: Albania
+  rate: 140
+- country: Algeria
+  rate: 200
+- country: Angola
+  rate: 250
+- country: Anguilla
+  rate: 300
+- country: Antigua
+  rate: 230
+- country: Argentina
+  rate: 200
+- country: Armenia
+  rate: 135
+- country: Australia
+  rate: 200
+- country: Austria
+  rate: 200
+- country: Azerbaijan
+  rate: 150
+
+# b
+- country: Bahamas
+  rate: 210
+- country: Bahrain
+  rate: 200
+- country: Bangladesh
+  rate: 100
+- country: Barbados
+  rate: 195
+- country: Belarus
+  rate: 145
+- country: Belgium
+  rate: 200
+- country: Belize
+  rate: 170
+- country: Benin
+  rate: 115
+- country: Bermuda
+  rate: 200
+- country: Bolivia
+  rate: 130
+- country: Bosnia and Herzegovina
+  rate: 135
+- country: Botswana
+  rate: 150
+- country: Brazil
+  rate: 170
+- country: British virgin island
+  rate: 200
+- country: Brunei
+  rate: 160
+- country: Bulgaria
+  rate: 170
+- country: Burkina Faso
+  rate: 140
+- country:  Burundi
+  rate: 190
+
+# c
+- country: Cambodia
+  rate: 90
+- country: Cameroon
+  rate: 165
+- country: Canada
+  rate: 200
+- country: Canary island
+  rate: 150
+- country: Cape Verde
+  rate: 150
+- country: Cayman island
+  rate: 200
+- country: Central African Republic
+  rate: 130
+- country: Chad
+  rate: 150
+- country: China
+  rate: 160
+- country: China, Hong Kong
+  rate: 200
+- country: China, Macau
+  rate: 200
+- country: Chile
+  rate: 150
+- country: Colombia
+  rate: 180
+- country: Comoros
+  rate: 200
+- country: Congo
+  rate: 160
+- country: Congo Dem Rep
+  rate: 160
+- country: Cook islands
+  rate: 140
+- country: Costa Rica
+  rate: 150
+- country: Côte d’Ivoire
+  rate: 150
+- country: Croatia
+  rate: 200
+- country: Cuba
+  rate: 200
+- country: Cyprus
+  rate: 150
+- country: Czech Republic
+  rate: 200
+
+# D
+- country: Denmark
+  rate: 200
+- country: Djibouti
+  rate: 130
+- country: Dominica
+  rate: 170
+- country: Dominican Republic
+  rate: 170
+
+# E
+- country: Egypt
+  rate: 150
+- country: Ethiopia
+  rate: 100
+- country: Ecuador
+  rate: 160
+- country: Equatorial Guinea
+  rate: 160
+- country: El Salvador
+  rate: 160
+- country: Eritrea
+  rate: 100
+- country: Estonia
+  rate: 190
+
+# F
+- country: Fiji
+  rate: 190
+- country: Finland
+  rate: 210
+- country: France
+  rate: 200
+
+# G
+- country: Gabon
+  rate: 150
+- country: Gambia
+  rate: 150
+- country: Georgia
+  rate: 130
+- country: Germany
+  rate: 200
+- country: Ghana
+  rate: 200
+- country: Gibralter
+  rate: 150
+- country: Greece
+  rate: 200
+- country: Greenland
+  rate: 200
+- country: Grenada
+  rate: 200
+- country: Guatemala
+  rate: 140
+- country: Guinea
+  rate: 200
+- country: Guinea-Bissau
+  rate: 160
+- country: Guyana
+  rate: 160
+
+# H
+- country: Haiti
+  rate: 150
+- country: Honduras
+  rate: 150
+- country: Hungary
+  rate: 200
+
+# I
+- country: Iceland
+  rate: 230
+- country: Indonesia
+  rate: 160
+- country: Iran
+  rate: 160
+- country: Iraq
+  rate: 120
+- country: Ireland
+  rate: 200
+- country: Israel
+  rate: 200
+- country: Italy
+  rate: 200
+
+# J
+- country: Jamaica
+  rate: 200
+- country: Japan
+  rate: 300
+- country: Jordan
+  rate: 160
+
+# k
+- country: Kazakhstan
+  rate: 160
+- country: Kenya
+  rate: 160
+- country: Kiribati
+  rate: 100
+- country: Kuwait
+  rate: 200
+- country: Kyrgyzstan
+  rate: 140
+
+# L
+- country: Lao
+  rate: 100
+- country: Latvia
+  rate: 200
+- country: Lebanon
+  rate: 160
+- country: Lesotho
+  rate: 100
+- country: Liberia
+  rate: 160
+- country: Libya
+  rate: 160
+- country: Lithuania
+  rate: 175
+- country: Luxembourg
+  rate: 200
+
+# M
+- country: Macedonia
+  rate: 200
+- country: Madagascar
+  rate: 120
+- country: Malawi
+  rate: 100
+- country: Malaysia
+  rate: 130
+- country: Maldives
+  rate: 150
+- country: Mali
+  rate: 100
+- country: Malta
+  rate: 200
+- country: Mauritania
+  rate: 100
+- country: Mauritius
+  rate: 170
+- country: Mexico
+  rate: 200
+- country: Micronesia
+  rate: 100
+- country: Moldova
+  rate: 150
+- country: Monaco
+  rate: 200
+- country: Mongolia
+  rate: 150
+- country: Montenegro
+  rate: 130
+- country: Morocco
+  rate: 160
+- country: Mozambique
+  rate: 160
+- country: Myanmar
+  rate: 120
+
+# N
+- country: Namibia
+  rate: 100
+- country: Nauru
+  rate: 100
+- country: Nepal
+  rate: 120
+- country: Netherlands
+  rate: 200
+- country: Netherlands, Antillas
+  rate: 200
+- country: New Zealand
+  rate: 200
+- country: Nicaragua
+  rate: 120
+- country: Niger
+  rate: 100
+- country: Nigeria
+  rate: 150
+- country: North Korea
+  rate: 170
+- country: Niue
+  rate: 100
+- country: Norway
+  rate: 230
+
+# O
+- country: Omen
+  rate: 160
+
+# P
+- country: Pakistan
+  rate: 130
+- country: Palau
+  rate: 150
+- country: Panama
+  rate: 150
+- country: Papua New Guinea
+  rate: 130
+- country: Paraguay
+  rate: 150
+- country: Peru
+  rate: 150
+- country: Philippines
+  rate: 130
+- country: Poland
+  rate: 200
+- country: Portugal
+  rate: 200
+- country: Puerto Rico
+  rate: 160
+
+# Q
+- country: Qatar
+  rate: 160
+
+# R
+- country: Romania
+  rate: 200
+- country: Russia Federation
+  rate: 260
+- country: Rwanda
+  rate: 140
+
+# S
+- country: Samoa
+  rate: 120
+- country: Sao Tome and Principe
+  rate: 120
+- country: Saudi Arabia
+  rate: 200
+- country: Senegal
+  rate: 150
+- country: Serbia
+  rate: 160
+- country: Seychelles
+  rate: 200
+- country: Sierra Leone
+  rate: 130
+- country: Singapore
+  rate: 180
+- country: Slovak Rep
+  rate: 170
+- country: Slovenia
+  rate: 200
+- country: Solomon Islands
+  rate: 150
+- country: Somalia
+  rate: 100
+- country: South Africa
+  rate: 160
+- country: South Korea
+  rate: 200
+- country: Spain
+  rate: 200
+- country: Sri Lanka
+  rate: 130
+- country: Saint Kitts and Nevis
+  rate: 150
+- country: Saint Lucia
+  rate: 150
+- country: Saint Vincent and the Grenadines
+  rate: 150
+- country: Sudan
+  rate: 160
+- country: Suriname
+  rate: 130
+- country: Swaziland
+  rate: 100
+- country: Sweden
+  rate: 230
+- country: Switzerland
+  rate: 220
+- country: Syrian Arab Republic
+  rate: 160
+
+# T
+- country: Taiwan
+  rate: 165
+- country: Tajikistan
+  rate: 140
+- country: Tanzania
+  rate: 140
+- country: Thailand
+  rate: 130
+- country: Togo
+  rate: 100
+- country: Tokelau
+  rate: 75
+- country: Tonga
+  rate: 150
+- country: Trinidad and Tobago
+  rate: 150
+- country: Turkey
+  rate: 200
+- country: Tunisia
+  rate: 145
+- country: Turkmenistan
+  rate: 150
+- country: Turks & Caicos island
+  rate: 150
+- country: Tuvalu
+  rate: 100
+
+# U
+- country: Uganda
+  rate: 135
+- country: Ukraine
+  rate: 200
+- country: United Arab Emirates
+  rate: 210
+- country: United Kingdom
+  rate: 220
+- country: USA
+  rate: 200
+- country: Uruguay
+  rate: 180
+- country: Uzbekistan
+  rate: 120
+
+# V
+- country: Vanuatu
+  rate: 160
+- country: Venezuela
+  rate: 200
+- country: Vietnam
+  rate: 100
+- country: Virgin island USA
+  rate: 200
+
+# w
+- country: West Bank
+  rate: 130
+
+# Y
+- country: Yemen
+  rate: 100
+- country: Yugoslavia
+  rate: 160
+
+# Z
+- country: Zambia
+  rate: 100
+- country: Zimbabwe
+  rate: 100
