@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_07_22_061029) do
+ActiveRecord::Schema[7.0].define(version: 2024_07_22_065149) do
   create_table "active_storage_attachments", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -53,6 +53,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_07_22_061029) do
     t.string "remark"
     t.string "message"
     t.integer "rejected_by"
+    t.integer "advance_percentage"
     t.index ["user_id"], name: "index_advances_on_user_id"
   end
 
@@ -126,14 +127,20 @@ ActiveRecord::Schema[7.0].define(version: 2024_07_22_061029) do
   end
 
   create_table "travel_itineraries", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.date "start_date"
-    t.date "end_date"
+    t.datetime "start"
+    t.datetime "end"
     t.string "from"
     t.string "to"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "advance_id"
     t.decimal "amount", precision: 10
+    t.string "mode"
+    t.integer "dsa_percentage"
+    t.string "halt_at"
+    t.float "mileage"
+    t.integer "days"
+    t.text "detail"
   end
 
   create_table "users", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
