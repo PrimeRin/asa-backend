@@ -32,9 +32,9 @@ class AdvanceUpdateQuery
     case @params[:status]
     when 'approved'
       next_status = next_status(@resource.status)
-      @resource.update(status: next_status, message: @params[:message], verified_by: @current_user.id)
+      @resource.update(status: next_status, message: @params[:message], "#{next_status}_by": @current_user.id)
     when 'rejected'
-      @resource.update(status: 'rejected', message: @params[:message], confirmed_by: @current_user.id)
+      @resource.update(status: 'rejected', message: @params[:message], rejected_by: @current_user.id)
     else
       raise 'Invalid status'
     end
