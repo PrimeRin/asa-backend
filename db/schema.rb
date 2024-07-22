@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_07_22_034249) do
+ActiveRecord::Schema[7.0].define(version: 2024_07_22_061029) do
   create_table "active_storage_attachments", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -76,10 +76,9 @@ ActiveRecord::Schema[7.0].define(version: 2024_07_22_034249) do
     t.string "from"
     t.string "to"
     t.decimal "rate", precision: 10
-    t.bigint "grade_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["grade_id"], name: "index_dsa_rates_on_grade_id"
+    t.string "grade_name"
   end
 
   create_table "grades", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -152,7 +151,6 @@ ActiveRecord::Schema[7.0].define(version: 2024_07_22_034249) do
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "advances", "users"
   add_foreign_key "attachments", "advances"
-  add_foreign_key "dsa_rates", "grades"
   add_foreign_key "permissions", "roles"
   add_foreign_key "salary_advances", "advances"
   add_foreign_key "users", "roles"

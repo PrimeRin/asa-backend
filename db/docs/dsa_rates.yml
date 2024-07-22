@@ -1,16 +1,46 @@
-M1:
+# Bhutan
+- grade: Management
   from: Bhutan
   to: Bhutan
   rate: 5000
-M2:
+- grade: Managerial & Specialization (Experts)
   from: Bhutan
   to: Bhutan
-  rate: 4000
-PS1:
-  from: Bhutan
-  to: Bhutan
-  rate: 3000
-PS2:
+  rate: 2500
+- grade: Professional & Adm Service (PS)
   from: Bhutan
   to: Bhutan
   rate: 2000
+- grade: Professional & Adm Support Service (SS)
+  from: Bhutan
+  to: Bhutan
+  rate: 1500
+- grade: Operational Service (OS)
+  from: Bhutan
+  to: Bhutan
+  rate: 1200
+
+# India
+- grade: Management
+  from: Bhutan
+  to: India
+  rate: 6000
+- grade: Managerial & Specialization (Experts)
+  from: Bhutan
+  to: India
+  rate: 5000
+- grade: Professional & Adm Service (PS)
+  from: Bhutan
+  to: India
+  rate: 4500
+- grade: Professional & Adm Support Service (SS)
+  from: Bhutan
+  to: India
+  rate: 4000
+- grade: Operational Service (OS)
+  from: Bhutan
+  to: India
+  rate: 4000
+
+
+
