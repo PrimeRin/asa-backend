@@ -40,9 +40,20 @@ module Api
     private
 
     def set_rate
-      @rate = DsaRate.find_by!(from: rate_params[:from], to: rate_params[:to], grade_id: current_user.grade.id)
+      @rate = DsaRate.find_by!(from: rate_params[:from], to: rate_params[:to], grade_name: grade_name)
     rescue ActiveRecord::RecordNotFound
       render json: { error: 'Rate not found' }, status: :not_found
+    end
+
+    def grade_name
+      user = Icbs::EmployeeMst.find_by(employeecode: current_user.username)
+      return unless user
+
+      grade = Icbs::GradeMst.find_by(gradeid: user.gradeid)
+      return unless grade
+
+      grade_category = Icbs::GradeCategory.find_by(categoryid: grade.categoryid)
+      grade_category&.categoryname
     end
 
     def rate_params
