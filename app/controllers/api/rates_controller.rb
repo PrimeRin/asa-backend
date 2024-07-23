@@ -9,6 +9,10 @@ module Api
       render json: @rate
     end
 
+    def mileage
+      render json: { rate: 16 }, status: :ok
+    end
+
     def create
       @rate = DsaRate.new(rate_params)
 
