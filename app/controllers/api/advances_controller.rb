@@ -5,7 +5,7 @@ module Api
     include UrlHelper
     before_action :authenticate_user!
     before_action :set_advance, only: %i[show update update_status]
-    before_action :check_existing_advances, only: [:create]
+    # before_action :check_existing_advances, only: [:create]
 
     def index
       items = params[:per_page] || 10
@@ -108,7 +108,18 @@ module Api
 
     def travel_itinerary_params
       params.require(:travel_itinerary).map do |itinerary|
-        itinerary.permit(:start_date, :end_date, :from, :to, :amount)
+        itinerary.permit(
+          :start_date,
+          :end_date,
+          :from,
+          :to,
+          :rate,
+          :dsa_percentage,
+          :halt_at,
+          :mileage,
+          :mode,
+          :days
+        )
       end
     end
 
