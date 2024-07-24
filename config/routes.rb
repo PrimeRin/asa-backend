@@ -17,7 +17,7 @@ Rails.application.routes.draw do
       end
     end
     resources :notifications, only: [:create]
-    resources :stop_over, only: [index]
+    resources :stop_over, only: %i[index]
     resources :files, only: %i[create]
     resources :permissions, only: %i[index]
     resources :itinerary, only: %i[index, show]
