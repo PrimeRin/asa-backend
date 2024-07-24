@@ -1,0 +1,2 @@
+class StopOverRate < ApplicationRecord
+end

@@ -55,3 +55,10 @@ ActiveRecord::Base.connection_pool.with_connection(&:active?)
 # rails g migration RemoveFieldsFromUsers email:string mobile_number:string basic_pay:decimal first_name:string middle_name:string last_name:string position_title:string department_name:string --database primary
 
 # rails g migration RemoveEmailFromUsers email:string --database primary
+# \
+# # StopOverRate
+# - value : number
+# - country : string
+# - grade_name : string
+# - rate :
+#   - currency: string
