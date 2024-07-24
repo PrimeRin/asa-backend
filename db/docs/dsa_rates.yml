@@ -42,5 +42,24 @@
   to: India
   rate: 4000
 
-
-
+# India
+- grade: Management
+  from: India
+  to: India
+  rate: 6000
+- grade: Managerial & Specialization (Experts)
+  from: India
+  to: India
+  rate: 5000
+- grade: Professional & Adm Service (PS)
+  from: India
+  to: India
+  rate: 4500
+- grade: Professional & Adm Support Service (SS)
+  from: India
+  to: India
+  rate: 4000
+- grade: Operational Service (OS)
+  from: India
+  to: India
+  rate: 4000
