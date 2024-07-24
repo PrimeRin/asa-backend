@@ -13,6 +13,11 @@ module Api
       render json: { rate: 16 }, status: :ok
     end
 
+    def third_country
+      rate = DsaRateThirdCountry.find_by(country: third_country_rate_params[:country])
+      render json: { rate: rate }, status: :ok
+    end
+
     def create
       @rate = DsaRate.new(rate_params)
 
@@ -57,6 +62,10 @@ module Api
 
     def rate_params
       params.require(:rate).permit(:from, :to, :grade_id)
+    end
+
+    def third_country_rate_params
+      params.require(:rate).permit(:country)
     end
   end
 end

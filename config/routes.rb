@@ -29,6 +29,7 @@ Rails.application.routes.draw do
       collection do
         get :get_country_to
         get :mileage
+        get :third_country
       end
     end
   end
