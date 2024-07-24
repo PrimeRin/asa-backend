@@ -15,7 +15,7 @@ module Api
 
     def third_country
       rate = DsaRateThirdCountry.find_by(country: third_country_rate_params[:country])
-      render json: { rate: rate }, status: :ok
+      render json: rate, status: :ok
     end
 
     def create
