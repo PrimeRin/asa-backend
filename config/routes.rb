@@ -27,7 +27,6 @@ Rails.application.routes.draw do
     end
     resources :rates, only: %i[index update create] do
       collection do
-        get :get_country_from
         get :get_country_to
         get :mileage
       end

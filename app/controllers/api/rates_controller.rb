@@ -31,13 +31,8 @@ module Api
       end
     end
 
-    def get_country_from
-      countries = DsaRate.distinct.pluck(:from)
-      render json: countries
-    end
-
     def get_country_to
-      countries = DsaRate.distinct.pluck(:to)
+      countries =  DsaRateThirdCountry.distinct.pluck(:country)
       render json: countries
     end
 
