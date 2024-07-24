@@ -1,0 +1,20 @@
+# stop_over_rates.yml
+# INDIA
+- value: 1
+  country: India
+  rate: 5000
+  currency: Ngultrum
+- value: 2
+  country: India
+  rate: 3000
+  currency: Ngultrum
+
+# OTHER
+- value: 1
+  country: Other
+  rate: 200
+  currency: USD
+- value: 2
+  country: Other
+  rate: 200
+  currency: USD
