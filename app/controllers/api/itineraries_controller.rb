@@ -1,5 +1,5 @@
 module Api
-  class ItineraryController < ApplicationController
+  class ItinerariesController < ApplicationController
     before_action :authenticate_user!
     before_action :set_advance, only: %i[index]
     before_action :set_itinerary, only: %i[show]
