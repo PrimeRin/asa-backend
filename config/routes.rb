@@ -20,7 +20,7 @@ Rails.application.routes.draw do
     resources :stop_over, only: %i[index]
     resources :files, only: %i[create]
     resources :permissions, only: %i[index]
-    resources :itineraries, only: %i[index show]
+    resources :itineraries, only: %i[create index show update destroy]
     resources :users, only: %i[index show update] do
       collection do
         post 'reset_password'
