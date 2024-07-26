@@ -63,3 +63,47 @@
   from: India
   to: India
   rate: 4000
+
+# Other - India
+- grade: Management
+  from: Other
+  to: India
+  rate: 6000
+- grade: Managerial & Specialization (Experts)
+  from: Other
+  to: India
+  rate: 5000
+- grade: Professional & Adm Service (PS)
+  from: Other
+  to: India
+  rate: 4500
+- grade: Professional & Adm Support Service (SS)
+  from: Other
+  to: India
+  rate: 4000
+- grade: Operational Service (OS)
+  from: Other
+  to: India
+  rate: 4000
+
+# Other - Bhutan
+- grade: Management
+  from: Bhutan
+  to: Other
+  rate: 5000
+- grade: Managerial & Specialization (Experts)
+  from: Bhutan
+  to: Other
+  rate: 2500
+- grade: Professional & Adm Service (PS)
+  from: Bhutan
+  to: Other
+  rate: 2000
+- grade: Professional & Adm Support Service (SS)
+  from: Bhutan
+  to: Other
+  rate: 1500
+- grade: Operational Service (OS)
+  from: Bhutan
+  to: Other
+  rate: 1200
