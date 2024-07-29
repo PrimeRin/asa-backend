@@ -6,7 +6,7 @@ module Api
 
 
     def create
-      @itinerary = travel_itineraries.create(itinerary_params)
+      @itinerary = TravelItinerary.create(itinerary_params)
       if @itinerary.save
         render json: @itinerary, status: :created
       else
