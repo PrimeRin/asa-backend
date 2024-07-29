@@ -1,12 +1,12 @@
 module Api
   class ItinerariesController < ApplicationController
     before_action :authenticate_user!
-    before_action :set_advance, only: %i[index create]
+    before_action :set_advance, only: %i[index ]
     before_action :set_itinerary, only: %i[show update destroy]
 
 
     def create
-      @itinerary = @advance.travel_itineraries.create(itinerary_params)
+      @itinerary = travel_itineraries.create(itinerary_params)
       if @itinerary.save
         render json: @itinerary, status: :created
       else
