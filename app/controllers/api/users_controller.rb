@@ -21,7 +21,7 @@ module Api
           last_name: user_detail.lastname,
           department_name: department_name(user_detail.divisionid),
           position_title: position_title(user_detail.designationid),
-          basic_pay: user_detail.basicpay,
+          net_pay: net_pay(user_detail.employeeid),
           profile_pic: ProfileService.new(user_detail.employeeid).profile_image,
         )
         render json: user_data, status: :ok
@@ -86,6 +86,10 @@ module Api
       rescue ActiveRecord::RecordNotFound
         nil
       end
+    end
+
+    def net_pay(id)
+      Icbs::PayDetail.net_amount(id)
     end
 
     def set_user
