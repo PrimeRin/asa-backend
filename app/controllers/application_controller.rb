@@ -7,7 +7,6 @@ class ApplicationController < ActionController::API
   def pagy_metadata(pagy)
     {
       page: pagy.page,
-      items: pagy.items,
       pages: pagy.pages,
       count: pagy.count,
       prev: pagy.prev,
