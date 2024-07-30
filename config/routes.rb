@@ -14,6 +14,7 @@ Rails.application.routes.draw do
         get 'type_counts'
         get 'monthly_counts'
         post 'update_status'
+        post 'claim_dsa'
       end
     end
     resources :notifications, only: [:create]

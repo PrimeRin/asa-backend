@@ -4,7 +4,7 @@ module Api
   class AdvancesController < ApplicationController
     include UrlHelper
     before_action :authenticate_user!
-    before_action :set_advance, only: %i[show update update_status]
+    before_action :set_advance, only: %i[show update update_status claim_dsa]
     # before_action :check_existing_advances, only: [:create]
 
     def index
@@ -82,6 +82,14 @@ module Api
       if @advance.update(advance_params)
         update_itinerary if itinerary_needed?
         update_files if files_attached?
+        render json: @advance, status: :ok
+      else
+        render json: @advance.errors, status: :unprocessable_entity
+      end
+    end
+
+    def claim_dsa
+      if @advance.update(claim_dsa: true, status: "pending")
         render json: @advance, status: :ok
       else
         render json: @advance.errors, status: :unprocessable_entity
