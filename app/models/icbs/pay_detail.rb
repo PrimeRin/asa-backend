@@ -10,8 +10,7 @@ module Icbs
                 .select(:COMPONENTAMOUNT)
                 .distinct
                 .where(emppayid: max_emppayid, EMPID: empid, COMPONENTCODE: 'Net')
-
-        pay.first.COMPONENTAMOUNT
+        pay[0].componentamount
       rescue => e
         Rails.logger.error("Error fetching distinct component amount: #{e.message}")
         nil
