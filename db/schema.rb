@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_07_30_090516) do
+ActiveRecord::Schema[7.0].define(version: 2024_07_31_030234) do
   create_table "active_storage_attachments", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -55,6 +55,8 @@ ActiveRecord::Schema[7.0].define(version: 2024_07_30_090516) do
     t.integer "rejected_by"
     t.decimal "advance_percentage", precision: 10, scale: 2
     t.boolean "claim_dsa"
+    t.decimal "dsa_amount", precision: 10, scale: 2
+    t.decimal "advance_amount", precision: 10, scale: 2
     t.index ["user_id"], name: "index_advances_on_user_id"
   end
 
