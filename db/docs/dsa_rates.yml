@@ -88,22 +88,22 @@
 
 # Other - Bhutan
 - grade: Management
-  from: Bhutan
-  to: Other
+  from: Other
+  to: Bhutan
   rate: 5000
 - grade: Managerial & Specialization (Experts)
-  from: Bhutan
-  to: Other
+  from: Other
+  to: Bhutan
   rate: 2500
 - grade: Professional & Adm Service (PS)
-  from: Bhutan
-  to: Other
+  from: Other
+  to: Bhutan
   rate: 2000
 - grade: Professional & Adm Support Service (SS)
-  from: Bhutan
-  to: Other
+  from: Other
+  to: Bhutan
   rate: 1500
 - grade: Operational Service (OS)
-  from: Bhutan
-  to: Other
+  from: Other
+  to: Bhutan
   rate: 1200
