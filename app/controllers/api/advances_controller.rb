@@ -89,7 +89,7 @@ module Api
     end
 
     def claim_dsa
-      if @advance.update(claim_dsa: true, status: "pending")
+      if @advance.update(claim_dsa: true, status: "pending", dsa_amount: params[:dsa_amount])
         render json: @advance, status: :ok
       else
         render json: @advance.errors, status: :unprocessable_entity
