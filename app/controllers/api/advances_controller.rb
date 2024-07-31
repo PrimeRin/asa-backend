@@ -126,7 +126,8 @@ module Api
           :halt_at,
           :mileage,
           :mode,
-          :days
+          :days,
+          :currency
         )
       end
     end
