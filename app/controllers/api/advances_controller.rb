@@ -154,7 +154,16 @@ module Api
     end
 
     def advance_params
-      params.require(:advance).permit(:advance_type, :status, :amount, :purpose, :remark, :advance_percentage)
+      params.require(:advance).permit(
+        :advance_type,
+        :status,
+        :amount,
+        :purpose,
+        :remark,
+        :advance_percentage,
+        :dsa_amount,
+        :advance_amount
+      )
     end
 
     def calculate_status_count
