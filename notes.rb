@@ -62,3 +62,7 @@ ActiveRecord::Base.connection_pool.with_connection(&:active?)
 # - grade_name : string
 # - rate :
 #   - currency: string
+# StopOverRate.where(country: 'India').update_all(currency: 'INR')
+# DsaRate.where(to: 'Bhutan').update_all(currency: 'Nu')
+# DsaRate.where(to: 'India').update_all(currency: 'INR')
+# DsaRateThirdCountry.update_all(currency: "USD")
