@@ -161,8 +161,8 @@ module Api
         :purpose,
         :remark,
         :advance_percentage,
-        dsa_amount: {},
-        advance_amount: {}
+        dsa_amount: [:Nu, :INR, :USD],
+        advance_amount: [:Nu, :INR, :USD]
       )
     end
 
