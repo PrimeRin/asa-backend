@@ -90,6 +90,7 @@ module Api
 
     def claim_dsa
       if @advance.update(claim_dsa: true, status: "pending", dsa_amount: params[:dsa_amount])
+        PublishNotificationService.new(current_user, @advance).create
         render json: @advance, status: :ok
       else
         render json: @advance.errors, status: :unprocessable_entity

@@ -73,8 +73,10 @@ class PublishNotificationService
     recipients = [creator_id]
 
     case @advance.status
-    when 'comfirmed'
-      recipients << finance_id
+    when 'verified'
+      recipients = [*recipients, *daf_id]
+    when 'confirmed'
+      recipients = [*recipients, *finance_id]
     end
 
     recipients.flatten
