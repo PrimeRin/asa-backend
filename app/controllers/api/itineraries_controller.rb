@@ -32,8 +32,11 @@ module Api
     end
 
     def destroy
-      @itinerary.destroy
-      head :no_content
+      if @itinerary.destroy
+        render json: { message: 'Itinerary successfully deleted.' }, status: :ok
+      else
+        render json: { error: 'Failed to delete itinerary.' }, status: :unprocessable_entity
+      end
     end
 
     private
