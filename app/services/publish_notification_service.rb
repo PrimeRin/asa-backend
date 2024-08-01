@@ -19,7 +19,7 @@ class PublishNotificationService
       'detail_url' => "/viewRequestedAdvance/#{@advance.id}",
       'recipients' => finance_id
     }
-    NotificationWorker.perform_async(notification_params)
+    NotificationWorker.new.perform(notification_params)
   end
 
   def update
@@ -29,7 +29,7 @@ class PublishNotificationService
       'detail_url' => "/viewRequestedAdvance/#{@advance.id}",
       'recipients' => update_recipients
     }
-    NotificationWorker.perform_async(notification_params)
+    NotificationWorker.new.perform(notification_params)
   end
 
   private
