@@ -58,7 +58,7 @@ class PublishNotificationService
     case @advance.status
     when 'verified'
       "#{advance_type} has been verified by the Finance."
-    when 'comfirmed'
+    when 'confirmed'
       "#{advance_type} has been approved by the DAF Director."
     when 'rejected'
       "#{advance_type} has been rejected by the Finance."
