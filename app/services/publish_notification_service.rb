@@ -7,6 +7,11 @@ class PublishNotificationService
     'in_country_tour_advance' => 'In Country Tour Advance',
     'ex_country_tour_advance' => 'Ex Country Tour Advance'
   }.freeze
+
+  DSA_TYPE = {
+    'in_country_tour_advance' => 'In Country DSA Claim',
+    'ex_country_tour_advance' => 'Ex Country DSA Claim'
+  }.freeze
   def initialize(current_user, advance)
     @current_user = current_user
     @advance = advance
@@ -35,12 +40,21 @@ class PublishNotificationService
   private
 
   def create_message
-    advance_type = ADVANCE_TYPE[@advance.advance_type]
+    advance_type = if @advance.claim_dsa
+                     DSA_TYPE[@advance.advance_type]
+                   else
+                     ADVANCE_TYPE[@advance.advance_type]
+                   end
     "New #{advance_type} application has been submitted."
   end
 
   def update_message
-    advance_type = ADVANCE_TYPE[@advance.advance_type]
+    advance_type = if @advance.claim_dsa
+                     DSA_TYPE[@advance.advance_type]
+                   else
+                     ADVANCE_TYPE[@advance.advance_type]
+                   end
+
     case @advance.status
     when 'verified'
       "#{advance_type} has been verified by the Finance."
