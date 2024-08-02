@@ -25,6 +25,7 @@ class PublishNotificationService
       'recipients' => finance_id
     }
     NotificationWorker.new.perform(notification_params)
+    AdvanceMailer.advance_email(finance_id, create_message).deliver_now
   end
 
   def update
@@ -35,6 +36,7 @@ class PublishNotificationService
       'recipients' => update_recipients
     }
     NotificationWorker.new.perform(notification_params)
+    AdvanceMailer.advance_email(update_recipients, create_message).deliver_now
   end
 
   private
@@ -45,7 +47,7 @@ class PublishNotificationService
                    else
                      ADVANCE_TYPE[@advance.advance_type]
                    end
-    "New #{advance_type} application has been submitted."
+    "New #{advance_type} application has been submitted by User #{@current_user.username}."
   end
 
   def update_message
