@@ -31,7 +31,7 @@ Rails.application.configure do
   Rails.application.routes.default_url_options[:host] = ENV['RAILS_BACKEND_URL']
   # Action mailer
   config.action_mailer.perform_caching = false
-  config.action_mailer.default_url_options = { host: ENV.fetch('HOST_DOMAIN') }
+  config.action_mailer.default_url_options = { host: ENV.fetch('HOST_DOMAIN_UAT') }
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
     address: ENV.fetch('SMTP_ADDRESS'),
