@@ -43,7 +43,7 @@ class PublishNotificationService
 
   def send_mail(recipients, message)
     recipients.each do |recipient|
-      AdvanceMailer.advance_email(recipient, message).deliver_now
+      AdvanceEmailJob.perform_later(recipient, message)
     end
   end
 
