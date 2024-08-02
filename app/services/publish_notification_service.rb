@@ -36,7 +36,7 @@ class PublishNotificationService
       'recipients' => update_recipients
     }
     NotificationWorker.new.perform(notification_params)
-    send_mail(update_recipients, create_message)
+    send_mail(update_recipients, update_message)
   end
 
   private
