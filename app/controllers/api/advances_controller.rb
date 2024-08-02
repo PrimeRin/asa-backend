@@ -5,7 +5,7 @@ module Api
     include UrlHelper
     before_action :authenticate_user!
     before_action :set_advance, only: %i[show update update_status claim_dsa]
-    # before_action :check_existing_advances, only: [:create]
+    before_action :check_existing_advances, only: [:create]
 
     def index
       items = params[:per_page] || 10
