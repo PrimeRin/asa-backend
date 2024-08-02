@@ -25,7 +25,7 @@ class PublishNotificationService
       'recipients' => finance_id
     }
     NotificationWorker.new.perform(notification_params)
-    AdvanceMailer.advance_email(finance_id, create_message).deliver_now
+    send_mail(finance_id, create_message)
   end
 
   def update
@@ -36,10 +36,16 @@ class PublishNotificationService
       'recipients' => update_recipients
     }
     NotificationWorker.new.perform(notification_params)
-    AdvanceMailer.advance_email(update_recipients, create_message).deliver_now
+    send_mail(update_recipients, create_message)
   end
 
   private
+
+  def send_mail(recipients, message)
+    recipients.each do |recipient|
+      AdvanceMailer.advance_email(recipient, message).deliver_now
+    end
+  end
 
   def create_message
     advance_type = if @advance.claim_dsa
