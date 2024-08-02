@@ -5,7 +5,7 @@ module Api
     include UrlHelper
     before_action :authenticate_user!
     before_action :set_advance, only: %i[show update update_status claim_dsa]
-    # before_action :check_existing_advances, only: [:create]
+    before_action :check_existing_advances, only: [:create]
 
     def index
       items = params[:per_page] || 10
@@ -100,10 +100,13 @@ module Api
     private
 
     def check_existing_advances
-      existing_advance = current_user.advances.where(status: ['pending', 'verified', 'confirmed']).exists?
+      existing_advance = current_user.advances.where(
+        advance_type: params[:advance][:advance_type],
+        status: %w[pending verified confirmed]
+      ).exists?
 
       if existing_advance
-        render json: { status: :conflict, message: 'You already have an existing advance which is needs to close.' }, status: :conflict
+        render json: { status: :conflict, message: 'You already have an existing advance which needs to close.' }, status: :conflict
       end
     end
 
