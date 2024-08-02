@@ -28,6 +28,18 @@ Rails.application.configure do
   config.active_record.verbose_query_logs = true
   config.middleware.use ActionDispatch::Cookies
   config.middleware.use ActionDispatch::Session::CookieStore
-  config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
   Rails.application.routes.default_url_options[:host] = ENV['RAILS_BACKEND_URL']
+  # Action mailer
+  config.action_mailer.perform_caching = false
+  config.action_mailer.default_url_options = { host: ENV.fetch('HOST_DOMAIN') }
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.smtp_settings = {
+    address: ENV.fetch('SMTP_ADDRESS'),
+    port: ENV.fetch('SMTP_PORT'),
+    domain: ENV.fetch('SMTP_DOMAIN'),
+    user_name: ENV.fetch('SMTP_USERNAME'),
+    password: ENV.fetch('SMTP_PASSWORD'),
+    authentication: 'plain',
+    enable_starttls_auto: true
+  }
 end
