@@ -10,6 +10,21 @@ module Api
       when "all"
         generate_all_reports
       end
+      total = calculate_total_amount
+      if @advances.empty?
+        render json: { message: "There are no advances for this employee." }, status: :not_found
+      else
+        @advances = @advances.map do |advance|
+          advance.attributes.merge(
+            user: {
+              username: advance.user.username,
+              email: advance.user.email,
+              department: advance.user.department,
+              name: advance.name,
+            })
+        end
+        render json: { advances: @advances, total: total }, status: :ok
+      end
     end
 
     private
@@ -23,13 +38,6 @@ module Api
       end
 
       @advances = @advances.where(user_id: user.id)
-      total = calculate_total_amount
-
-      if @advances.empty?
-        render json: { message: "There are no advances for this employee." }, status: :not_found
-      else
-        render json: { advances: @advances, total: total }, status: :ok
-      end
     end
 
     def calculate_total_amount
@@ -70,8 +78,6 @@ module Api
       end
 
       @advances = @advances.where(filters) if filters.any?
-      total = calculate_total_amount
-      render json: { advances: @advances, total: total }, status: :ok
     end
 
     def set_advance
