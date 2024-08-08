@@ -131,6 +131,7 @@ module Api
           :mileage,
           :mode,
           :days,
+          :stop_at,
           :currency
         )
       end
