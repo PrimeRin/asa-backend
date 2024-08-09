@@ -80,6 +80,7 @@ module Api
 
     def update
       if @advance.update(advance_params)
+        update_salary_advance if @advance.advance_type === 'salary_advance'
         update_itinerary if itinerary_needed?
         update_files if files_attached?
         render json: @advance, status: :ok
@@ -111,7 +112,7 @@ module Api
     end
 
     def update_itinerary
-      @advance.travel_itineraries.update(travel_itinerary_params)
+      ItineraryService.new(@advance, travel_itinerary_params).update
     end
 
     def update_files
@@ -147,6 +148,10 @@ module Api
 
     def create_salary_advance
       SalaryService.new(@advance, salary_params).create
+    end
+
+    def update_salary_advance
+      SalaryService.new(@advance, salary_params).update
     end
 
     def set_advance

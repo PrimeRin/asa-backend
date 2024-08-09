@@ -8,7 +8,7 @@ Rails.application.routes.draw do
     sessions: 'users/sessions'
   }
   namespace :api do
-    resources :advances, only: %i[index show create] do
+    resources :advances, only: %i[index show create update] do
       collection do
         get 'status_counts'
         get 'type_counts'
