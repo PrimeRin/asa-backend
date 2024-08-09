@@ -15,8 +15,7 @@ class AdvanceUpdateQuery
     'in_country_tour_advance': 'TA',
     'ex_country_tour_advance': 'TA',
     'dsa_claim': 'DSA',
-  }
-
+  }.freeze
 
   def self.call(params, current_user, resource)
     new(params, current_user, resource).run
@@ -69,7 +68,7 @@ class AdvanceUpdateQuery
       prefix = PREFIX_DISPATCH['dsa_claim']
       reference_key = 'dsa_claim_ref'
     else
-      prefix = PREFIX_DISPATCH[@resource.advance_type]
+      prefix = PREFIX_DISPATCH[@resource.advance_type.to_sym]
       reference_key = 'advance_ref'
     end
     reference = "#{prefix}_#{year}_#{month}_#{@resource.id}"
