@@ -9,6 +9,15 @@ class AdvanceUpdateQuery
     closed
   ].freeze
 
+  PREFIX_DISPATCH = {
+    'salary_advance': 'SA',
+    'other_advance': 'OA',
+    'in_country_tour_advance': 'TA',
+    'ex_country_tour_advance': 'TA',
+    'dsa_claim': 'DSA',
+  }
+
+
   def self.call(params, current_user, resource)
     new(params, current_user, resource).run
   end
@@ -33,6 +42,9 @@ class AdvanceUpdateQuery
     when 'approved'
       next_status = next_status(@resource.status)
       @resource.update(status: next_status, message: @params[:message], "#{next_status}_by": @current_user.id)
+      if next_status == 'dispatched'
+        generate_dispatched_ref
+      end
     when 'rejected'
       @resource.update(status: 'rejected', message: @params[:message], rejected_by: @current_user.id)
     else
@@ -47,5 +59,22 @@ class AdvanceUpdateQuery
     else
       ADVANCE_STATUS_TYPE[current_index + 1]
     end
+  end
+
+  def generate_dispatched_ref
+    year = Time.current.year
+    month = Time.current.month.to_s.rjust(2, '0')
+
+    if @resource.claim_dsa
+      prefix = PREFIX_DISPATCH['dsa_claim']
+      reference_key = 'dsa_claim_ref'
+    else
+      prefix = PREFIX_DISPATCH[@resource.advance_type]
+      reference_key = 'advance_ref'
+    end
+    reference = "#{prefix}_#{year}_#{month}_#{@resource.id}"
+    existing_ref = @resource.dispatched_ref || {}
+    updated_ref = existing_ref.merge(reference_key => reference)
+    @resource.update(dispatched_ref: updated_ref)
   end
 end
