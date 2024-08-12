@@ -2,6 +2,7 @@ module Api
   class ReportsController < ApplicationController
     before_action :authenticate_user!
     before_action :set_advance, only: %i[index]
+    before_action :get_advance, only: %i[show]
 
     def index
       case reports_params[:report_type]
@@ -27,9 +28,20 @@ module Api
       end
     end
 
+    def show
+      report = ReportService.new(@advance).create
+      render json: { report: report }, status: :ok
+    end
+
     private
 
     def generate_individual_report
+      filters = {}
+
+      if reports_params[:advance_type] && reports_params[:advance_type] != 'all'
+        filters[:advance_type] = reports_params[:advance_type]
+      end
+
       user = User.find_by(username: reports_params[:employee_id])
 
       if user.nil?
@@ -38,6 +50,7 @@ module Api
       end
 
       @advances = @advances.where(user_id: user.id)
+      @advances = @advances.where(filters) if filters.any?
     end
 
     def calculate_total_amount
@@ -93,6 +106,11 @@ module Api
       end
     end
 
+    def get_advance
+      @advance = Advance.find(params[:id])
+    rescue ActiveRecord::RecordNotFound
+      render json: { error: 'Advance not found' }, status: :not_found
+    end
     def reports_params
       params.require(:report_filters).permit(
         :report_type,
