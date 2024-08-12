@@ -24,10 +24,12 @@ class ReportService
     @advance.attributes.merge(
       user: {
         eid: @advance.user.username,
-        name: user_full_name,
-        designation: position_title(icbs_user.designationid),
+        name: user_full_name(@advance.user.username),
+        designation: position_title(icbs_user(@advance.user.username).designationid),
         department: @advance.user.department,
-        verified_by: @advance.verifier,
+        verified_by: @advance.verifier.attributes.merge(
+          name: user_full_name(@advance.verifier.username)
+        ),
         confirmed_by: @advance.confirmer,
       },
       previous_advance: {
@@ -36,7 +38,7 @@ class ReportService
         tour_advance: 2000
       },
       detail: @advance.salary_advance,
-      net_pay: Icbs::PayDetail.net_amount(icbs_user.employeeid)
+      net_pay: Icbs::PayDetail.net_amount(icbs_user(@advance.user.username).employeeid)
       )
   end
 
@@ -54,13 +56,14 @@ class ReportService
 
   private
 
-  def icbs_user
-    @icbs_user ||= Icbs::EmployeeMst.find_by(employeecode: @advance.user.username)
+  def icbs_user(username)
+    icbs_user = Icbs::EmployeeMst.find_by(employeecode: username)
   end
 
-  def user_full_name
-    if icbs_user
-      [icbs_user.firstname, icbs_user.middlename, icbs_user.lastname].compact.join(' ')
+  def user_full_name(username)
+    user = icbs_user(username)
+    if user
+      [user.firstname, user.middlename, user.lastname].compact.join(' ')
     else
       "Unknown User"
     end
