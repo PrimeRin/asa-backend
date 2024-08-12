@@ -82,7 +82,6 @@ module Api
       if @advance.update(advance_params)
         update_salary_advance if @advance.advance_type === 'salary_advance'
         update_itinerary if itinerary_needed?
-        update_files if files_attached?
         render json: @advance, status: :ok
       else
         render json: @advance.errors, status: :unprocessable_entity
