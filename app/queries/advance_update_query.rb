@@ -71,7 +71,7 @@ class AdvanceUpdateQuery
       prefix = PREFIX_DISPATCH[@resource.advance_type.to_sym]
       reference_key = 'advance_ref'
     end
-    reference = "#{prefix}_#{year}_#{month}_#{@resource.id}"
+    reference = "#{prefix}/#{year}/#{month}/#{@resource.id}"
     existing_ref = @resource.dispatched_ref || {}
     updated_ref = existing_ref.merge(reference_key => reference)
     @resource.update(dispatched_ref: updated_ref)
