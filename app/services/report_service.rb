@@ -29,13 +29,13 @@ class ReportService
         name: user_full_name(@advance.user.username),
         designation: position_title(icbs_user(@advance.user.username).designationid),
         department: @advance.user.department,
-        verified_by: verifier_detail,
-        confirmed_by: confirmer_detail,
       },
+      verified_by: verifier_detail,
+      confirmed_by: confirmer_detail,
       previous_advance: {
         salary_advance: nil,
-        other_advance: 2000,
-        tour_advance: 2000
+        other_advance: 20000,
+        tour_advance: 2000,
       },
       detail: @advance.salary_advance,
       net_pay: Icbs::PayDetail.net_amount(icbs_user(@advance.user.username).employeeid)
@@ -54,10 +54,10 @@ class ReportService
         designation: position_title(icbs_user(@advance.user.username).designationid),
         department: @advance.user.department,
         grade: grade_name(@advance.user.username),
-        verified_by: verifier_detail,
-        confirmed_by: confirmer_detail,
         travel_itineraries: @advance.travel_itineraries,
       },
+      verified_by: verifier_detail,
+      confirmed_by: confirmer_detail,
     )
   end
 
@@ -69,10 +69,10 @@ class ReportService
         designation: position_title(icbs_user(@advance.user.username).designationid),
         department: @advance.user.department,
         grade: grade_name(@advance.user.username),
-        verified_by: verifier_detail,
-        confirmed_by: confirmer_detail,
         travel_itineraries: @advance.travel_itineraries,
       },
+      verified_by: verifier_detail,
+      confirmed_by: confirmer_detail,
       )
   end
 
@@ -130,6 +130,14 @@ class ReportService
       Rails.logger.error("Error fetching position title for designation_id #{designation_id}: #{e.message}")
       "Unknown Position"
     end
+  end
+
+  def previous_other_advance
+
+  end
+
+  def previous_tour_advance
+
   end
 
   def handle_unknown_advance_type
