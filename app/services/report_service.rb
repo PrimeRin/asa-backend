@@ -43,7 +43,20 @@ class ReportService
   end
 
   def other_report
-
+    @advance.attributes.merge(
+      user: {
+        eid: @advance.user.username,
+        name: user_full_name(@advance.user.username),
+        designation: position_title(icbs_user(@advance.user.username).designationid),
+        department: @advance.user.department,
+      },
+      verified_by: verifier_detail,
+      confirmed_by: confirmer_detail,
+      previous_advance: {
+        other_advance: 20000,
+      },
+      detail: @advance.salary_advance,
+    )
   end
 
   def travel_advance_report
