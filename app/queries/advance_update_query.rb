@@ -65,7 +65,7 @@ class AdvanceUpdateQuery
     month = Time.current.month.to_s.rjust(2, '0')
 
     if @resource.claim_dsa
-      prefix = PREFIX_DISPATCH['dsa_claim']
+      prefix = PREFIX_DISPATCH[:dsa_claim]
       reference_key = 'dsa_claim_ref'
     else
       prefix = PREFIX_DISPATCH[@resource.advance_type.to_sym]
