@@ -42,7 +42,7 @@ class AdvanceQuery
   end
 
   def search
-    return unless @params[:query]
+    return unless @params[:query].present?
 
     @resource = @resource.joins(:user).where('users.email LIKE ?', "%#{@params[:query]}%")
   end

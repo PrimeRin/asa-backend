@@ -2,26 +2,55 @@ module Api
   class ReportsController < ApplicationController
     before_action :authenticate_user!
     before_action :set_advance, only: %i[index]
+    before_action :get_advance, only: %i[show]
 
     def index
       case reports_params[:report_type]
       when "individual"
         generate_individual_report
-      else
+      when "all"
         generate_all_reports
       end
+      total = calculate_total_amount
+      if @advances.empty?
+        render json: { message: "There are no advances for this employee." }, status: :not_found
+      else
+        @advances = @advances.map do |advance|
+          advance.attributes.merge(
+            user: {
+              username: advance.user.username,
+              email: advance.user.email,
+              department: advance.user.department,
+              name: advance.name,
+            })
+        end
+        render json: { advances: @advances, total: total }, status: :ok
+      end
+    end
+
+    def show
+      report = ReportService.new(@advance).create
+      render json: { report: report }, status: :ok
     end
 
     private
 
     def generate_individual_report
-      @advances = @advances.where(username: reports_params[:employee_id])
-      total = calculate_total_amount
-      if @advances.empty?
-        render json: { message: "There are no advances for this employee." }, status: :not_found
-      else
-        render json: { advances: @advances, total: total }, status: :ok
+      filters = {}
+
+      if reports_params[:advance_type] && reports_params[:advance_type] != 'all'
+        filters[:advance_type] = reports_params[:advance_type]
       end
+
+      user = User.find_by(username: reports_params[:employee_id])
+
+      if user.nil?
+        render json: { message: "User not found." }, status: :not_found
+        return
+      end
+
+      @advances = @advances.where(user_id: user.id)
+      @advances = @advances.where(filters) if filters.any?
     end
 
     def calculate_total_amount
@@ -51,13 +80,17 @@ module Api
 
     def generate_all_reports
       filters = {}
-      filters[:advance_type] = reports_params[:advance_type] unless reports_params[:advance_type] == 'all'
-      filters[:department] = reports_params[:department] unless reports_params[:department] == 'all'
 
-      @advances = @advances.where(filters)
-      total = calculate_total_amount
+      if reports_params[:advance_type] && reports_params[:advance_type] != 'all'
+        filters[:advance_type] = reports_params[:advance_type]
+      end
 
-      render json: { advances: @advances, total: total }, status: :ok
+      if reports_params[:department] && reports_params[:department] != 'all'
+        user_ids = User.where(department: reports_params[:department]).pluck(:id)
+        filters[:user_id] = user_ids
+      end
+
+      @advances = @advances.where(filters) if filters.any?
     end
 
     def set_advance
@@ -69,12 +102,17 @@ module Api
           updated_at: start_date.beginning_of_day..end_date.end_of_day
         )
       else
-        @advances = []
+        @advances = Advance.none
       end
     end
 
+    def get_advance
+      @advance = Advance.find(params[:id])
+    rescue ActiveRecord::RecordNotFound
+      render json: { error: 'Advance not found' }, status: :not_found
+    end
     def reports_params
-      params.permit(
+      params.require(:report_filters).permit(
         :report_type,
         :start_date,
         :end_date,

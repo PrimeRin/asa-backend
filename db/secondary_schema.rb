@@ -122,4 +122,4 @@ ActiveRecord::Schema[7.0].define(version: 2024_07_17_070914) do
     t.string "verified_by"
     t.string "verify_remarks"
   end
-
+end

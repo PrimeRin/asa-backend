@@ -12,7 +12,8 @@ class ItineraryService
     end
   end
 
-  def update(itinerary, new_itinerary_params)
-    itinerary.update(new_itinerary_params)
+  def update
+    @advance.travel_itineraries.delete_all
+    create
   end
 end

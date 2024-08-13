@@ -64,7 +64,8 @@ module Api
         :dsa_percentage,
         :halt_at,
         :mileage,
-        :days
+        :days,
+        :stop_at
       )
     end
   end

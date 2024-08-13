@@ -2,7 +2,7 @@
 
 class TravelItinerary < ApplicationRecord
   belongs_to :advance
-  validates :start_date, :end_date, :from, :to, :rate, presence: true
+  validates :start_date, :end_date, :rate, presence: true
   validate :end_date_after_start_date
   # validate :check_amount
 

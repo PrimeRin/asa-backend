@@ -9,4 +9,14 @@ class SalaryService
   def create
     @advance.create_salary_advance(@salary_params).save
   end
+
+  def update
+    salary = @advance.salary_advance
+
+    if salary
+      salary.update(@salary_params)
+    else
+      raise "Salary record not found for advance ID #{@advance.id}"
+    end
+  end
 end
