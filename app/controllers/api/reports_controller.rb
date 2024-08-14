@@ -46,6 +46,7 @@ module Api
       user = User.find_by(username: reports_params[:employee_id])
 
       if user.nil?
+        @advances = Advance.none
         return
       end
 
