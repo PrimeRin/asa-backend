@@ -1,6 +1,11 @@
 # frozen_string_literal: true
 
 class ReportService
+  ADVANCE_TYPE = {
+    'salary_advance' => '1302004',
+    'other_advance' => '1302008',
+    'tour_advance' => '1302003',
+  }.freeze
   def initialize(advance)
     @advance = advance
   end
@@ -33,9 +38,9 @@ class ReportService
       verified_by: verifier_detail,
       confirmed_by: confirmer_detail,
       previous_advance: {
-        salary_advance: nil,
-        other_advance: 20000,
-        tour_advance: 2000,
+        salary_advance: previous_balance(@advance.user.username, ADVANCE_TYPE['salary_advance']),
+        other_advance: previous_balance(@advance.user.username, ADVANCE_TYPE['other_advance']),
+        tour_advance: previous_balance(@advance.user.username, ADVANCE_TYPE['tour_advance'])
       },
       detail: @advance.salary_advance,
       net_pay: Icbs::PayDetail.net_amount(icbs_user(@advance.user.username).employeeid)
@@ -53,7 +58,7 @@ class ReportService
       verified_by: verifier_detail,
       confirmed_by: confirmer_detail,
       previous_advance: {
-        other_advance: 20000,
+        other_advance: previous_balance(@advance.user.username, ADVANCE_TYPE['other_advance']),
       },
       detail: @advance.salary_advance,
     )
@@ -90,6 +95,10 @@ class ReportService
   end
 
   private
+
+  def previous_balance(slcode, glcode)
+    Icbs::BalanceFetcher.fetch_balance(slcode, glcode)
+  end
 
   def verifier_detail
     if @advance.verifier
