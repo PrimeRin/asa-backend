@@ -154,14 +154,6 @@ class ReportService
     end
   end
 
-  def previous_other_advance
-
-  end
-
-  def previous_tour_advance
-
-  end
-
   def handle_unknown_advance_type
     Rails.logger.error("Unknown advance_type: #{@advance.advance_type}")
   end
