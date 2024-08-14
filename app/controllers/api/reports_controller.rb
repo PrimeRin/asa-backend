@@ -39,6 +39,10 @@ module Api
     def generate_individual_report
       filters = {}
 
+      if reports_params[:advance_type === 'Dsa Claim']
+        return dsa_report
+      end
+
       if reports_params[:advance_type] && reports_params[:advance_type] != 'all'
         filters[:advance_type] = reports_params[:advance_type]
       end
@@ -52,6 +56,16 @@ module Api
 
       @advances = @advances.where(user_id: user.id)
       @advances = @advances.where(filters) if filters.any?
+    end
+
+    def dsa_report
+      user = User.find_by(username: reports_params[:employee_id])
+
+      if user.nil?
+        @advances = Advance.none
+        return
+      end
+      @advances = @advances.where(user_id: user.id, claim_dsa: true)
     end
 
     def calculate_total_amount
