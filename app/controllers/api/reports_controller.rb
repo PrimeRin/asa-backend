@@ -13,7 +13,7 @@ module Api
       end
       total = calculate_total_amount
       if @advances.empty?
-        render json: { message: "There are no advances for this employee." }, status: :ok
+        message = "There are no advances for this employee."
       else
         @advances = @advances.map do |advance|
           advance.attributes.merge(
@@ -24,8 +24,9 @@ module Api
               name: advance.name,
             })
         end
-        render json: { advances: @advances, total: total }, status: :ok
+        message = nil
       end
+      render json: { advances: @advances, total: total, message: message  }, status: :ok
     end
 
     def show
