@@ -39,7 +39,7 @@ module Api
     def generate_individual_report
       filters = {}
 
-      if reports_params[:advance_type === 'Dsa Claim']
+      if reports_params[:advance_type === 'dsa_claim']
         return dsa_report
       end
 
