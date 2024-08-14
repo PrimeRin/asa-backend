@@ -65,13 +65,13 @@ class AdvanceUpdateQuery
     month = Time.current.month.to_s.rjust(2, '0')
 
     if @resource.claim_dsa
-      prefix = PREFIX_DISPATCH['dsa_claim']
+      prefix = PREFIX_DISPATCH[:dsa_claim]
       reference_key = 'dsa_claim_ref'
     else
       prefix = PREFIX_DISPATCH[@resource.advance_type.to_sym]
       reference_key = 'advance_ref'
     end
-    reference = "#{prefix}_#{year}_#{month}_#{@resource.id}"
+    reference = "#{prefix}/#{year}/#{month}/#{@resource.id}"
     existing_ref = @resource.dispatched_ref || {}
     updated_ref = existing_ref.merge(reference_key => reference)
     @resource.update(dispatched_ref: updated_ref)

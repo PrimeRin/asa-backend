@@ -13,7 +13,7 @@ module Api
       end
       total = calculate_total_amount
       if @advances.empty?
-        render json: { message: "There are no advances for this employee." }, status: :not_found
+        message = "There are no advances for this employee."
       else
         @advances = @advances.map do |advance|
           advance.attributes.merge(
@@ -24,8 +24,9 @@ module Api
               name: advance.name,
             })
         end
-        render json: { advances: @advances, total: total }, status: :ok
+        message = nil
       end
+      render json: { advances: @advances, total: total, message: message  }, status: :ok
     end
 
     def show
@@ -38,6 +39,10 @@ module Api
     def generate_individual_report
       filters = {}
 
+      if reports_params[:advance_type]  == 'dsa_claim'
+        return dsa_report
+      end
+
       if reports_params[:advance_type] && reports_params[:advance_type] != 'all'
         filters[:advance_type] = reports_params[:advance_type]
       end
@@ -45,12 +50,22 @@ module Api
       user = User.find_by(username: reports_params[:employee_id])
 
       if user.nil?
-        render json: { message: "User not found." }, status: :not_found
+        @advances = Advance.none
         return
       end
 
       @advances = @advances.where(user_id: user.id)
       @advances = @advances.where(filters) if filters.any?
+    end
+
+    def dsa_report
+      user = User.find_by(username: reports_params[:employee_id])
+
+      if user.nil?
+        @advances = Advance.none
+        return
+      end
+      @advances = @advances.where(user_id: user.id, claim_dsa: true)
     end
 
     def calculate_total_amount

@@ -66,3 +66,13 @@ ActiveRecord::Base.connection_pool.with_connection(&:active?)
 # DsaRate.where(to: 'Bhutan').update_all(currency: 'Nu')
 # DsaRate.where(to: 'India').update_all(currency: 'INR')
 # DsaRateThirdCountry.update_all(currency: "USD")
+
+
+# TODO:
+# - add validation for salary advance
+# - add office order number for other advance
+
+# Frontend
+# - double notifications
+#
+
