@@ -46,7 +46,6 @@ module Api
       user = User.find_by(username: reports_params[:employee_id])
 
       if user.nil?
-        render json: { message: "User not found." }, status: :not_found
         return
       end
 
