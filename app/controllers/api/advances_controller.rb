@@ -29,7 +29,7 @@ module Api
         position_title: @advance.position,
         advance_detail: @advance.salary_advance,
         travel_itinerary: travel_itineraries,
-        files: files
+        files: serialize_files(files)
       )
       render json: @advance, status: :ok
     end
