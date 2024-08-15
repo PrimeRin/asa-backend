@@ -9,7 +9,7 @@ class Advance < ApplicationRecord
 
   validates :advance_type, :status, :amount, presence: true
   validates :advance_type,
-            inclusion: { in: %w[salary_advance other_advance in_country_tour_advance ex_country_tour_advance],
+            inclusion: { in: %w[salary_advance other_advance in_country_tour_advance ex_country_tour_advance dsa_claim],
                          message: '%<value>s is not a valid advance type' }
   validates :status,
             inclusion: { in: %w[pending verified confirmed dispatched closed rejected],
