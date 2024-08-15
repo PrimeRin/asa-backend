@@ -89,11 +89,20 @@ module Api
     end
 
     def claim_dsa
-      if @advance.update(claim_dsa: true, status: "pending", dsa_amount: params[:dsa_amount])
-        PublishNotificationService.new(current_user, @advance).create
-        render json: @advance, status: :ok
+      new_advance = @advance.dup
+      new_advance.assign_attributes(
+        claim_dsa: true,
+        status: 'pending',
+        advance_type: 'dsa_claim',
+        dsa_amount: params[:dsa_amount]
+      )
+
+      if new_advance.save
+        # Publish notification for the newly created advance
+        PublishNotificationService.new(current_user, new_advance).create
+        render json: new_advance, status: :ok
       else
-        render json: @advance.errors, status: :unprocessable_entity
+        render json: new_advance.errors, status: :unprocessable_entity
       end
     end
 

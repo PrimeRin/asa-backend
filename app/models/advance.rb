@@ -28,7 +28,8 @@ class Advance < ApplicationRecord
     salary_advance: 'salary_advance',
     other_advance: 'other_advance',
     in_country_tour_advance: 'in_country_tour_advance',
-    ex_country_tour_advance: 'ex_country_tour_advance'
+    ex_country_tour_advance: 'ex_country_tour_advance',
+    dsa_claim: 'dsa_claim'
   }
 
   def verifier
