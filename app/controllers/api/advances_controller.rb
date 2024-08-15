@@ -96,6 +96,7 @@ module Api
         advance_type: 'dsa_claim',
         dsa_amount: params[:dsa_amount]
       )
+      @advance.update(status: "closed");
 
       if new_advance.save
         # Publish notification for the newly created advance
