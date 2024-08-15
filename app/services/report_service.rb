@@ -16,12 +16,9 @@ class ReportService
       salary_report
     when "other_advance"
       other_report
-    when "in_country_tour_advance"
+    when "in_country_tour_advance", "in_country_dsa_claim",
+      "ex_country_tour_advance", "ex_country_dsa_claim"
       travel_advance_report
-    when "ex_country_tour_advance"
-      travel_advance_report
-    when "dsa_claim"
-      travel_dsa_report
     else
       handle_unknown_advance_type
     end
@@ -72,7 +69,7 @@ class ReportService
         designation: position_title(icbs_user(@advance.user.username).designationid),
         department: @advance.user.department,
         grade: grade_name(@advance.user.username),
-        travel_itineraries: @advance.travel_itineraries,
+        travel_itineraries: travel_itineraries,
       },
       verified_by: verifier_detail,
       confirmed_by: confirmer_detail,
@@ -156,5 +153,14 @@ class ReportService
 
   def handle_unknown_advance_type
     Rails.logger.error("Unknown advance_type: #{@advance.advance_type}")
+  end
+
+  def travel_itineraries
+    if @advance.advance_type == 'in_country_dsa_claim' || @advance.advance_type == 'ex_country_dsa_claim'
+      advance = Advance.find(@advance.parent_id)
+      advance.travel_itineraries
+    else
+      @advance.travel_itineraries
+    end
   end
 end
