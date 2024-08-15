@@ -9,8 +9,8 @@ class PublishNotificationService
   }.freeze
 
   DSA_TYPE = {
-    'in_country_tour_advance' => 'In Country DSA Claim',
-    'ex_country_tour_advance' => 'Ex Country DSA Claim'
+    'in_country_dsa_claim' => 'In Country DSA Claim',
+    'ex_country_dsa_claim' => 'Ex Country DSA Claim'
   }.freeze
   def initialize(current_user, advance)
     @current_user = current_user

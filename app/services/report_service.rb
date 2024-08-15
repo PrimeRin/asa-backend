@@ -1,6 +1,11 @@
 # frozen_string_literal: true
 
 class ReportService
+  ADVANCE_TYPE = {
+    'salary_advance' => '1302004',
+    'other_advance' => '1302008',
+    'tour_advance' => '1302003',
+  }.freeze
   def initialize(advance)
     @advance = advance
   end
@@ -11,12 +16,9 @@ class ReportService
       salary_report
     when "other_advance"
       other_report
-    when "in_country_tour_advance"
+    when "in_country_tour_advance", "in_country_dsa_claim",
+      "ex_country_tour_advance", "ex_country_dsa_claim"
       travel_advance_report
-    when "ex_country_tour_advance"
-      travel_advance_report
-    when "dsa_claim"
-      travel_dsa_report
     else
       handle_unknown_advance_type
     end
@@ -33,9 +35,9 @@ class ReportService
       verified_by: verifier_detail,
       confirmed_by: confirmer_detail,
       previous_advance: {
-        salary_advance: nil,
-        other_advance: 20000,
-        tour_advance: 2000,
+        salary_advance: previous_balance(@advance.user.username, ADVANCE_TYPE['salary_advance']),
+        other_advance: previous_balance(@advance.user.username, ADVANCE_TYPE['other_advance']),
+        tour_advance: previous_balance(@advance.user.username, ADVANCE_TYPE['tour_advance'])
       },
       detail: @advance.salary_advance,
       net_pay: Icbs::PayDetail.net_amount(icbs_user(@advance.user.username).employeeid)
@@ -53,7 +55,7 @@ class ReportService
       verified_by: verifier_detail,
       confirmed_by: confirmer_detail,
       previous_advance: {
-        other_advance: 20000,
+        other_advance: previous_balance(@advance.user.username, ADVANCE_TYPE['other_advance']),
       },
       detail: @advance.salary_advance,
     )
@@ -67,7 +69,7 @@ class ReportService
         designation: position_title(icbs_user(@advance.user.username).designationid),
         department: @advance.user.department,
         grade: grade_name(@advance.user.username),
-        travel_itineraries: @advance.travel_itineraries,
+        travel_itineraries: travel_itineraries,
       },
       verified_by: verifier_detail,
       confirmed_by: confirmer_detail,
@@ -90,6 +92,10 @@ class ReportService
   end
 
   private
+
+  def previous_balance(slcode, glcode)
+    Icbs::BalanceFetcher.fetch_balance(slcode, glcode)
+  end
 
   def verifier_detail
     if @advance.verifier
@@ -145,15 +151,16 @@ class ReportService
     end
   end
 
-  def previous_other_advance
-
-  end
-
-  def previous_tour_advance
-
-  end
-
   def handle_unknown_advance_type
     Rails.logger.error("Unknown advance_type: #{@advance.advance_type}")
+  end
+
+  def travel_itineraries
+    if @advance.advance_type == 'in_country_dsa_claim' || @advance.advance_type == 'ex_country_dsa_claim'
+      advance = Advance.find(@advance.parent_id)
+      advance.travel_itineraries
+    else
+      @advance.travel_itineraries
+    end
   end
 end

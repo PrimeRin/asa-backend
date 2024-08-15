@@ -74,19 +74,19 @@ module Api
       @advances.each do |advance|
         case advance.advance_type
         when 'salary_advance', 'other_advance'
-          total[:Nu] += advance.amount
+          total[:Nu] += advance.amount.to_f
         when 'in_country_tour_advance'
-          total[:Nu] += advance.advance_amount['Nu']
-          total[:Nu] += advance.dsa_amount['Nu'] if advance.claim_dsa
+          total[:Nu] += advance.advance_amount['Nu'].to_f
         when 'ex_country_tour_advance'
-          total[:Nu] += advance.advance_amount['Nu']
-          total[:INR] += advance.advance_amount['INR']
-          total[:USD] += advance.advance_amount['USD']
-          if advance.claim_dsa
-            total[:Nu] += advance.dsa_amount['Nu']
-            total[:INR] += advance.dsa_amount['INR']
-            total[:USD] += advance.dsa_amount['USD']
-          end
+          total[:Nu] += advance.advance_amount['Nu'].to_f
+          total[:INR] += advance.advance_amount['INR'].to_f
+          total[:USD] += advance.advance_amount['USD'].to_f
+        when 'in_country_dsa_claim'
+          total[:Nu] += advance.dsa_amount['Nu'].to_f
+        when 'ex_country_dsa_claim'
+          total[:Nu] += advance.dsa_amount['Nu'].to_f
+          total[:INR] += advance.dsa_amount['INR'].to_f
+          total[:USD] += advance.dsa_amount['USD'].to_f
         end
       end
 
@@ -97,7 +97,11 @@ module Api
       filters = {}
 
       if reports_params[:advance_type] && reports_params[:advance_type] != 'all'
-        filters[:advance_type] = reports_params[:advance_type]
+        if reports_params[:advance_type] == 'dsa_claim'
+          filters[:advance_type] = %w[in_country_dsa_claim ex_country_dsa_claim]
+        else
+          filters[:advance_type] = reports_params[:advance_type]
+        end
       end
 
       if reports_params[:department] && reports_params[:department] != 'all'
@@ -113,7 +117,7 @@ module Api
       end_date = Date.parse(reports_params[:end_date]) rescue nil
       if start_date && end_date
         @advances = Advance.where(
-          status: "dispatched",
+          status: %w[dispatched closed],
           updated_at: start_date.beginning_of_day..end_date.end_of_day
         )
       else

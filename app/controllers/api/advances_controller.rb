@@ -28,8 +28,8 @@ module Api
         user: @advance.user,
         position_title: @advance.position,
         advance_detail: @advance.salary_advance,
-        travel_itinerary: @advance.travel_itineraries,
-        files: serialize_files(@advance.files)
+        travel_itinerary: travel_itineraries,
+        files: serialize_files(files)
       )
       render json: @advance, status: :ok
     end
@@ -89,11 +89,27 @@ module Api
     end
 
     def claim_dsa
-      if @advance.update(claim_dsa: true, status: "pending", dsa_amount: params[:dsa_amount])
-        PublishNotificationService.new(current_user, @advance).create
-        render json: @advance, status: :ok
+      new_advance = @advance.dup
+      dsa_type = case @advance.advance_type
+                 when 'in_country_tour_advance'
+                   'in_country_dsa_claim'
+                 when 'ex_country_tour_advance'
+                   'ex_country_dsa_claim'
+                 end
+      new_advance.assign_attributes(
+        claim_dsa: true,
+        status: 'pending',
+        advance_type: dsa_type,
+        dsa_amount: params[:dsa_amount],
+        parent_id: @advance.id,
+      )
+      @advance.update!(status: "closed")
+
+      if new_advance.save
+        PublishNotificationService.new(current_user, new_advance).create
+        render json: new_advance, status: :ok
       else
-        render json: @advance.errors, status: :unprocessable_entity
+        render json: new_advance.errors, status: :unprocessable_entity
       end
     end
 
@@ -182,6 +198,24 @@ module Api
 
     def calculate_type_count
       Advance.group(:advance_type).count
+    end
+
+    def travel_itineraries
+      if @advance.advance_type == 'in_country_dsa_claim' || @advance.advance_type == 'ex_country_dsa_claim'
+        advance = Advance.find(@advance.parent_id)
+        advance.travel_itineraries
+      else
+        @advance.travel_itineraries
+      end
+    end
+
+    def files
+      if @advance.advance_type == 'in_country_dsa_claim' || @advance.advance_type == 'ex_country_dsa_claim'
+        advance = Advance.find(@advance.parent_id)
+        advance.files
+      else
+        @advance.files
+      end
     end
   end
 end
