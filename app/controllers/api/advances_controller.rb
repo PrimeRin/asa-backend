@@ -29,7 +29,7 @@ module Api
         position_title: @advance.position,
         advance_detail: @advance.salary_advance,
         travel_itinerary: travel_itineraries,
-        files: serialize_files(@advance.files)
+        files: files
       )
       render json: @advance, status: :ok
     end
@@ -202,7 +202,7 @@ module Api
 
     def travel_itineraries
       if @advance.advance_type == 'in_country_dsa_claim' || @advance.advance_type == 'ex_country_dsa_claim'
-        advance = Advance.find_by(parent_id: @advance.parent_id)
+        advance = Advance.find(@advance.parent_id)
         advance.travel_itineraries
       else
         @advance.travel_itineraries
@@ -211,7 +211,7 @@ module Api
 
     def files
       if @advance.advance_type == 'in_country_dsa_claim' || @advance.advance_type == 'ex_country_dsa_claim'
-        advance = Advance.find_by(parent_id: @advance.parent_id)
+        advance = Advance.find(@advance.parent_id)
         advance.files
       else
         @advance.files
