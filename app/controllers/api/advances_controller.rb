@@ -186,6 +186,7 @@ module Api
         :amount,
         :purpose,
         :remark,
+        :office_order,
         :advance_percentage,
         dsa_amount: [:Nu, :INR, :USD],
         advance_amount: [:Nu, :INR, :USD]
