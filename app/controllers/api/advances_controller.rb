@@ -90,16 +90,21 @@ module Api
 
     def claim_dsa
       new_advance = @advance.dup
+      dsa_type = case @advance.advance_type
+                 when 'in_country_tour_advance'
+                   'in_country_dsa_claim'
+                 when 'ex_country_tour_advance'
+                   'ex_country_dsa_claim'
+                 end
       new_advance.assign_attributes(
         claim_dsa: true,
         status: 'pending',
-        advance_type: 'dsa_claim',
+        advance_type: dsa_type,
         dsa_amount: params[:dsa_amount]
       )
-      @advance.update(status: "closed");
+      @advance.update!(status: "closed")
 
       if new_advance.save
-        # Publish notification for the newly created advance
         PublishNotificationService.new(current_user, new_advance).create
         render json: new_advance, status: :ok
       else
