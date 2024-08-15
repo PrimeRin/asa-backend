@@ -74,19 +74,19 @@ module Api
       @advances.each do |advance|
         case advance.advance_type
         when 'salary_advance', 'other_advance'
-          total[:Nu] += advance.amount
-        when 'in_country_tour_advance',
-          total[:Nu] += advance.advance_amount['Nu']
+          total[:Nu] += advance.amount.to_f
+        when 'in_country_tour_advance'
+          total[:Nu] += advance.advance_amount['Nu'].to_f
         when 'ex_country_tour_advance', 'ex_country_dsa_claim'
-          total[:Nu] += advance.advance_amount['Nu']
-          total[:INR] += advance.advance_amount['INR']
-          total[:USD] += advance.advance_amount['USD']
+          total[:Nu] += advance.advance_amount['Nu'].to_f
+          total[:INR] += advance.advance_amount['INR'].to_f
+          total[:USD] += advance.advance_amount['USD'].to_f
         when 'in_country_dsa_claim'
-          total[:Nu] += advance.dsa_amount['Nu']
+          total[:Nu] += advance.dsa_amount['Nu'].to_f
         when 'ex_country_dsa_claim'
-          total[:Nu] += advance.dsa_amount['Nu']
-          total[:INR] += advance.dsa_amount['INR']
-          total[:USD] += advance.dsa_amount['USD']
+          total[:Nu] += advance.dsa_amount['Nu'].to_f
+          total[:INR] += advance.dsa_amount['INR'].to_f
+          total[:USD] += advance.dsa_amount['USD'].to_f
         end
       end
 
