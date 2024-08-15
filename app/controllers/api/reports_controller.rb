@@ -113,7 +113,7 @@ module Api
       end_date = Date.parse(reports_params[:end_date]) rescue nil
       if start_date && end_date
         @advances = Advance.where(
-          status: "dispatched",
+          status: %w[dispatched closed],
           updated_at: start_date.beginning_of_day..end_date.end_of_day
         )
       else
