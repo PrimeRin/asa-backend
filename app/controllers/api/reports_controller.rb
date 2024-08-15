@@ -77,7 +77,7 @@ module Api
           total[:Nu] += advance.amount.to_f
         when 'in_country_tour_advance'
           total[:Nu] += advance.advance_amount['Nu'].to_f
-        when 'ex_country_tour_advance', 'ex_country_dsa_claim'
+        when 'ex_country_tour_advance'
           total[:Nu] += advance.advance_amount['Nu'].to_f
           total[:INR] += advance.advance_amount['INR'].to_f
           total[:USD] += advance.advance_amount['USD'].to_f
