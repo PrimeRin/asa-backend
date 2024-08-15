@@ -43,6 +43,9 @@ class AdvanceUpdateQuery
       @resource.update(status: next_status, message: @params[:message], "#{next_status}_by": @current_user.id)
       if next_status == 'dispatched'
         generate_dispatched_ref
+      elsif next_status == 'confirmed' && @resource.advance_percentage == '0.0'
+        @resource.update(status: "dispatched")
+        generate_dispatched_ref
       end
     when 'rejected'
       @resource.update(status: 'rejected', message: @params[:message], rejected_by: @current_user.id)
