@@ -75,18 +75,12 @@ module Api
         case advance.advance_type
         when 'salary_advance', 'other_advance'
           total[:Nu] += advance.amount
-        when 'in_country_tour_advance'
+        when 'in_country_tour_advance', 'in_country_dsa_claim'
           total[:Nu] += advance.advance_amount['Nu']
-          total[:Nu] += advance.dsa_amount['Nu'] if advance.claim_dsa
-        when 'ex_country_tour_advance'
+        when 'ex_country_tour_advance', 'ex_country_dsa_claim'
           total[:Nu] += advance.advance_amount['Nu']
           total[:INR] += advance.advance_amount['INR']
           total[:USD] += advance.advance_amount['USD']
-          if advance.claim_dsa
-            total[:Nu] += advance.dsa_amount['Nu']
-            total[:INR] += advance.dsa_amount['INR']
-            total[:USD] += advance.dsa_amount['USD']
-          end
         end
       end
 
