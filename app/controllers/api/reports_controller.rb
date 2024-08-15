@@ -97,7 +97,11 @@ module Api
       filters = {}
 
       if reports_params[:advance_type] && reports_params[:advance_type] != 'all'
-        filters[:advance_type] = reports_params[:advance_type]
+        if reports_params[:advance_type] == 'dsa_claim'
+          filters[:advance_type] = %w[in_country_dsa_claim ex_country_dsa_claim]
+        else
+          filters[:advance_type] = reports_params[:advance_type]
+        end
       end
 
       if reports_params[:department] && reports_params[:department] != 'all'
