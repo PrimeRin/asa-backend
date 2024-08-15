@@ -28,7 +28,7 @@ module Api
         user: @advance.user,
         position_title: @advance.position,
         advance_detail: @advance.salary_advance,
-        travel_itinerary: @advance.travel_itineraries,
+        travel_itinerary: travel_itineraries,
         files: serialize_files(@advance.files)
       )
       render json: @advance, status: :ok
@@ -100,7 +100,8 @@ module Api
         claim_dsa: true,
         status: 'pending',
         advance_type: dsa_type,
-        dsa_amount: params[:dsa_amount]
+        dsa_amount: params[:dsa_amount],
+        parent_id: @advance.id,
       )
       @advance.update!(status: "closed")
 
@@ -197,6 +198,24 @@ module Api
 
     def calculate_type_count
       Advance.group(:advance_type).count
+    end
+
+    def travel_itineraries
+      if @advance.advance_type == 'in_country_dsa_claim' || @advance.advance_type == 'ex_country_dsa_claim'
+        advance = Advance.find_by(parent_id: @advance.parent_id)
+        advance.travel_itineraries
+      else
+        @advance.travel_itineraries
+      end
+    end
+
+    def files
+      if @advance.advance_type == 'in_country_dsa_claim' || @advance.advance_type == 'ex_country_dsa_claim'
+        advance = Advance.find_by(parent_id: @advance.parent_id)
+        advance.files
+      else
+        @advance.files
+      end
     end
   end
 end
