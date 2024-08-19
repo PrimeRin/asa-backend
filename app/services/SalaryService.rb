@@ -23,7 +23,7 @@ class SalaryService
 
   def get_completion_month_year
     date = @advance.updated_at || Time.now
-    duration = @salary_params[:duration] || 0
+    duration = @salary_params[:duration].to_i
     completion_date = date.advance(months: duration)
     completion_date.strftime("%B %Y")
   end
