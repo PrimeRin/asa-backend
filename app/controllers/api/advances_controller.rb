@@ -66,6 +66,10 @@ module Api
     end
 
     def create
+      unless advance_params[:advance_type] != 'salary_advance' || check_salary_advance
+        return render json: { status: :conflict, message: 'You already have an existing advance which needs to be closed.' }, status: :conflict
+      end
+
       @advance = current_user.advances.new(advance_params)
 
       if @advance.save
@@ -191,6 +195,20 @@ module Api
         dsa_amount: [:Nu, :INR, :USD],
         advance_amount: [:Nu, :INR, :USD]
       )
+    end
+
+    def check_salary_advance
+      salary_advance = previous_balance(current_user.username, '1302004')
+
+      if salary_advance > 0
+        return false
+      end
+
+      true
+    end
+
+    def previous_balance(slcode, glcode)
+      Icbs::BalanceFetcher.fetch_balance(slcode, glcode)
     end
 
     def calculate_status_count
