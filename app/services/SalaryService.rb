@@ -7,8 +7,11 @@ class SalaryService
   end
 
   def create
-    @advance.create_salary_advance(@salary_params).save
-    @advance.update(completion_month: get_completion_month_year)
+    salary_advance = @advance.create_salary_advance(@salary_params)
+
+    if salary_advance.save
+      salary_advance.update(completion_month: get_completion_month_year)
+    end
   end
 
   def update
