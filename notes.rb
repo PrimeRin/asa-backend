@@ -74,5 +74,24 @@ ActiveRecord::Base.connection_pool.with_connection(&:active?)
 
 # Frontend
 # - double notifications
-#
 
+# Deploy react in Nginx
+# sudo nano /etc/nginx/sites-available/asa-web
+# server {
+#         listen 3004;
+#         listen [::]:3004;
+#         server_name asa-web;
+
+#         root /var/www/asa-web;
+#         index index.html;
+
+#         location / {
+#                 try_files $uri $uri/ /index.html;
+#         }
+
+# }
+
+# sudo ln -s /etc/nginx/sites-available/asa-web /etc/nginx/sites-enabled/
+# sudo nginx -t
+# sudo systemctl restart nginx.service 
+# sudo systemctl status nginx.service
