@@ -16,8 +16,8 @@ else
   puts 'No profile picture attached.'
 end
 
-advance.files.attach(io: File.open(Rails.root.join('app', 'assets', 'files', 'office_order.pdf')),
-                     filename: 'office_order.pdf', content_type: 'application/pdf')
+advance.files.attach(io: File.open(Rails.root.join('app', 'assets', 'files', 'DFERM (3).pdf')),
+                     filename: 'DFERM (3).pdf', content_type: 'application/pdf')
 advance.files.each do |file|
   puts "File Name: #{file.filename}"
   puts "File Size: #{file.blob.byte_size} bytes"

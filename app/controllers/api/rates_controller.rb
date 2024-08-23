@@ -50,7 +50,9 @@ module Api
     end
 
     def grade_name
-      user = Icbs::EmployeeMst.find_by(employeecode: current_user.username)
+      username = rate_params[:username].presence || current_user.username
+
+      user = Icbs::EmployeeMst.find_by(employeecode: username)
       return unless user
 
       grade = Icbs::GradeMst.find_by(gradeid: user.gradeid)
@@ -61,7 +63,7 @@ module Api
     end
 
     def rate_params
-      params.require(:rate).permit(:from, :to, :grade_id)
+      params.require(:rate).permit(:from, :to, :grade_id, :username)
     end
 
     def third_country_rate_params
