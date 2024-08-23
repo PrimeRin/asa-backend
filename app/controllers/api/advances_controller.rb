@@ -152,7 +152,8 @@ module Api
           :mode,
           :days,
           :stop_at,
-          :currency
+          :currency,
+          :return
         )
       end
     end
