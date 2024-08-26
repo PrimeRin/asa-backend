@@ -66,7 +66,7 @@ rails db:seed
 ![User Flow Diagram](app/assets/images/userflow3.png)
 
 ## Advance flow diagram
-![User Flow Diagram](app/assets/images/userflow1.png)
+![User Flow Diagram](app/assets/images/advance_flow.png)
 
 Employee submits the advance request form with advance amounts and details which is initially kept in pending state. Finance teams checks the pending advances and it verifies or reject a/c to the details. If the advance is verified then it is forwared to the DAF Director for the confirmation, once the advance is confirmed Finance dispatches the fund to the requestors account.
 
