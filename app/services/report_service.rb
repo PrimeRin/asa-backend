@@ -107,7 +107,10 @@ class ReportService
 
   def confirmer_detail
     if @advance.confirmer
-      @advance.confirmer.attributes.merge(name: user_full_name(@advance.confirmer.username))
+      @advance.confirmer.attributes.merge(
+        name: user_full_name(@advance.confirmer.username), 
+        role_name: role_name(@advance.confirmer.username)
+        )
     else
       nil
     end
@@ -125,6 +128,16 @@ class ReportService
       "Unknown User"
     end
   end
+
+  def role_name(username)
+    user = User.find_by(username: username)
+    if user
+      user.role.name
+    else
+      "Unknown Role"
+    end
+  end
+
 
   def grade_name(username)
     begin
