@@ -107,3 +107,59 @@ Senior HR Officer:
     confirm: true
     dispatch: false
     reject: true
+
+Duputy Governor:
+  salary_advance:
+    view: true
+    create: true
+    delete: true
+    update: false
+  tour_advance:
+    view: true
+    create: true
+    delete: true
+    update: true
+  other_advance:
+    view: true
+    create: true
+    delete: true
+    update: true
+  dashboard:
+    view: true
+    create: true
+    delete: true
+    update: true
+  requested_advance:
+    view: true
+    verify: false
+    confirm: true
+    dispatch: false
+    reject: true
+
+Governor:
+  salary_advance:
+    view: true
+    create: true
+    delete: true
+    update: false
+  tour_advance:
+    view: true
+    create: true
+    delete: true
+    update: true
+  other_advance:
+    view: true
+    create: true
+    delete: true
+    update: true
+  dashboard:
+    view: true
+    create: true
+    delete: true
+    update: true
+  requested_advance:
+    view: true
+    verify: false
+    confirm: true
+    dispatch: false
+    reject: true

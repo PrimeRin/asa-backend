@@ -1,6 +1,6 @@
 - name: Employee
-- name: Administrator
 - name: DAF Director
 - name: Finance
-- name: Governor
 - name: Senior HR Officer
+- name: Duputy Governor
+- name: Governor

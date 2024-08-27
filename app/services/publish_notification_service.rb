@@ -67,7 +67,8 @@ class PublishNotificationService
     when 'verified'
       "#{advance_type} has been verified by the Finance."
     when 'confirmed'
-      "#{advance_type} has been approved by the DAF Director."
+      role_name = @advance.confirmer&.role&.name || 'DAF Director'
+      "#{advance_type} has been approved by the #{role_name}."
     when 'rejected'
       "#{advance_type} has been rejected by the Finance."
     when 'dispatched'
