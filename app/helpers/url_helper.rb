@@ -7,6 +7,7 @@ module UrlHelper
   def serialize_files(files)
     files.map do |file|
       {
+        id: file.id,
         name: file.filename.to_s,
         size: file.byte_size,
         url: rails_blob_url(

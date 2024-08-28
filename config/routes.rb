@@ -20,7 +20,7 @@ Rails.application.routes.draw do
     resources :notifications, only: [:create]
     resources :reports, only: %i[index show]
     resources :stop_over, only: %i[index]
-    resources :files, only: %i[create update]
+    resources :files, only: %i[create update destroy]
     resources :permissions, only: %i[index]
     resources :itineraries, only: %i[create index show update destroy]
     resources :users, only: %i[index show update] do
