@@ -146,6 +146,8 @@ module Api
           :from,
           :to,
           :rate,
+          :from_place,
+          :to_place,
           :dsa_percentage,
           :halt_at,
           :mileage,
