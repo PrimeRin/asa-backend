@@ -83,12 +83,26 @@ module Api
     end
 
     def update
-      if @advance.update(advance_params)
+      if @advance.update(advance_params.merge(status: "pending"))
         update_salary_advance if @advance.advance_type === 'salary_advance'
         update_itinerary if itinerary_needed?
         render json: @advance, status: :ok
       else
         render json: @advance.errors, status: :unprocessable_entity
+      end
+    end
+
+    def update
+      if @advance.status.in?(["pending", "rejected"])
+        if @advance.update(advance_params.merge(status: "pending"))
+          update_salary_advance if @advance.advance_type == 'salary_advance'
+          update_itinerary if itinerary_needed?
+          render json: @advance, status: :ok
+        else
+          render json: @advance.errors, status: :unprocessable_entity
+        end
+      else
+        render json: { error: "Invalid status for updation" }, status: :unprocessable_entity
       end
     end
 
