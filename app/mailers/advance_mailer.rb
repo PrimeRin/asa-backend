@@ -4,7 +4,7 @@ class AdvanceMailer < ApplicationMailer
     @message = message
     @url = ENV['HOST_DOMAIN']
     user = User.find_by(id: recipient_id)
-    @icbs_user_name = icbs_user(user.username)
+    @icbs_user_name = user_full_name(user.username)
     if user
       @user = user
       mail(to: @user.email, subject: 'Salary Advance and DSA Notification')
