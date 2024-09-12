@@ -17,6 +17,15 @@ class AdvanceUpdateQuery
     'dsa_claim': 'DSA',
   }.freeze
 
+  GLCODE = {
+    'salary_advance': 1302004,
+    'other_advance': 1302008,
+    'tour_advance': 1302003,
+    'office tour': 4703001,
+    'meeting/seminar': 4703002,
+    'training': 4703003,
+  }.freeze
+
   def self.call(params, current_user, resource)
     new(params, current_user, resource).run
   end
@@ -29,6 +38,7 @@ class AdvanceUpdateQuery
 
   def run
     run_query
+    generate_voucher if @resource.status == 'dispatched'
     @resource
   end
 
@@ -78,5 +88,66 @@ class AdvanceUpdateQuery
     existing_ref = @resource.dispatched_ref || {}
     updated_ref = existing_ref.merge(reference_key => reference)
     @resource.update(dispatched_ref: updated_ref)
+  end
+
+  def generate_voucher
+    return if get_amount == 0 
+    
+    vch_type = @resource.advance_type == 'salary_advance' ? 'Salary Advance' : 'other_advance'
+    monthly_recovery_amount = 0
+    from_date = nil
+    to_date = nil
+    loan_id = nil
+  
+    if @resource.advance_type == 'salary_advance'
+      monthly_recovery_amount = @resource.salary_advance.deduction
+      from_date = Date.today
+      to_date = Date.today >> @resource.salary_advance.duration
+      loan_id = 9876 
+    end
+  
+    Icbs::VoucherGenerator.generate_voucher(
+      txn_date: Date.today,
+      txn_value_date: Date.today,
+      particulars: @resource.message,
+      vch_type: vch_type,
+      created_by: username(@resource.dispatched_by),
+      amount: get_amount,
+      dr_gl_code: get_glcode,
+      cr_gl_code: 1202002,
+      emp_code: username(@resource.user_id),
+      monthly_recovery_amount: monthly_recovery_amount,
+      from_date: from_date,
+      to_date: to_date,
+      loan_id: loan_id
+    )
+  end
+  
+
+  def username(id)
+    User.find(id).username
+  end
+
+  def get_amount
+    case @resource.advance_type
+    when 'salary_advance', 'other_advance'
+      return @resource.amount
+    when 'in_country_tour_advance'
+      return @resource.advance_amount.Nu
+    when 'ex_country_tour_advance'
+      return @resource.advance_amount.Nu + @resource.advance_amount.INR + @resource.advance_amount.USD
+    when 'in_country_dsa_claim'
+      return @resource.dsa_amount.Nu
+    when 'ex_country_dsa_claim'
+      return @resource.dsa_amount.Nu + @resource.dsa_amount.INR + @resource.dsa_amount.USD
+    end
+  end
+
+  def get_glcode
+    if @resource.advance_type == 'in_country_tour_advance' || @resource.advance_type == 'ex_country_tour_advance'
+      GLCODE[:tour_advance]
+    else
+      GLCODE[@resource.tour_type.to_sym]
+    end
   end
 end
