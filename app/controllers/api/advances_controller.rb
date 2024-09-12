@@ -208,6 +208,7 @@ module Api
         :purpose,
         :remark,
         :office_order,
+        :tour_type,
         :advance_percentage,
         dsa_amount: [:Nu, :INR, :USD],
         advance_amount: [:Nu, :INR, :USD]

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_09_11_092522) do
+ActiveRecord::Schema[7.0].define(version: 2024_09_12_042613) do
   create_table "active_storage_attachments", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -60,6 +60,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_09_11_092522) do
     t.json "dispatched_ref"
     t.integer "parent_id"
     t.string "office_order"
+    t.string "tour_type"
     t.index ["user_id"], name: "index_advances_on_user_id"
   end
 
