@@ -20,7 +20,7 @@ class AdvanceUpdateQuery
   GLCODE = {
     'salary_advance': 1302004,
     'other_advance': 1302008,
-    'tour_advance': 1302003,
+    'tour_advance': 1302003, # tour advance
     'office tour': 4703001,
     'meeting/seminar': 4703002,
     'training': 4703003,
@@ -103,7 +103,7 @@ class AdvanceUpdateQuery
       monthly_recovery_amount = @resource.salary_advance.deduction
       from_date = Date.today
       to_date = Date.today >> @resource.salary_advance.duration
-      loan_id = 9876 
+      loan_id = 10012 
     end
   
     Icbs::VoucherGenerator.generate_voucher(
@@ -112,7 +112,7 @@ class AdvanceUpdateQuery
       particulars: @resource.message,
       vch_type: vch_type,
       created_by: username(@resource.dispatched_by),
-      amount: get_amount,
+      amount: get_amount.to_i,
       dr_gl_code: get_glcode,
       cr_gl_code: 1202002,
       emp_code: username(@resource.user_id),
@@ -133,13 +133,13 @@ class AdvanceUpdateQuery
     when 'salary_advance', 'other_advance'
       return @resource.amount
     when 'in_country_tour_advance'
-      return @resource.advance_amount.Nu
+      return @resource.advance_amount['Nu']
     when 'ex_country_tour_advance'
-      return @resource.advance_amount.Nu + @resource.advance_amount.INR + @resource.advance_amount.USD
+      return @resource.advance_amount['Nu'] + @resource.advance_amount['INR'] + @resource.advance_amount['USD']
     when 'in_country_dsa_claim'
-      return @resource.dsa_amount.Nu
+      return @resource.dsa_amount['Nu']
     when 'ex_country_dsa_claim'
-      return @resource.dsa_amount.Nu + @resource.dsa_amount.INR + @resource.dsa_amount.USD
+      return @resource.dsa_amount['Nu'] + @resource.dsa_amount['INR'] + @resource.dsa_amount['USD']
     end
   end
 
