@@ -95,3 +95,7 @@ ActiveRecord::Base.connection_pool.with_connection(&:active?)
 # sudo nginx -t
 # sudo systemctl restart nginx.service 
 # sudo systemctl status nginx.service
+
+
+# ## Clock service 
+# --> nohup bundle exec clockwork clock.rb &
