@@ -59,6 +59,23 @@ rails db:seed
  rails s
 ```
 
+### Step 6: Services
+  1. Run Clock- used for scheduling dsa claim mails 
+```bash
+ nohup bundle exec clockwork clock.rb &
+```
+ 
+ 2. Run the sidekiq
+```bash
+ TODO
+```
+
+3. Redis server
+```bash
+ TODO
+```
+
+
 ## User flow diagram
 
 ![User Flow Diagram](app/assets/images/userflow1.png)
