@@ -1,6 +1,4 @@
-class NotificationWorker
-  include Sidekiq::Worker
-
+class NotificationWorker < ApplicationWorker
   def perform(notification_params)
     notification = Notification.new(notification_params)
     if notification.save

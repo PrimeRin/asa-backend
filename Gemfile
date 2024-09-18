@@ -35,3 +35,5 @@ end
 
 group :development do
 end
+
+gem "clockwork", "~> 3.0"
