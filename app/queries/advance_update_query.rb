@@ -37,8 +37,8 @@ class AdvanceUpdateQuery
   end
 
   def run
+    generate_voucher if @resource.status == 'confirmed'
     run_query
-    generate_voucher if @resource.status == 'dispatched'
     @resource
   end
 
