@@ -91,7 +91,9 @@ class AdvanceUpdateQuery
   end
 
   def generate_voucher
-    return if get_amount == 0 
+    if get_amount == 0 && !['in_country_dsa_claim', 'ex_country_dsa_claim'].include?(@resource.advance_type)
+      return
+    end
     
     vch_type = @resource.advance_type == 'salary_advance' ? 'Salary Advance' : 'other_advance'
     monthly_recovery_amount = 0

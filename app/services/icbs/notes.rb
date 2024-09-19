@@ -87,3 +87,11 @@ BEGIN
     DBMS_OUTPUT.PUT_LINE('Transaction ID: ' || v_nextTxnID);   
 END;
 
+
+Advance.where(advance_type: 'salary_advance').update_all(tour_type: 'salary_advance')
+Advance.where(advance_type: 'other_advance').update_all(tour_type: 'other_advance')
+Advance.where(advance_type: 'in_country_tour_advance').update_all(tour_type:  'office tour')
+Advance.where(advance_type: 'ex_country_tour_advance').update_all(tour_type: 'training')
+Advance.where(advance_type: 'in_country_dsa_claim').update_all(tour_type:  'office tour')
+Advance.where(advance_type: 'ex_country_dsa_claim').update_all(tour_type: 'training')
+
