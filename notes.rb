@@ -99,3 +99,6 @@ ActiveRecord::Base.connection_pool.with_connection(&:active?)
 
 # ## Clock service 
 # --> nohup bundle exec clockwork clock.rb &
+
+## Performs the job right now
+DsaReminderJob.perform_now
