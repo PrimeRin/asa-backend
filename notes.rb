@@ -102,3 +102,7 @@ ActiveRecord::Base.connection_pool.with_connection(&:active?)
 
 ## Performs the job right now
 DsaReminderJob.perform_now
+
+
+## Redis server
+--> ps aux | grep redis

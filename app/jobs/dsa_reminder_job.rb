@@ -2,7 +2,7 @@ class DsaReminderJob < ApplicationJob
   queue_as :default
 
   REMINDER_MESSAGE = 'Reminder to submit your DSA (Daily Subsistence Allowance) claim for the for the recent tour advance.'\
-                     'Please ensure the submission is completed at the earliest, as delays may cause issues with the final settlement process.'
+                     'Please ensure the submission is completed at the earliest, as delays may cause issues with the future advance process.'
 
   def perform
     send_mail(user_ids, REMINDER_MESSAGE)
