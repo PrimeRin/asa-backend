@@ -109,21 +109,22 @@ class AdvanceUpdateQuery
     end
 
     begin
-      Icbs::VoucherGenerator.generate_voucher(
-        txn_date: Date.today,
-        txn_value_date: Date.today,
-        particulars: @resource.message,
-        vch_type: vch_type,
-        created_by: username(@resource.dispatched_by),
-        amount: get_amount.to_i,
-        dr_gl_code: get_glcode,
-        cr_gl_code: 1202002,
-        emp_code: username(@resource.user_id),
-        monthly_recovery_amount: monthly_recovery_amount,
-        from_date: from_date,
-        to_date: to_date,
-        loan_id: loan_id
-      )
+      render json: { error: "There was clash with existing voucher. Please try again after few minutes." }, status: :unprocessable_entity
+      # Icbs::VoucherGenerator.generate_voucher(
+      #   txn_date: Date.today,
+      #   txn_value_date: Date.today,
+      #   particulars: @resource.message,
+      #   vch_type: vch_type,
+      #   created_by: username(@resource.dispatched_by),
+      #   amount: get_amount.to_i,
+      #   dr_gl_code: get_glcode,
+      #   cr_gl_code: 1202002,
+      #   emp_code: username(@resource.user_id),
+      #   monthly_recovery_amount: monthly_recovery_amount,
+      #   from_date: from_date,
+      #   to_date: to_date,
+      #   loan_id: loan_id
+      # )
     rescue => e
       render json: { error: "There was clash with existing voucher. Please try again after few minutes." }, status: :unprocessable_entity
     end
