@@ -91,7 +91,7 @@ class AdvanceUpdateQuery
   end
 
   def generate_voucher
-    if get_amount == 0 && !['in_country_dsa_claim', 'ex_country_dsa_claim'].include?(@resource.advance_type)
+    if get_amount.to_i == 0 && !['in_country_dsa_claim', 'ex_country_dsa_claim'].include?(@resource.advance_type)
       return
     end
     
