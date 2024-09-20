@@ -140,8 +140,21 @@ module Api
       ).exists?
 
       if existing_advance
-        render json: { status: :conflict, message: 'You already have an existing advance which needs to close.' }, status: :conflict
+        return render json: { status: :conflict, message: 'You already have an existing advance which needs to close.' }, status: :conflict
       end
+
+
+      unsettled_advance_types = ['in_country_tour_advance', 'ex_country_tour_advance']
+      if unsettled_advance_types.include?(params[:advance][:advance_type])
+        advance_not_closed_user_ids = Advance.where(
+          advance_type: unsettled_advance_types,
+          status: 'dispatched'
+        ).pluck(:user_id)
+    
+        if advance_not_closed_user_ids.include?(current_user.id)
+          return render json: { status: :conflict, message: 'You already have an existing tour advance that needs to be settled. Please submit DSA claim to settle the advance.' }, status: :conflict
+        end
+      end                                     
     end
 
     def update_itinerary
