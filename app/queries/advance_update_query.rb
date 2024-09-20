@@ -113,7 +113,7 @@ class AdvanceUpdateQuery
         txn_value_date: Date.today,
         particulars: @resource.message,
         vch_type: vch_type,
-        created_by: username(@resource.dispatched_by),
+        created_by: @current_user.username,
         amount: get_amount.to_i,
         dr_gl_code: get_glcode,
         cr_gl_code: 1202002,
