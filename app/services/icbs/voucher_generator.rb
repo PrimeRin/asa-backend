@@ -1,6 +1,6 @@
 module Icbs
   class VoucherGenerator
-    def self.generate_voucher(txn_date:, txn_value_date:, particulars:, vch_type:, created_by:, amount:, dr_gl_code:, cr_gl_code:, emp_code:, monthly_recovery_amount:, from_date:, to_date:, loan_id:)
+    def self.generate_voucher(txn_date:, txn_value_date:, particulars:, vch_type:, created_by:, amount:, dr_gl_code:, total_amount:, cr_gl_code:, new_cr_gl_code:, emp_code:, monthly_recovery_amount:, from_date:, to_date:, loan_id:)
       oracle_formatted_txn_date = txn_date ? txn_date.strftime('%d-%b-%Y').upcase : nil
       oracle_formatted_value_date = txn_value_date ? txn_value_date.strftime('%d-%b-%Y').upcase : nil
       oracle_formatted_from_date = from_date ? from_date.strftime('%d-%b-%Y').upcase : nil
@@ -22,8 +22,10 @@ module Icbs
               '#{vch_type}',
               '#{created_by}',
               #{amount},
+              #{total_amount},
               #{dr_gl_code},
               #{cr_gl_code},
+              #{new_cr_gl_code},
               #{emp_code},
               #{monthly_recovery_amount},
               #{oracle_formatted_from_date ? "TO_DATE('#{oracle_formatted_from_date}', 'DD-MON-YYYY')" : 'NULL'},
