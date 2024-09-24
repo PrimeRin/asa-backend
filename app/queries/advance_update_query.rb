@@ -160,9 +160,13 @@ class AdvanceUpdateQuery
     when 'salary_advance', 'other_advance', 'in_country_tour_advance', 'in_country_dsa_claim'
       @resource.amount
     when 'ex_country_tour_advance', 'ex_country_dsa_claim'
-      (@resource.advance_amount.values_at('Nu', 'INR', 'USD').sum) + (@resource.dsa_amount.values_at('Nu', 'INR', 'USD').sum)
+      advance_amount = @resource.advance_amount || {}
+      dsa_amount = @resource.dsa_amount || {}
+  
+      (advance_amount.values_at('Nu', 'INR', 'USD').compact.sum) + 
+      (dsa_amount.values_at('Nu', 'INR', 'USD').compact.sum)
     else
-      0 
+      0
     end
   end
 
