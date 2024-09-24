@@ -95,7 +95,15 @@ class AdvanceUpdateQuery
       return
     end
     
-    vch_type = @resource.advance_type == 'salary_advance' ? 'Salary Advance' : 'other_advance'
+    vch_type = case @resource.advance_type
+    when 'salary_advance'
+      'Salary Advance'
+    when 'in_country_dsa_claim', 'ex_country_dsa_claim'
+      'Dsa Claim'
+    else
+      'other_advance'
+    end
+    
     monthly_recovery_amount = 0
     from_date = nil
     to_date = nil
