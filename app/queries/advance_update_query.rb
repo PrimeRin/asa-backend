@@ -163,8 +163,10 @@ class AdvanceUpdateQuery
       advance_amount = @resource.advance_amount || {}
       dsa_amount = @resource.dsa_amount || {}
   
-      (advance_amount.values_at('Nu', 'INR', 'USD').compact.sum) + 
-      (dsa_amount.values_at('Nu', 'INR', 'USD').compact.sum)
+      advance_sum = advance_amount.values_at('Nu', 'INR', 'USD').compact.map(&:to_f).sum
+      dsa_sum = dsa_amount.values_at('Nu', 'INR', 'USD').compact.map(&:to_f).sum
+  
+      advance_sum + dsa_sum
     else
       0
     end
