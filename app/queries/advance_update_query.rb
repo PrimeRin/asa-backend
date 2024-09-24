@@ -123,10 +123,10 @@ class AdvanceUpdateQuery
         vch_type: vch_type,
         created_by: @current_user.username,
         amount: get_amount.to_i,
-        total_amount: nil,
+        total_amount: get_total_amount.to_i,
         dr_gl_code: get_glcode,
-        cr_gl_code: 1202002,
-        new_cr_gl_code: 1302003,
+        cr_gl_code: get_cr_gl_code(vch_type),
+        new_cr_gl_code: 1202002,
         emp_code: username(@resource.user_id),
         monthly_recovery_amount: monthly_recovery_amount,
         from_date: from_date,
@@ -152,6 +152,25 @@ class AdvanceUpdateQuery
       return @resource.dsa_amount['Nu']
     when 'ex_country_dsa_claim'
       return @resource.dsa_amount['Nu'] + @resource.dsa_amount['INR'] + @resource.dsa_amount['USD']
+    end
+  end
+
+  def get_total_amount
+    case @resource.advance_type
+    when 'salary_advance', 'other_advance', 'in_country_tour_advance', 'in_country_dsa_claim'
+      @resource.amount
+    when 'ex_country_tour_advance', 'ex_country_dsa_claim'
+      (@resource.advance_amount.values_at('Nu', 'INR', 'USD').sum) + (@resource.dsa_amount.values_at('Nu', 'INR', 'USD').sum)
+    else
+      0 
+    end
+  end
+
+  def get_cr_gl_code(vch_type)
+    if vch_type == 'Dsa Claim'
+      GLCODE[:tour_advance]
+    else
+      1202002
     end
   end
 
