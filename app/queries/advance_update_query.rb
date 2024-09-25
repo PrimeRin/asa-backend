@@ -37,8 +37,8 @@ class AdvanceUpdateQuery
   end
 
   def run
+    generate_voucher if @resource.status == 'confirmed'
     run_query
-    generate_voucher if @resource.status == 'dispatched'
     @resource
   end
 
@@ -119,7 +119,7 @@ class AdvanceUpdateQuery
     Icbs::VoucherGenerator.generate_voucher(
         txn_date: Date.today,
         txn_value_date: Date.today,
-        particulars: @resource.message,
+        particulars: @params[:message],
         vch_type: vch_type,
         created_by: @current_user.username,
         amount: get_amount.to_i,
