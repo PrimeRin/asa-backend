@@ -24,6 +24,7 @@ class AdvanceUpdateQuery
     'office tour': 4703001,
     'meeting/seminar': 4703002,
     'training': 4703003,
+    'remittance': 4806006,
   }.freeze
 
   def self.call(params, current_user, resource)
