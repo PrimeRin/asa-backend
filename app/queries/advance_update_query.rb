@@ -152,7 +152,7 @@ class AdvanceUpdateQuery
     when 'in_country_dsa_claim'
       return @resource.dsa_amount['Nu']
     when 'ex_country_dsa_claim'
-      return @resource.dsa_amount['Nu'] + @resource.dsa_amount['INR'] + @resource.dsa_amount['USD']
+      return @resource.dsa_amount['Nu'].to_i + @resource.dsa_amount['INR'].to_i + @resource.dsa_amount['USD'].to_i
     end
   end
 
