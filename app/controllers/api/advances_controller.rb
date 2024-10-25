@@ -223,6 +223,7 @@ module Api
         :office_order,
         :tour_type,
         :advance_percentage,
+        :additional_expense,
         dsa_amount: [:Nu, :INR, :USD],
         advance_amount: [:Nu, :INR, :USD]
       )

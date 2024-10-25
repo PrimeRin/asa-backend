@@ -106,3 +106,41 @@ DsaReminderJob.perform_now
 
 ## Redis server
 --> ps aux | grep redis
+
+
+server {
+    listen 80;
+    listen [::]:80;
+    server_name asa.rma.org;
+
+    # Redirect all HTTP traffic to HTTPS
+    return 301 https://$host$request_uri;
+}
+
+server {
+    listen 443 ssl;
+    listen [::]:443 ssl;
+    server_name asa.rma.org;
+
+    # SSL certificate and key
+    ssl_certificate /etc/ssl/certs/wildcard_rma_org_bt.crt;
+    ssl_certificate_key /etc/ssl/private/wildcard_rma_org_bt.key;
+
+    # SSL settings
+    ssl_protocols TLSv1.2 TLSv1.3;
+    ssl_prefer_server_ciphers on;
+    ssl_ciphers HIGH:!aNULL:!MD5;
+
+    # Security headers
+    add_header X-Frame-Options "DENY";
+    add_header X-Content-Type-Options "nosniff";
+    add_header X-XSS-Protection "1; mode=block";
+    add_header Strict-Transport-Security "max-age=31536000; includeSubDomains; preload" always;
+
+    root /var/www/asa-web;
+    index index.html;
+
+    location / {
+        try_files $uri $uri/ /index.html;
+    }
+}
