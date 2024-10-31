@@ -57,7 +57,7 @@ module Api
       @user = current_user
       if @user.valid_password?(params[:current_password])
         if params[:new_password] == params[:new_password_confirmation]
-          if @user.update(password: params[:new_password])
+          if @user.update(password: params[:new_password], reset_password: false)
             render json: { message: 'Password successfully updated' }, status: :ok
           else
             render json: { errors: @user.errors.full_messages }, status: :unprocessable_entity
