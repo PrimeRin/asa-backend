@@ -4,7 +4,7 @@ namespace :db do
   desc 'Backup the MySQL database'
   task backup: :environment do
     # Configure your database and backup details
-    backup_dir = '/home/prime/Desktop/asa/backup'
+    backup_dir = ENV['BACKUP_DIR']
     timestamp = Time.now.strftime('%Y%m%d%H%M%S')
 
     # Fetch database credentials from environment variables
