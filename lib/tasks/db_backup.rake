@@ -8,15 +8,16 @@ namespace :db do
     timestamp = Time.now.strftime('%Y%m%d%H%M%S')
 
     # Fetch database credentials from environment variables
+    database_host = ENV['DATABASE_HOST']
     database_name = ENV['DATABASE_NAME']
     username = ENV['DATABASE_USERNAME']
     password = ENV['DATABASE_PASSWORD']
 
     # Command to create the full backup
-    backup_file = "#{backup_dir}/backup_#{timestamp}.sql"
+    backup_file = "#{backup_dir}/asa_backup_#{timestamp}.sql"
     
     # Ensure the password is formatted correctly with no space after -p
-    command = "mysqldump -u #{username} -p#{password} #{database_name} > #{backup_file}"
+    command = "mysqldump -h #{database_host} -u #{username} -p#{password} #{database_name} > #{backup_file}"
 
     # Create the backup directory if it doesn't exist
     FileUtils.mkdir_p(backup_dir)
