@@ -232,12 +232,14 @@ module Api
     def check_salary_advance
       salary_advance = previous_balance(current_user.username, '1302004')
 
-      if salary_advance > 0
+      if salary_advance < 0
         return false
       end
 
       true
     end
+
+    
 
     def previous_balance(slcode, glcode)
       Icbs::BalanceFetcher.fetch_balance(slcode, glcode)
