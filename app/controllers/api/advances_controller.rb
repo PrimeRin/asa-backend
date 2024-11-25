@@ -29,7 +29,8 @@ module Api
         position_title: @advance.position,
         advance_detail: @advance.salary_advance,
         travel_itinerary: travel_itineraries,
-        files: serialize_files(files)
+        files: serialize_files(files),
+        tickets: serialize_files(tickets)
       )
       render json: @advance, status: :ok
     end
@@ -266,6 +267,15 @@ module Api
         advance.files
       else
         @advance.files
+      end
+    end
+
+    def tickets
+      if @advance.advance_type == 'ex_country_dsa_claim'
+        advance = Advance.find(@advance.parent_id)
+        advance.tickets
+      else
+        @advance.tickets
       end
     end
   end

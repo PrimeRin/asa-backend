@@ -77,21 +77,21 @@ ActiveRecord::Base.connection_pool.with_connection(&:active?)
 
 # Deploy react in Nginx
 # sudo nano /etc/nginx/sites-available/asa-web
-# server {
-#         listen 3004;
-#         listen [::]:3004;
-#         server_name asa-web;
+server {
+        listen 3004;
+        listen [::]:3004;
+        server_name asa-web;
 
-#         root /var/www/asa-web;
-#         index index.html;
+        root /var/www/asa-web;
+        index index.html;
 
-#         location / {
-#                 try_files $uri $uri/ /index.html;
-#         }
+        location / {
+                try_files $uri $uri/ /index.html;
+        }
 
-# }
+}
 
-# sudo ln -s /etc/nginx/sites-available/asa-web /etc/nginx/sites-enabled/
+sudo ln -s /etc/nginx/sites-available/asa-web /etc/nginx/sites-enabled/
 # sudo nginx -t
 # sudo systemctl restart nginx.service 
 # sudo systemctl status nginx.service
@@ -143,4 +143,30 @@ server {
     location / {
         try_files $uri $uri/ /index.html;
     }
+}
+
+
+server {
+    listen 3011;
+    listen [::]:3011;
+    server_name radiator-web;
+
+    root /var/www/radiator-web;
+    index index.html;
+
+    # Serve static files (e.g., favicon.ico, images, styles, etc.)
+    location /_next/ {
+        alias /var/www/radiator-web/.next/;
+    }
+
+    # Serve static assets like favicon.ico, images, etc.
+    location /static/ {
+        alias /var/www/radiator-web/public/;
+    }
+
+    # Handling all other requests (i.e., routing via Next.js)
+    location / {
+        try_files $uri $uri/ @nextjs;
+  }
+    
 }

@@ -2,6 +2,7 @@
 
 class Advance < ApplicationRecord
   has_many_attached :files
+  has_many_attached :tickets
   has_many :attachments, dependent: :destroy
   belongs_to :user
   has_many :travel_itineraries
