@@ -6,7 +6,8 @@ module Api
 
     def create
       if files_attached?
-        params[:files]&.each { |file| @advance.files.attach(file) }
+        attachments = params[:file_type] == 'tickets' ? @advance.tickets : @advance.files
+        params[:files]&.each { |file| attachments.attach(file) }
         render status: :created
       else
         render status: :ok
