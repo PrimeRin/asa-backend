@@ -185,7 +185,11 @@ class AdvanceUpdateQuery
     if @resource.advance_type == 'in_country_tour_advance' || @resource.advance_type == 'ex_country_tour_advance'
       GLCODE[:tour_advance]
     else
-      GLCODE[@resource.tour_type.to_sym]
+      if (@resource.tour_type == 'meeting/seminar')
+        GLCODE[:training]
+      else
+        GLCODE[@resource.tour_type.to_sym]
+      end
     end
   end
 end
