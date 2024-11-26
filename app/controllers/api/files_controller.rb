@@ -16,10 +16,10 @@ module Api
 
     def update
       if files_attached?
-        # Optionally, detach existing files before attaching new ones
-        @advance.files.purge if params[:purge_existing]
-
-        params[:files]&.each { |file| @advance.files.attach(file) }
+        attachments = params[:file_type] == 'tickets' ? @advance.tickets : @advance.files
+        attachments.purge if params[:purge_existing] 
+    
+        params[:files]&.each { |file| attachments.attach(file) }
         render status: :ok
       else
         render status: :unprocessable_entity
@@ -28,7 +28,7 @@ module Api
 
     def destroy
       if params[:file_id].is_a?(Array)
-        files = @advance.files.where(id: params[:file_id])
+        files = params[:file_type] == 'tickets' ? @advance.tickets.where(id: params[:file_id]) : @advance.files.where(id: params[:file_id])
     
         if files.present?
           files.each(&:purge)
