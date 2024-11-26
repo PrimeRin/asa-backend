@@ -120,7 +120,7 @@ class AdvanceUpdateQuery
     Icbs::VoucherGenerator.generate_voucher(
         txn_date: Date.today,
         txn_value_date: Date.today,
-        particulars: @params[:message],
+        particulars: @params[:message].to_s.gsub(/\s+/, ' ').strip,
         vch_type: vch_type,
         created_by: @current_user.username,
         amount: get_amount.to_i,
