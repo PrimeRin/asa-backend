@@ -272,7 +272,7 @@ module Api
 
     def tickets
       if @advance.advance_type == 'ex_country_dsa_claim'
-        advance = Advance.find(@advance.parent_id)
+        advance = Advance.find(@advance.id)
         advance.tickets
       else
         @advance.tickets
