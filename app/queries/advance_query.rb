@@ -22,9 +22,9 @@ class AdvanceQuery
 
   def run_query
     @resource = if @params[:type] == 'my_advance'
-                  @current_user.advances.where(status: @params[:status], advance_type: @params[:advance_type])
+                  @current_user.advances.where(status: @params[:status], advance_type: @params[:advance_type], deleted: false)
                 elsif @params[:type] == 'claim_dsa'
-                  Advance.where(status: @params[:status], advance_type: @params[:advance_type], claim_dsa: true)
+                  Advance.where(status: @params[:status], advance_type: @params[:advance_type], claim_dsa: true, deleted: false)
                 else
                   filter_by_status
                 end
@@ -33,9 +33,9 @@ class AdvanceQuery
   def filter_by_status
     case @current_user.role.name
     when 'Finance'
-      Advance.where(status: finance_statuses, advance_type: @params[:advance_type], claim_dsa: nil)
+      Advance.where(status: finance_statuses, advance_type: @params[:advance_type], claim_dsa: nil, deleted: false)
     when 'DAF Director'
-      Advance.where(status: director_statuses, advance_type: @params[:advance_type], claim_dsa: nil)
+      Advance.where(status: director_statuses, advance_type: @params[:advance_type], claim_dsa: nil, deleted: false)
     else
       Advance.where(claim_dsa: nil)
     end
