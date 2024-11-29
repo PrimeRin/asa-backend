@@ -189,7 +189,7 @@ module Api
     end
 
     def salary_params
-      params.require(:salary_advance).permit(:duration, :deduction, :completion_month, :status)
+      params.require(:salary_advance).permit(:duration, :deduction, :completion_month, :status, :netpay)
     end
 
     def create_itinerary
