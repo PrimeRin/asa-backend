@@ -27,6 +27,9 @@ Rails.application.routes.draw do
       collection do
         post 'reset_password'
       end
+      collection do
+        post 'accept_terms'
+      end
     end
     resources :rates, only: %i[index update create] do
       collection do

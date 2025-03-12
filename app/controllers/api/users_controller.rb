@@ -3,7 +3,7 @@
 module Api
   class UsersController < ApplicationController
     before_action :authenticate_user!
-    before_action :set_user, only: %i[show update destroy]
+    before_action :set_user, only: %i[show update destroy accept_terms]
 
     def index
       @pagy, @users = pagy(User.all, page: params[:page] || 1)
@@ -51,6 +51,14 @@ module Api
     def destroy
       @user.destroy
       head :no_content
+    end
+
+    def accept_terms
+      if @user.update(accepted_terms: true)
+        render json: { message: 'Terms accepted successfully' }, status: :ok
+      else
+        render json: { errors: @user.errors.full_messages }, status: :unprocessable_entity
+      end
     end
 
     def reset_password
