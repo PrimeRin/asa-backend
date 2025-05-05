@@ -245,11 +245,11 @@ module Api
     end
 
     def calculate_status_count
-      Advance.group(:status).count
+      Advance.where(deleted: false).group(:status).count
     end
 
     def calculate_type_count
-      Advance.group(:advance_type).count
+      Advance.where(deleted: false).group(:advance_type).count
     end
 
     def travel_itineraries

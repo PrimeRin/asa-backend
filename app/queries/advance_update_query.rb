@@ -38,7 +38,7 @@ class AdvanceUpdateQuery
   end
 
   def run
-    generate_voucher if @resource.status == 'confirmed'
+    generate_voucher if @resource.status == 'confirmed' && @params[:status] == 'approved'
     run_query
     @resource
   end
@@ -117,7 +117,7 @@ class AdvanceUpdateQuery
       loan_id = 10012 
     end
 
-    Icbs::VoucherGenerator.generate_voucher(
+    voucher_id = Icbs::VoucherGenerator.generate_voucher(
         txn_date: Date.today,
         txn_value_date: Date.today,
         particulars: @params[:message].to_s.gsub(/\s+/, ' ').strip,
@@ -134,6 +134,8 @@ class AdvanceUpdateQuery
         to_date: to_date,
         loan_id: loan_id
       )
+      voucher_no = Icbs::DraftVch.find(voucher_id).vchno
+      @resource.update(vch_no: voucher_no)
   end
   
 
