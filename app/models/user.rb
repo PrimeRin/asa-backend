@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class User < ApplicationRecord
-  devise :database_authenticatable, :registerable, :rememberable
+  devise :database_authenticatable, :registerable, :rememberable, :recoverable
   has_many :advances, dependent: :destroy
   has_one_attached :profile_pic
   belongs_to :role

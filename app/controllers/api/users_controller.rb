@@ -2,7 +2,7 @@
 
 module Api
   class UsersController < ApplicationController
-    before_action :authenticate_user!
+    before_action :authenticate_user!, only: %i[index show create update destroy accept_terms reset_password]
     before_action :set_user, only: %i[show update destroy accept_terms]
 
     def index
@@ -75,6 +75,35 @@ module Api
         end
       else
         render json: { errors: ['Current password is incorrect'] }, status: :unprocessable_entity
+      end
+    end
+
+    def forgot_password
+      user = User.find_by(username: params[:username])
+      
+      if user.present?
+        if user.email.present?
+          # Generate a reset token
+          raw_token, hashed_token = Devise.token_generator.generate(User, :reset_password_token)
+          user.reset_password_token = hashed_token
+          user.reset_password_sent_at = Time.now.utc
+          user.save(validate: false)
+          
+          # Send email using our custom mailer
+          PasswordResetMailer.reset_instructions(user, raw_token).deliver_now
+          
+          render json: { 
+            message: "Password reset instructions sent to the email associated with your account." 
+          }, status: :ok
+        else
+          render json: { 
+            error: "No email address is associated with this account. Please contact support." 
+          }, status: :unprocessable_entity
+        end
+      else
+        render json: { 
+          error: "User does not exist!" 
+        }, status: :not_found
       end
     end
 
