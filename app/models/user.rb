@@ -33,10 +33,11 @@ class User < ApplicationRecord
   end
 
   def generate_password_reset_token!
-    update(
-      reset_password_token: SecureRandom.urlsafe_base64,
-      reset_password_sent_at: Time.now.utc
-    )
+    raw, enc = Devise.token_generator.generate(self.class, :reset_password_token)
+    self.reset_password_token = enc
+    self.reset_password_sent_at = Time.now.utc
+    save(validate: false)
+    raw # Return the raw token to send via email
   end
 
   def clear_password_reset_token!

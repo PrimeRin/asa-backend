@@ -83,13 +83,8 @@ module Api
       
       if user.present?
         if user.email.present?
-          # Generate a reset token
-          raw_token, hashed_token = Devise.token_generator.generate(User, :reset_password_token)
-          user.reset_password_token = hashed_token
-          user.reset_password_sent_at = Time.now.utc
-          user.save(validate: false)
-          
           # Send email using our custom mailer
+          raw_token = user.generate_password_reset_token!
           PasswordResetMailer.reset_instructions(user, raw_token).deliver_now
           
           render json: { 
