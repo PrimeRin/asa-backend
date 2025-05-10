@@ -26,10 +26,15 @@ Rails.application.routes.draw do
     resources :users, only: %i[index show update] do
       collection do
         post 'reset_password'
-        post 'forgot_password'
       end
       collection do
         post 'accept_terms'
+      end
+      collection do
+        post 'forgot_password'
+      end
+      collection do
+        post 'change_password'
       end
     end
     resources :rates, only: %i[index update create] do

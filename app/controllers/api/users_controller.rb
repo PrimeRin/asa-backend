@@ -107,6 +107,24 @@ module Api
       end
     end
 
+    def change_password
+      user = User.with_reset_password_token(params[:token])
+      
+      if user && user.reset_password_period_valid?
+        if params[:password] == params[:password_confirmation]
+          if user.reset_password(params[:password], params[:password_confirmation])
+            render json: { message: 'Password successfully reset' }, status: :ok
+          else
+            render json: { errors: user.errors.full_messages }, status: :unprocessable_entity
+          end
+        else
+          render json: { errors: ['Password and confirmation do not match'] }, status: :unprocessable_entity
+        end
+      else
+        render json: { errors: ['Invalid or expired token'] }, status: :unprocessable_entity
+      end
+    end
+
     private
 
     def department_name(division_id)
