@@ -9,7 +9,7 @@ class PasswordResetMailer < ApplicationMailer
   
       mail(
         to: @user.email,
-        subject: 'Forgot Password Link'
+        subject: 'Forgot Password Link(ASA)'
       )
     end
   
