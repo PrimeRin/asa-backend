@@ -112,7 +112,10 @@ module Api
       
       if user && user.reset_password_period_valid?
         if params[:password] == params[:password_confirmation]
-          if user.reset_password(params[:password], params[:password_confirmation])
+          user.password = params[:password]
+          user.password_confirmation = params[:password_confirmation]
+          if user.save
+            user.clear_password_reset_token!
             render json: { message: 'Password successfully reset' }, status: :ok
           else
             render json: { errors: user.errors.full_messages }, status: :unprocessable_entity
