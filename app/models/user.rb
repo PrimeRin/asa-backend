@@ -37,7 +37,7 @@ class User < ApplicationRecord
     self.reset_password_token = enc
     self.reset_password_sent_at = Time.now.utc
     save(validate: false)
-    raw # Return the raw token to send via email
+    enc
   end
 
   def clear_password_reset_token!
